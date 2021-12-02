@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        {% with url_name=request.resolver_match.url_name %}
+            {% if url_name == 'pending' %}
+                <h1>Pending Products</h1>
+                <div class="row">
+                    {% for product in pending %}
+                    <div class="col-3">
+                        <div class="card" style="width: 18rem;">
+                          <img src="{{ product.product_image.url }}" class="card-img-top" alt="image for {{ product.product }}">
+                          <div class="card-body">
+                            <h5 class="card-title">{{ product.product }}</h5>
+                            <p class="card-text">{{ product.description|truncatewords:40 }}</p>
+                            <a href="#" class="btn btn-info btn-sm">View</a>
+                          </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            {% elif url_name == 'rejected' %}
+                <h1>Rejected Products</h1>
+
+                <div class="row">
+                    {% for product in rejected %}
+                    <div class="col-3">
+                        <div class="card" style="width: 18rem;">
+                          <img src="{{ product.product_image.url }}" class="card-img-top" alt="image for {{ product.product }}">
+                          <div class="card-body">
+                            <h5 class="card-title">{{ product.product }}</h5>
+                            <p class="card-text">{{ product.description|truncatewords:40 }}</p>
+                            <a href="#" class="btn btn-info btn-sm">View</a>
+                          </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            {% elif url_name == 'collected' %}
+                <h1>Collected Products</h1>
+
+                <div class="row">
+                    {% for product in collected %}
+                    <div class="col-3">
+                        <div class="card" style="width: 18rem;">
+                          <img src="{{ product.product_image.url }}" class="card-img-top" alt="image for {{ product.product }}">
+                          <div class="card-body">
+                            <h5 class="card-title">{{ product.product }}</h5>
+                            <p class="card-text">{{ product.description|truncatewords:40 }}</p>
+                            <a href="#" class="btn btn-info btn-sm">View</a>
+                          </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            {% endif %}
+        {% endwith %}
+    </div>
+{% endblock %}
