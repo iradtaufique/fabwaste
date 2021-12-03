@@ -12,7 +12,7 @@
                           <div class="card-body">
                             <h5 class="card-title">{{ product.product }}</h5>
                             <p class="card-text">{{ product.description|truncatewords:40 }}</p>
-                            <a href="#" class="btn btn-info btn-sm">View</a>
+                            <a href="{% url 'details' product.id %}" class="btn btn-info btn-sm">View</a>
                           </div>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                           <div class="card-body">
                             <h5 class="card-title">{{ product.product }}</h5>
                             <p class="card-text">{{ product.description|truncatewords:40 }}</p>
-                            <a href="#" class="btn btn-info btn-sm">View</a>
+                            <a href="{% url 'details' product.id %}" class="btn btn-info btn-sm">View</a>
                           </div>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
                           <div class="card-body">
                             <h5 class="card-title">{{ product.product }}</h5>
                             <p class="card-text">{{ product.description|truncatewords:40 }}</p>
-                            <a href="#" class="btn btn-info btn-sm">View</a>
+                            <a href="{% url 'details' product.id %}" class="btn btn-info btn-sm">View</a>
                           </div>
                         </div>
                     </div>

@@ -1,7 +1,7 @@
 from django import forms
 from django.shortcuts import redirect, render, get_object_or_404
 from .forms import AddProductForm, AddAddressForm, UpdateProductForm
-from .models import Product
+from .models import Product, Address
 from django.core.mail import EmailMessage, send_mass_mail
 from django.template.loader import render_to_string
 from django.conf import settings
@@ -10,6 +10,7 @@ from django.conf import settings
 
 
 def addProduct(request):
+
     form = AddProductForm(request=request)
     address_form = AddAddressForm()
     if request.method == 'POST':
@@ -18,23 +19,16 @@ def addProduct(request):
         address_form = AddAddressForm(request.POST)
         if form.is_valid() and address_form.is_valid():
             address = address_form.save(commit=False)
-            print(address_form.cleaned_data['province'])
+            # print(form.cleaned_data['id'])
             address.user = request.user
             form.save()
             address.save()
 
-            # print(form.cleaned_data['collected_date'])
             dat = form.cleaned_data['collected_date']
             device = form.cleaned_data['product']
 
             template = render_to_string('send_email.html', {'name': request.user, 'date': dat})
             template2 = render_to_string('send_email2.html', {'name': request.user, 'device': device, 'date': dat})
-            # email1 = EmailMessage(
-            #     ' Thanks for adding your product',
-            #     template,
-            #     settings.EMAIL_HOST_USER,
-            #     [request.user.email, 'iradukunda.ta@gmail.com'],
-            # )
 
             email1 = (
                 ' Thanks for adding your product',
@@ -51,13 +45,11 @@ def addProduct(request):
             send_mass_mail((email1, email2), fail_silently=False)
             # email.fail_silently = False
             # email.send()
-            return redirect('/')
+            return redirect('view_product')
     return render(request, 'addProduct.html', {'form': form, 'address_form': address_form})
 
 
 """view for viewing the products based on user"""
-
-
 def houseHoldProducts(request):
     products = Product.objects.filter(user=request.user)
     if request.user.is_staff:
@@ -81,7 +73,6 @@ def updateHouseHoldProducts(request, id):
 
 """view for viewing the products based on their status"""
 
-
 def productStatus(request):
     pending = Product.objects.filter(status='Pending')
     rejected = Product.objects.filter(status='Rejected')
@@ -97,12 +88,13 @@ def productStatus(request):
 
 
 """view for viewing the products details on Admin side"""
-
-
-def productDetails(request, id):
+def productUpdate(request, id):
     details = get_object_or_404(Product, id=id)
-    return render(request, 'houseHoldProductUpdate.html', {'details': details})
+    address = get_object_or_404(Address, id=id)
+    context = {'details': details, 'address': address}
+    return render(request, 'productDetails.html', context)
 
 
-def updateProductToCollected(request, id):
+
+def changeProductToCollected(request, id):
     product = get_object_or_404(Product, id=id)

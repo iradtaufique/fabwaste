@@ -17,7 +17,9 @@
             <p class="card-text"><b>P Cost:</b> {{ product.cost }}</p>
             <p class="card-text"><b>P QTY:</b> {{ product.quantity }}</p>
             <p class="card-text"><small class="text-muted">Created {{ product.created_date}}</small></p>
-              <a href="{% url 'view_product_details' product.id %}" class="btn btn-sm btn-info">update</a>
+              {% if not request.user.is_staff %}
+                <a href="{% url 'update_product' product.id %}" class="btn btn-sm btn-info">update</a>
+              {% endif %}
           </div>
         </div>
       </div>

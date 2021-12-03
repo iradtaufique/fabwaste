@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container justify-content-center mt-5">
+        <div class="row">
+            <div class="col-3">
+                <img src="{{ details.product_image.url }}" alt="{{ details.product }}" width="250" height="250">
+            </div>
+            <div class="col-5">
+                <h5 class="text-center">Product Description</h5><br><br>
+                <p><b>Product Name:</b> {{ details.product }}</p>
+                <p><b>Quantity:</b> {{ details.quantity }}</p>
+                <p><b>Product Owner:</b> {{ details.user }}</p>
+                <p><b>Collected Date:</b> {{ details.collected_date }}</p>
+                <p><b>Cost:</b> {{ details.cost }}</p>
+                <p><b>Description: </b>{{ details.description }}</p>
+            </div>
+            <div class="col-4">
+                <h5 class="text-center">Address Where the product is</h5><br><br>
+                <p><b>Province: </b>{{ address.province }}</p>
+                <p><b>District: </b>{{ address.district }}</p>
+                <p><b>Sector: </b>{{ address.sector }}</p>
+                <p><b>Cell: </b>{{ address.cell }}</p>
+                <p><b>village: </b>{{ address.village }}</p>
+                <p><b>Road Number: </b>{{ address.road_number }}</p>
+                <p><b>House Number: </b>{{ address.house_number }}</p>
+                <p><b>Contact Number: </b>{{ address.user.mobile }}</p>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

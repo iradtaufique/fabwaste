@@ -22,6 +22,8 @@ class Product(models.Model):
         ('Pending', 'Pending'), ('Collected', 'Collected'),
         ('Rejected', 'Rejected')
     )
+
+    # id = models.AutoField(primary_key=True)
     user = models.ForeignKey(UsersAccount, on_delete=models.DO_NOTHING)
     product = models.ForeignKey(Category, on_delete=models.DO_NOTHING, null=True, blank=True)
     product_image = models.ImageField(upload_to='media')
@@ -35,7 +37,7 @@ class Product(models.Model):
 
 
 class Address(models.Model):
-    user = models.ForeignKey(UsersAccount, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(UsersAccount, on_delete=models.DO_NOTHING, default=None)
     province = models.CharField(max_length=50)
     district = models.CharField(max_length=50)
     sector = models.CharField(max_length=50)
