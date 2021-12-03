@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'userauth.apps.UserauthConfig',
 
     'crispy_forms',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
