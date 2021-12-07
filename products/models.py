@@ -13,17 +13,16 @@ class Category(models.Model):
     def __str__(self):
         return f'{self.name}'
 
-# Create your models here.
+
 class Product(models.Model):
-    # COST = (
-    #     ('5000-10000', '5000-10000'),
-    # )
+    AVAILABILITY = (
+        ('Available', 'Available'),
+        ('Not_Available', 'Not_Available'),
+    )
     STATUS = (
         ('Pending', 'Pending'), ('Collected', 'Collected'),
-        ('Rejected', 'Rejected')
     )
 
-    # id = models.AutoField(primary_key=True)
     user = models.ForeignKey(UsersAccount, on_delete=models.DO_NOTHING)
     product = models.ForeignKey(Category, on_delete=models.DO_NOTHING, null=True, blank=True)
     product_image = models.ImageField(upload_to='media')
@@ -34,6 +33,8 @@ class Product(models.Model):
     cost = models.CharField(max_length=20)
     other = models.CharField(max_length=50, null=True, blank=True)
     status = models.CharField(max_length=10, choices=STATUS, default='Pending')
+    availability = models.CharField(max_length=20, choices=AVAILABILITY, default='Available', null=True)
+    payed = models.BooleanField(default=False, null=True)
 
 
 class Address(models.Model):
