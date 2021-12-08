@@ -15,6 +15,7 @@ from products.models import Product
 from userauth.tokens import account_activation_token
 from .serializers import RegisterSerializer, UserLoginSerializer, CreateProductSerializer
 import jwt
+from jwt import PyJWT
 
 
 class RegisterUserAPi(GenericAPIView):
@@ -34,7 +35,15 @@ class RegisterUserAPi(GenericAPIView):
                     'token': account_activation_token.make_token(user),
                 })
             user.email_user(subject=subject, message=message)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+            return Response(
+                {
+                    'data': serializer.data,
+                    'status': status.HTTP_201_CREATED,
+                    "message": "Account Created Successfully",
+                }
+
+            )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -64,27 +73,30 @@ class CreateProductApiView(CreateAPIView):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-        # dat = form.cleaned_data['collected_date']
-        # device = form.cleaned_data['product']
-        #
+        print(serializer.data['collected_date'])
+
+        dat = serializer.data['collected_date']
+        device = serializer.data['product']
+
         # template = render_to_string('send_email.html', {'name': request.user, 'date': dat})
-        # template2 = render_to_string('send_email2.html', {'name': request.user, 'device': device, 'date': dat})
+        template = render_to_string('send_email.html', {'date': dat})
+        template2 = render_to_string('send_email2.html', {'device': device, 'date': dat})
         #
-        # email1 = (
-        #     ' Thanks for adding your product',
-        #     template,
-        #     settings.EMAIL_HOST_USER,
-        #     [request.user.email, 'iradukunda.ta@gmail.com'],
-        # )
-        # email2 = (
-        #     ' Thanks for adding your product',
-        #     template2,
-        #     settings.EMAIL_HOST_USER,
-        #     ['iradukunda.ta@gmail.com'],
-        # )
-        # send_mass_mail((email1, email2), fail_silently=False)
-        # # email.fail_silently = False
-        # # email.send()
+        email1 = (
+            ' Thanks for adding your product',
+            template,
+            settings.EMAIL_HOST_USER,
+            # [request.user.email, 'iradukunda.ta@gmail.com'],
+            ['iradukunda.ta@gmail.com'],
+        )
+        email2 = (
+            ' Thanks for adding your product',
+            template2,
+            settings.EMAIL_HOST_USER,
+            ['iradukunda.ta@gmail.com'],
+        )
+        send_mass_mail((email1, email2), fail_silently=False)
+
         # return redirect('view_product')
 
     def get_queryset(self):
