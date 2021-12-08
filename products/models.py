@@ -27,7 +27,7 @@ class Product(models.Model):
     product = models.ForeignKey(Category, on_delete=models.DO_NOTHING, null=True, blank=True)
     product_image = models.ImageField(upload_to='media')
     description = models.TextField()
-    created_date = models.DateField(auto_now=True)
+    created_date = models.DateField(auto_now_add=True)
     collected_date = models.DateField(default=timezone.now)
     quantity = models.IntegerField()
     cost = models.CharField(max_length=20)
@@ -35,6 +35,9 @@ class Product(models.Model):
     status = models.CharField(max_length=10, choices=STATUS, default='Pending')
     availability = models.CharField(max_length=20, choices=AVAILABILITY, default='Available', null=True)
     payed = models.BooleanField(default=False, null=True)
+
+    def __str__(self):
+        return f'{self.product}'
 
 
 class Address(models.Model):
@@ -46,3 +49,6 @@ class Address(models.Model):
     village = models.CharField(max_length=50)
     road_number = models.CharField(max_length=10)
     house_number = models.CharField(max_length=10)
+
+    def __str__(self):
+        return f'{self.province}'

@@ -3,7 +3,7 @@
 {% load static %}
 <html lang="en">
   <head>
-    <meta name="description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
+{#    <meta name="description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">#}
     <!-- Twitter meta-->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:site" content="@pratikborsadiya">
@@ -26,14 +26,14 @@
   </head>
   <body class="app sidebar-mini">
     <!-- Navbar-->
-    <header class="app-header"><a class="app-header__logo" href="{% url 'dashboard' %}">FabWest</a>
+    <header class="app-header"><a class="app-header__logo" href="{% url 'dashboard' %}">FabWaste</a>
       <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
       <!-- Navbar Right Menu-->
       <ul class="app-nav">
-        <li class="app-search">
-          <input class="app-search__input" type="search" placeholder="Search">
-          <button class="app-search__button"><i class="fa fa-search"></i></button>
-        </li>
+{#        <li class="app-search">#}
+{#          <input class="app-search__input" type="search" placeholder="Search">#}
+{#          <button class="app-search__button"><i class="fa fa-search"></i></button>#}
+{#        </li>#}
         <!--Notification Menu-->
 {#        {% include 'dashboard/includes/notification.html' %}#}
         <!-- User Menu-->
@@ -66,7 +66,7 @@
     <script type="text/javascript" src="{% static 'js/plugins/chart.js' %}"></script>
     <script type="text/javascript">
       var data = {
-      	labels: ["January", "February", "March", "April", "May"],
+      	labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October" , "November", "December"],
       	datasets: [
       		{
       			label: "My First dataset",
@@ -76,7 +76,7 @@
       			pointStrokeColor: "#fff",
       			pointHighlightFill: "#fff",
       			pointHighlightStroke: "rgba(220,220,220,1)",
-      			data: [65, 59, 80, 81, 56]
+      			data: [65, 59, 80, 81, 56, 65, 59, 80, 81, 56, 40, 23]
       		},
       		{
       			label: "My Second dataset",
@@ -86,23 +86,35 @@
       			pointStrokeColor: "#fff",
       			pointHighlightFill: "#fff",
       			pointHighlightStroke: "rgba(151,187,205,1)",
-      			data: [28, 48, 40, 19, 86]
+      			data: [28, 48, 40, 19, 86, 28, 48, 40, 19, 86, 30, 59]
       		}
       	]
       };
       var pdata = [
       	{
-      		value: 300,
-      		color: "#46BFBD",
+      		value: 30,
+      		color: "#311B92",
+      		highlight: "#311B92",
+      		label: "Phone"
+      	},
+      	{
+      		value: 50,
+      		color:"#00695C",
+      		highlight: "#00695C",
+      		label: "Television"
+      	},
+        {
+      		value: 30,
+      		color: "#46AFBC",
       		highlight: "#5AD3D1",
-      		label: "Complete"
+      		label: "Radio"
       	},
       	{
       		value: 50,
       		color:"#F7464A",
       		highlight: "#FF5A5E",
-      		label: "In-Progress"
-      	}
+      		label: "Cables"
+      	},
       ]
 
       {#var ctxl = $("#lineChartDemo").get(0).getContext("2d");#}

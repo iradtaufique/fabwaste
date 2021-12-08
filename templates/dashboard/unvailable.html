@@ -1,19 +1,13 @@
 {% extends 'dashboard/dashboard.html' %}
-
 {% load static %}
 {% block dashboard_content %}
 
     <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-th-list"></i>Un available devices</h1>
-          <p>Fab-Waste</p>
+          <h1><i class="fa fa-th-list"></i>UnAvailable Devices</h1>
+          <p>Fab|Waste</p>
         </div>
-        <ul class="app-breadcrumb breadcrumb side">
-          <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item">Tables</li>
-          <li class="breadcrumb-item active"><a href="#">Data Table</a></li>
-        </ul>
       </div>
       <div class="row">
         <div class="col-md-12">
@@ -23,31 +17,29 @@
                 <table class="table table-hover table-bordered" id="sampleTable">
                   <thead>
                     <tr>
-                      <th>Name</th>
-                      <th>Position</th>
-                      <th>Office</th>
-                      <th>Age</th>
-                      <th>Start date</th>
-                      <th>Salary</th>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Owner</th>
+                      <th>Created Date</th>
+                      <th>Collected Date</th>
+                      <th>View</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Tiger Nixon</td>
-                      <td>System Architect</td>
-                      <td>Edinburgh</td>
-                      <td>61</td>
-                      <td>2011/04/25</td>
-                      <td>$320,800</td>
-                    </tr>
-                    <tr>
-                      <td>Garrett Winters</td>
-                      <td>Accountant</td>
-                      <td>Tokyo</td>
-                      <td>63</td>
-                      <td>2011/07/25</td>
-                      <td>$170,750</td>
-                    </tr>
+                    {% for device in devices %}
+                        <tr>
+                          <td>{{ device.product}}</td>
+                          <td>{{ device.quantity}}</td>
+                          <td>{{ device.user.full_name}}</td>
+                          <td>{{ device.created_date}}</td>
+                          <td>{{ device.collected_date}}</td>
+                          <td>
+                            <div class="text-center">
+                              <a href=""><ion-icon name="eye-outline" style="font-size: large"></ion-icon></a>
+                            </div>
+                          </td>
+                        </tr>
+                    {% endfor %}
                   </tbody>
                 </table>
               </div>
@@ -57,9 +49,11 @@
       </div>
     </main>
 
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
    <!-- Essential javascripts for application to work-->
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-
     <!-- Data table plugin-->
     <script type="text/javascript" src="{% static 'js/plugins/jquery.dataTables.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/plugins/dataTables.bootstrap.min.js' %}"></script>
