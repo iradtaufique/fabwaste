@@ -10,10 +10,11 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView, GenericAPIView, ListAPIView
+from userauth.models import UsersAccount
 
 from products.models import Product
 from userauth.tokens import account_activation_token
-from .serializers import RegisterSerializer, UserLoginSerializer, CreateProductSerializer
+from .serializers import RegisterSerializer, UserLoginSerializer, CreateProductSerializer, ListProductSerializer
 import jwt
 from jwt import PyJWT
 
@@ -106,9 +107,18 @@ class CreateProductApiView(CreateAPIView):
         return Product.objects.filter(user=self.request.user)
 
 
+# view for listing devices
 class ListDevicesApiView(ListAPIView):
-    serializer_class = CreateProductSerializer
+    serializer_class = ListProductSerializer
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         return Product.objects.filter(user=self.request.user)
+
+
+class ListUsersApiView(ListAPIView):
+    serializer_class = RegisterSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        return UsersAccount.objects.all()

@@ -2,9 +2,10 @@ from rest_framework import serializers
 from userauth.models import UsersAccount
 from products.models import Product
 
+
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(min_length=8, label='Password',
-                                     style={'input_type': 'password', 'placeholder': 'Type Password'})
+                                     style={'input_type': 'password', 'placeholder': 'Type Password'}, write_only=True)
 
     class Meta:
         model = UsersAccount
@@ -37,5 +38,13 @@ class CreateProductSerializer(serializers.ModelSerializer):
         fields = [
             'product', 'product_image', 'description',
             'quantity', 'cost', 'other', 'collected_date',
-            ]
+        ]
 
+
+class ListProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = [
+            'id', 'product', 'product_image', 'description', 'user',
+            'quantity', 'cost', 'other', 'collected_date',
+        ]
