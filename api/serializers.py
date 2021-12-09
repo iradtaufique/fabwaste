@@ -36,6 +36,6 @@ class CreateProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = [
             'product', 'product_image', 'description',
-            'quantity', 'cost', 'other', 'collected_date', 'product'
+            'quantity', 'cost', 'other', 'collected_date',
             ]
 

@@ -1,0 +1,1 @@
+[{"model": "products.category", "pk": 1, "fields": {"name": "Phone", "cost": "500-1000"}}, {"model": "products.category", "pk": 2, "fields": {"name": "Television", "cost": "10000-20000"}}, {"model": "products.category", "pk": 3, "fields": {"name": "Radio", "cost": "1000-5000"}}]

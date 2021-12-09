@@ -13,71 +13,102 @@
         </ul>
       </div>
 
-    <div class="row">
-            <div class="col-md-6 col-lg-3">
-              <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
-                <div class="info">
-                  <h4>Users</h4>
-                  <p><b>{{ total_users }}</b></p>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-6 col-lg-3">
-              <div class="widget-small warning coloured-icon"><i class="icon fa fa-files-o fa-3x"></i>
-                <div class="info">
-                  <h4>Payed</h4>
-                  <p><b>{{ total_payed_devices }}</b></p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-              <div class="widget-small danger coloured-icon"><i class="icon fa fa-star fa-3x"></i>
-                <div class="info">
-                  <h4>Unpayed Devices</h4>
-                  <p><b>{{ total_unpayed_devices }}</b></p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-              <div class="widget-small info coloured-icon"><i class="icon fa fa-thumbs-o-up fa-3x"></i>
-                <div class="info">
-                  <h4>Total Device</h4>
-                  <p><b>{{ total_collected_devices }}</b></p>
-                </div>
-              </div>
+      {% if request.user.is_superuser %}
+        {# ============ Scripts for displaying cards==============  #}
+        <div class="row">
+        <div class="col-md-6 col-lg-3">
+          <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
+            <div class="info">
+              <h4>Users</h4>
+              <p><b>{{ total_users }}</b></p>
             </div>
           </div>
-    <div class="row">
+        </div>
 
-            <div class="col-md-6">
-              <div class="tile">
-                <h3 class="tile-title">Payed Devices</h3>
-                <div class="embed-responsive embed-responsive-16by9">
-                  <canvas class="embed-responsive-item" id="pieChartDemo"></canvas>
-                </div>
-              </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="widget-small warning coloured-icon"><i class="icon fa fa-files-o fa-3x"></i>
+            <div class="info">
+              <h4>Payed</h4>
+              <p><b>{{ total_payed_devices }}</b></p>
             </div>
-
-            <div class="col-md-6">
-              <div class="tile">
-                <h3 class="tile-title">Collected Devices</h3>
-                <div class="embed-responsive embed-responsive-16by9">
-                  <canvas class="embed-responsive-item" id="barChartDemo"></canvas>
-                </div>
-              </div>
-            </div>
-
-{#            <div class="col-md-6">#}
-{#              <div class="tile">#}
-{#                <h3 class="tile-title">Collected Devices</h3>#}
-{#                <div class="embed-responsive embed-responsive-16by9">#}
-{#                  <canvas class="embed-responsive-item" id="lineChartDemo"></canvas>#}
-{#                </div>#}
-{#              </div>#}
-{#            </div>#}
-
           </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="widget-small danger coloured-icon"><i class="icon fa fa-star fa-3x"></i>
+            <div class="info">
+              <h4>Unpayed Devices</h4>
+              <p><b>{{ total_unpayed_devices }}</b></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="widget-small info coloured-icon"><i class="icon fa fa-thumbs-o-up fa-3x"></i>
+            <div class="info">
+              <h4>Total Device</h4>
+              <p><b>{{ total_collected_devices }}</b></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        {# ============ Scripts for displaying charts==============  #}
+        <div class="row">
+        <div class="col-md-6">
+          <div class="tile">
+            <h3 class="tile-title">Payed Devices</h3>
+            <div class="embed-responsive embed-responsive-16by9">
+              <canvas class="embed-responsive-item" id="pieChartDemo"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="tile">
+            <h3 class="tile-title">Collected Devices</h3>
+            <div class="embed-responsive embed-responsive-16by9">
+              <canvas class="embed-responsive-item" id="barChartDemo"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% elif request.user.is_house_hold %}
+        <div class="row">
+        <div class="col-md-6 col-lg-3">
+          <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
+            <div class="info">
+              <h4>Devices</h4>
+              <p><b>10</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="widget-small warning coloured-icon"><i class="icon fa fa-files-o fa-3x"></i>
+            <div class="info">
+              <h4>Earned Money</h4>
+              <p><b>RF 2000</b></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="widget-small danger coloured-icon"><i class="icon fa fa-star fa-3x"></i>
+            <div class="info">
+              <h4>Picked Devices</h4>
+              <p><b>50</b></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="widget-small info coloured-icon"><i class="icon fa fa-thumbs-o-up fa-3x"></i>
+            <div class="info">
+              <h4>Sold Device</h4>
+              <p><b>12</b></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
     </main>
 
 {% endblock %}

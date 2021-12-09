@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from userauth.models import UsersAccount
 from products.models import Product, Category, Address
@@ -8,6 +9,7 @@ def dashboard(request):
     return render(request, 'dashboard/dashboard.html')
 
 
+@login_required
 def index(request):
     total_users = UsersAccount.objects.all().exclude(is_superuser=True).count()
     total_collected_devices = Product.objects.filter(status='Collected').count()
@@ -48,7 +50,6 @@ def un_available_devices(request):
 
 
 """available devices to be collected"""
-
 
 def available_devices(request):
     devices = Product.objects.filter(availability='Available').exclude(status='Collected')

@@ -28,13 +28,13 @@ class Product(models.Model):
     product_image = models.ImageField(upload_to='media')
     description = models.TextField()
     created_date = models.DateField(auto_now_add=True)
-    collected_date = models.DateField(default=timezone.now)
+    collected_date = models.DateField()
     quantity = models.IntegerField()
     cost = models.CharField(max_length=20)
     other = models.CharField(max_length=50, null=True, blank=True)
     status = models.CharField(max_length=10, choices=STATUS, default='Pending')
-    availability = models.CharField(max_length=20, choices=AVAILABILITY, default='Available', null=True)
-    payed = models.BooleanField(default=False, null=True)
+    availability = models.CharField(max_length=20, choices=AVAILABILITY, default='Available')
+    payed = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.product}'

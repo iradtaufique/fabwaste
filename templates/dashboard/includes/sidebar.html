@@ -3,11 +3,12 @@
     <aside class="app-sidebar">
       <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="{% static 'images/profi.png' %}" alt="User Image" width="60" height="60">
         <div>
-          <p class="app-sidebar__user-name">John Doe</p>
-          <p class="app-sidebar__user-designation">Fab|Waste Admin</p>
+          <p class="app-sidebar__user-name">{{ request.user.full_name }}</p>
+          <p class="app-sidebar__user-designation mt-1">Fab|Waste</p>
         </div>
       </div>
-      <ul class="app-menu">
+      {% if request.user.is_superuser %}
+          <ul class="app-menu">
         <li><a class="app-menu__item active" href="{% url 'dashboard' %}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Categories</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
@@ -30,8 +31,18 @@
             <li><a class="treeview-item" href="{% url 'list_user' %}"><i class="icon fa fa-circle-o"></i>All Users</a></li>
           </ul>
         </li>
+      </ul>
 
-
+      {% elif request.user.is_house_hold%}
+       <ul class="app-menu">
+        <li><a class="app-menu__item active" href="{% url 'dashboard' %}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
+        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Device</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a class="treeview-item" href=""><i class="icon fa fa-circle-o"></i>Add Device</a></li>
+          </ul>
+        </li>
+{#        <li><a class="app-menu__item" href="charts.html"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Charts</span></a></li>#}
 
       </ul>
+      {% endif %}
     </aside>
