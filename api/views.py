@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.generics import CreateAPIView, GenericAPIView
+from rest_framework.generics import CreateAPIView, GenericAPIView, ListAPIView
 
 from products.models import Product
 from userauth.tokens import account_activation_token
@@ -28,7 +28,7 @@ class RegisterUserAPi(GenericAPIView):
             current_site = get_current_site(request)
             subject = 'Activate Account'
             message = render_to_string(
-                'registration/account_activation _email.html', {
+                'registration/account_activation_email.html', {
                     'user': user,
                     'domain': current_site.domain,
                     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
@@ -48,12 +48,14 @@ class RegisterUserAPi(GenericAPIView):
 
 
 """api view for login a user"""
+
+
 class UserLoginApiView(GenericAPIView):
     serializer_class = UserLoginSerializer
 
     def post(self, request):
         data = request.data
-        email = data.get('email',)
+        email = data.get('email', )
         password = data.get('password', )
         user = authenticate(email=email, password=password)
 
@@ -66,6 +68,7 @@ class UserLoginApiView(GenericAPIView):
         return Response({'details': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
+# ====== view for adding device ========
 class CreateProductApiView(CreateAPIView):
     serializer_class = CreateProductSerializer
     permission_classes = [IsAuthenticated]
@@ -98,6 +101,14 @@ class CreateProductApiView(CreateAPIView):
         send_mass_mail((email1, email2), fail_silently=False)
 
         # return redirect('view_product')
+
+    def get_queryset(self):
+        return Product.objects.filter(user=self.request.user)
+
+
+class ListDevicesApiView(ListAPIView):
+    serializer_class = CreateProductSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         return Product.objects.filter(user=self.request.user)
