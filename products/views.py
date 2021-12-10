@@ -24,7 +24,7 @@ def addProduct(request):
             address.save()
 
             dat = form.cleaned_data['collected_date']
-            device = form.cleaned_data['product']
+            device = form.cleaned_data['product_name']
 
             template = render_to_string('send_email.html', {'name': request.user, 'date': dat})
             template2 = render_to_string('send_email2.html', {'name': request.user, 'device': device, 'date': dat})

@@ -10,18 +10,56 @@
       </div>
 
     <div class="row">
-        <div class="col-2">
+        <div class="col-sm-4">
             <div class="tile">
                 <h5 class="text-center">Device Image</h5>
-                <img src="{{ details.product_image.url }}" alt="" width="200" height="200">
+                <hr>
+                <div class="text-center">
+                    <img src="{{ details.product_image.url }}" alt="" width="300" height="300">
+                </div>
             </div>
         </div>
-        <div class="col-5">
+        <div class="col-sm-8">
             <div class="tile">
-                <h1>hello</h1>
-            </div>
+                <h5 class="text-center">Device Information</h5>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-form-label" for="inputDefault">Product Name</label>
+                            <p class="form-control">{{ details.product_name }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-form-label" for="inputDefault">Created Date</label>
+                            <p class="form-control">{{ details.created_date }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-form-label" for="inputDefault">Product Name</label>
+                            <p class="form-control">{{ details.product_name }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-form-label" for="inputDefault">Product Name</label>
+                            <p class="form-control">{{ details.product_name }}</p>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="exampleTextarea">Example textarea</label>
+                            <textarea class="form-control" id="exampleTextarea" rows="3">{{ details.description }}</textarea>
+                        </div>
+                    </div>
+                </div>
+
         </div>
-        <div class="col-5">
+        <div class="col-sm-4">
             <div class="tile">
                 <h1>hello</h1>
             </div>

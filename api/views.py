@@ -72,7 +72,7 @@ class UserLoginApiView(GenericAPIView):
 # ====== view for adding device ========
 class CreateProductApiView(CreateAPIView):
     serializer_class = CreateProductSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
