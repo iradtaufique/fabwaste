@@ -110,7 +110,7 @@ class CreateProductApiView(CreateAPIView):
 # view for listing devices
 class ListDevicesApiView(ListAPIView):
     serializer_class = ListProductSerializer
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         return Product.objects.filter(user=self.request.user)
@@ -118,7 +118,7 @@ class ListDevicesApiView(ListAPIView):
 
 class ListUsersApiView(ListAPIView):
     serializer_class = RegisterSerializer
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         return UsersAccount.objects.all()
