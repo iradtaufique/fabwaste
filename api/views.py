@@ -25,17 +25,18 @@ class RegisterUserAPi(GenericAPIView):
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
-            user = serializer.save()
-            current_site = get_current_site(request)
-            subject = 'Activate Account'
-            message = render_to_string(
-                'registration/account_activation_email.html', {
-                    'user': user,
-                    'domain': current_site.domain,
-                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                    'token': account_activation_token.make_token(user),
-                })
-            user.email_user(subject=subject, message=message)
+            serializer.save(is_active=True, is_house_hold=True)
+            # user = serializer.save(is_active=True, is_house_hold=True)
+            # current_site = get_current_site(request)
+            # subject = 'Activate Account'
+            # message = render_to_string(
+            #     'registration/account_activation_email.html', {
+            #         'user': user,
+            #         'domain': current_site.domain,
+            #         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            #         'token': account_activation_token.make_token(user),
+            #     })
+            # user.email_user(subject=subject, message=message)
 
             return Response(
                 {

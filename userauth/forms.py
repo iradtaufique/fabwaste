@@ -28,12 +28,12 @@ class RegisterUserForm(ModelForm):
             raise forms.ValidationError('Email olready Taken')
         return email
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['full_name'].widget.attrs.update({'class': 'form-control mb-3', 'placeholder': 'Your Full Name'})
-        self.fields['email'].widget.attrs.update({'class': 'form-control mb-3', 'name': 'email', 'placeholder': 'Email'})
-        self.fields['password'].widget.attrs.update({'class': 'form-control mb-3', 'placeholder': 'Password'})
-        self.fields['password2'].widget.attrs.update({'class': 'form-control mb-3', 'placeholder': 'Repeat Password'})
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['full_name'].widget.attrs.update({'class': 'form-control mb-3', 'placeholder': 'Your Full Name'})
+    #     self.fields['email'].widget.attrs.update({'class': 'form-control mb-3', 'name': 'email', 'placeholder': 'Email'})
+    #     self.fields['password'].widget.attrs.update({'class': 'form-control mb-3', 'placeholder': 'Password'})
+    #     self.fields['password2'].widget.attrs.update({'class': 'form-control mb-3', 'placeholder': 'Repeat Password'})
 
 
 class UserLoginForm(AuthenticationForm):

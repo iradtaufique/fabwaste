@@ -52,9 +52,7 @@ def addProduct(request):
 
 
 def houseHoldProducts(request):
-    products = Product.objects.all().filter(user=request.user)
-    if request.user.is_house_hold:
-        products = Product.objects.all()
+    products = Product.objects.filter(user=request.user)
     return render(request, 'houseHoldProducts.html', {'products': products})
 
 
