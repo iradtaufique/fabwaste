@@ -1,69 +1,83 @@
-{%extends 'base.html'%}
 
-{% block content %}
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Login - Vali Admin</title>
+  </head>
+  <body>
+    <section class="material-half-bg">
+      <div class="cover"></div>
+    </section>
+    <section class="login-content">
+      <div class="logo">
+        <h1>Fab|Waste</h1>
+      </div>
 
-<style>
-    .container-fluid {
-        max-width: 100%;
-    }
-
-    .account-form input {
-        border: 2px solid #ccc;
-        height: calc(2em + .75rem + 2px);
-    }
-
-    .account-form input:focus {
-        border-color: #1497ff;
-        box-shadow: none;
-    }
-</style>
-
-
-<div class="container-fluid">
-    <div class="row no-gutter">
-        <div class="col-md-12">
-            <div class="login d-flex align-items-center py-5">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-lg-6  mx-auto">
-                            <form class="account-form p-4 rounded" action="" method="post">
-
-                                {% csrf_token %}
-                                <h3 class="mb-4">Sign In</h3>
-
-                                {% if form.errors %}
-                                <div class="alert alert-primary" role="alert">
-                                    Error: Username or Password not correct!
-                                </div>
-                                {% endif %}
-
-                                <label class="form-label">{{ form.username.label}}</label>
-                                {{ form.username}}
-
-                                <label class="form-label">{{ form.password.label}}</label>
-                                {{ form.password}}
-                                <div class="d-grid gap-2">
-                                    <input type="hidden" name="next" value="{{ next }}">
-                                    <button class="btn btn-primary py-2 mb-4 mt-5 fw-bold" type="submit" value="Log-in">Sign in
-                                    </button>
-                                </div>
-                                <p class="text-center pb-3">
-                                    <a href="">Create an account</a>
-                                </p>
-                            </form>
-                            <p class="small text-center pt-4">
-                                {% comment %} <a href="{% url "password_reset" %}">Forgotten Password?</a> {% endcomment %}
-                            </p>
-                            <p class="small text-center">
-                                {% comment %} <a href="{% url "accounts:register" %}">Help Center?</a> {% endcomment %}
-                            </p>
-
-                        </div>
-                    </div>
-                </div>
+        {% if form.errors %}
+            <div class="alert alert-info" role="alert">
+                Username or Password not correct!
             </div>
-        </div>
-    </div>
-</div>
+        {% endif %}
+      <div class="login-box">
+        <form class="login-form" method="post">
+            {% csrf_token %}
+          <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>
+          <div class="form-group">
+            <label class="control-label">{{ form.username.label|upper}}</label>
+            {{ form.username}}
+          </div>
+          <div class="form-group">
+            <label class="control-label">{{ form.password.label|upper }}</label>
+            {{ form.password }}
+          </div>
+          <div class="form-group">
+            <div class="utility">
+              <p class="semibold-text mb-2"><a href="#" data-toggle="flip">Forgot Password ?</a></p>
+            </div>
+          </div>
+          <div class="form-group btn-container">
+            <button class="btn btn-primary btn-block"><i class="fa fa-sign-in fa-lg fa-fw"></i>SIGN IN</button>
+          </div>
+        </form>
+      </div>
+    </section>
+    <!-- Essential javascripts for application to work-->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="{% static 'js/plugins/pace.min.js' %}"></script>
+    <script type="text/javascript">
+      // Login Page Flipbox control
+      $('.login-content [data-toggle="flip"]').click(function() {
+      	$('.login-box').toggleClass('flipped');
+      	return false;
+      });
+    </script>
+  </body>
+</html>
 
-{%endblock%}
+
+
+
+
+
+
+
+
+{#======================================================#}
+
+
+
+
+
+

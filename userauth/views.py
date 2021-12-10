@@ -14,8 +14,8 @@ from .tokens import account_activation_token
 
 
 def home(request):
-    
     return render(request, 'base.html')
+
 
 def register(request):
     form = RegisterUserForm()
