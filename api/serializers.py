@@ -36,8 +36,8 @@ class CreateProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'product', 'product_image', 'description',
-            'quantity', 'cost', 'other', 'collected_date',
+            'product_name', 'product_image', 'description',
+            'quantity', 'price', 'other', 'collected_date',
         ]
 
 
@@ -45,6 +45,6 @@ class ListProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'id', 'product', 'product_image', 'description', 'user',
-            'quantity', 'cost', 'other', 'collected_date',
+            'id', 'product_name', 'product_image', 'description', 'user',
+            'quantity', 'price', 'other', 'collected_date',
         ]

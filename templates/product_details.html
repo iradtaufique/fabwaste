@@ -1,0 +1,33 @@
+{% extends 'dashboard/dashboard.html' %}
+{% load static %}
+{% block dashboard_content %}
+    <main class="app-content">
+      <div class="app-title">
+        <div>
+          <h1><i class="fa fa-th-list"></i>Devices Details</h1>
+          <p>Fab|Waste</p>
+        </div>
+      </div>
+
+    <div class="row">
+        <div class="col-2">
+            <div class="tile">
+                <h5 class="text-center">Device Image</h5>
+                <img src="{{ details.product_image.url }}" alt="" width="200" height="200">
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="tile">
+                <h1>hello</h1>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="tile">
+                <h1>hello</h1>
+            </div>
+        </div>
+    </div>
+
+
+    </main>
+{% endblock %}

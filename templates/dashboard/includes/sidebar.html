@@ -7,6 +7,8 @@
           <p class="app-sidebar__user-designation mt-1">Fab|Waste</p>
         </div>
       </div>
+
+    {#================== snippets for displaying sidebar on Admin ======================================#}
       {% if request.user.is_superuser %}
           <ul class="app-menu">
         <li><a class="app-menu__item active" href="{% url 'dashboard' %}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
@@ -33,12 +35,14 @@
         </li>
       </ul>
 
+     {#================== snippets for displaying sidebar on household ======================================#}
       {% elif request.user.is_house_hold%}
        <ul class="app-menu">
         <li><a class="app-menu__item active" href="{% url 'dashboard' %}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Device</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
-            <li><a class="treeview-item" href=""><i class="icon fa fa-circle-o"></i>Add Device</a></li>
+            <li><a class="treeview-item" href="{% url 'add_product' %}"><i class="icon fa fa-circle-o"></i>Add Device</a></li>
+            <li><a class="treeview-item" href="{% url 'view_product' %}"><i class="icon fa fa-circle-o"></i>View Device</a></li>
           </ul>
         </li>
 {#        <li><a class="app-menu__item" href="charts.html"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Charts</span></a></li>#}

@@ -80,26 +80,26 @@ class CreateProductApiView(CreateAPIView):
         print(serializer.data['collected_date'])
 
         dat = serializer.data['collected_date']
-        device = serializer.data['product']
+        device = serializer.data['product_name']
 
         # template = render_to_string('send_email.html', {'name': request.user, 'date': dat})
-        template = render_to_string('send_email.html', {'date': dat})
-        template2 = render_to_string('send_email2.html', {'device': device, 'date': dat})
+        # template = render_to_string('send_email.html', {'date': dat})
+        # template2 = render_to_string('send_email2.html', {'device': device, 'date': dat})
         #
-        email1 = (
-            ' Thanks for adding your product',
-            template,
-            settings.EMAIL_HOST_USER,
-            # [request.user.email, 'iradukunda.ta@gmail.com'],
-            ['iradukunda.ta@gmail.com'],
-        )
-        email2 = (
-            ' Thanks for adding your product',
-            template2,
-            settings.EMAIL_HOST_USER,
-            ['iradukunda.ta@gmail.com'],
-        )
-        send_mass_mail((email1, email2), fail_silently=False)
+        # email1 = (
+        #     ' Thanks for adding your product',
+        #     template,
+        #     settings.EMAIL_HOST_USER,
+        #     # [request.user.email, 'iradukunda.ta@gmail.com'],
+        #     ['iradukunda.ta@gmail.com'],
+        # )
+        # email2 = (
+        #     ' Thanks for adding your product',
+        #     template2,
+        #     settings.EMAIL_HOST_USER,
+        #     ['iradukunda.ta@gmail.com'],
+        # )
+        # send_mass_mail((email1, email2), fail_silently=False)
 
         # return redirect('view_product')
 

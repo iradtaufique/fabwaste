@@ -8,8 +8,8 @@ class AddProductForm(ModelForm):
     class Meta:
         model = Product
         fields = [
-            'product', 'product_image', 'description',
-            'quantity', 'cost', 'other', 'user', 'collected_date'
+            'product_name', 'product_image', 'description',
+            'quantity', 'price', 'other', 'user', 'collected_date'
             ]
 
     def __init__(self, *args, **kwargs):
@@ -23,7 +23,7 @@ class AddAddressForm(ModelForm):
     class Meta:
         model = Address
         fields = [
-            'province', 'sector', 'cell', 'district',
+            'province', 'district', 'sector', 'cell',
             'village', 'road_number', 'house_number'
             ]
 

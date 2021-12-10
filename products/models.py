@@ -24,20 +24,21 @@ class Product(models.Model):
     )
 
     user = models.ForeignKey(UsersAccount, on_delete=models.DO_NOTHING)
-    product = models.ForeignKey(Category, on_delete=models.DO_NOTHING, null=True, blank=True)
+    # product = models.ForeignKey(Category, on_delete=models.DO_NOTHING, null=True, blank=True)
+    product_name = models.CharField(max_length=100, null=True, blank=True)
     product_image = models.ImageField(upload_to='media')
     description = models.TextField()
     created_date = models.DateField(auto_now_add=True)
     collected_date = models.DateField()
     quantity = models.IntegerField()
-    cost = models.CharField(max_length=20)
+    price = models.CharField(max_length=20)
     other = models.CharField(max_length=50, null=True, blank=True)
     status = models.CharField(max_length=10, choices=STATUS, default='Pending')
     availability = models.CharField(max_length=20, choices=AVAILABILITY, default='Available')
     payed = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.product}'
+        return f'{self.product_name}'
 
 
 class Address(models.Model):

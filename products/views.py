@@ -10,7 +10,6 @@ from django.conf import settings
 
 
 def addProduct(request):
-
     form = AddProductForm(request=request)
     address_form = AddAddressForm()
     if request.method == 'POST':
@@ -50,10 +49,13 @@ def addProduct(request):
 
 
 """view for viewing the products based on user"""
+
+
 def houseHoldProducts(request):
-    products = Product.objects.filter(user=request.user)
-    if request.user.is_staff:
-        products = Product.objects.all()
+    # products = Product.objects.all()
+    products = Product.objects.all().filter(user=request.user)
+    # if request.user.is_house_hold:
+    #     products = Product.objects.all()
     return render(request, 'houseHoldProducts.html', {'products': products})
 
 
@@ -73,6 +75,7 @@ def updateHouseHoldProducts(request, id):
 
 """view for viewing the products based on their status"""
 
+
 def productStatus(request):
     pending = Product.objects.filter(status='Pending')
     rejected = Product.objects.filter(status='Rejected')
@@ -88,6 +91,8 @@ def productStatus(request):
 
 
 """view for viewing the products details on Admin side"""
+
+
 def productUpdate(request, id):
     details = get_object_or_404(Product, id=id)
     address = get_object_or_404(Address, id=id)
@@ -95,6 +100,14 @@ def productUpdate(request, id):
     return render(request, 'productDetails.html', context)
 
 
-
 def changeProductToCollected(request, id):
     product = get_object_or_404(Product, id=id)
+
+
+"""view for viewing the products details on Admin side"""
+
+
+def device_details(request, pk):
+    details = Product.objects.get(pk=pk)
+    context = {'details': details}
+    return render(request, 'product_details.html', context)

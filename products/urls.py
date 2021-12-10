@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import addProduct, houseHoldProducts, updateHouseHoldProducts, productStatus,\
-            productUpdate
+            productUpdate, device_details
 
 
 urlpatterns = [
@@ -10,6 +10,7 @@ urlpatterns = [
     path('pending-product', productStatus, name='pending'),
     path('rejected-product', productStatus, name='rejected'),
     path('collected-product', productStatus, name='collected'),
-    path('details/<int:id>/', productUpdate, name='details'),
+    path('update/<int:id>/', productUpdate, name='product_update'),
+    path('device-details/<int:pk>/', device_details, name='device_details'),
 
 ]

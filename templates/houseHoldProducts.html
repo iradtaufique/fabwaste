@@ -1,30 +1,65 @@
-{% extends 'base.html' %}
-{% block content %}
-<div class="container">
-    <h1>your Products</h1>
+{% extends 'dashboard/dashboard.html' %}
+{% load static %}
+{% block dashboard_content %}
 
-    {% for product in products %}
-
-    <div class="card mb-3" style="max-width: 540px;">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <img src="{{ product.product_image.url }}" class="img-fluid rounded-start" alt="image for {{ product.product }}">
+    <main class="app-content">
+      <div class="app-title">
+        <div>
+          <h1><i class="fa fa-th-list"></i>Your Devices</h1>
+          <p>Fab|Waste</p>
         </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title"><b>P Name:</b> {{ product.product }}</h5>
-            <p class="card-text"><b>Description:</b> {{ product.description }}</p>
-            <p class="card-text"><b>P Cost:</b> {{ product.cost }}</p>
-            <p class="card-text"><b>P QTY:</b> {{ product.quantity }}</p>
-            <p class="card-text"><small class="text-muted">Created {{ product.created_date}}</small></p>
-              {% if not request.user.is_staff %}
-                <a href="{% url 'update_product' product.id %}" class="btn btn-sm btn-info">update</a>
-              {% endif %}
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="tile">
+            <div class="tile-body">
+              <div class="table-responsive">
+                <table class="table table-hover table-bordered" id="sampleTable">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Cost</th>
+                      <th>Created Date</th>
+                      <th>Collected Date</th>
+                      <th>View</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for device in products %}
+                        <tr>
+                          <td>{{ device.id}}</td>
+                          <td>{{ device.product}}</td>
+                          <td>{{ device.quantity}}</td>
+                          <td>{{ device.cost}}</td>
+                          <td>{{ device.created_date}}</td>
+                          <td>{{ device.collected_date}}</td>
+                          <td>
+                            <div class="text-center">
+                              <a href="{% url 'device_details' device.pk %}"><ion-icon name="eye-outline" style="font-size: large"></ion-icon></a>
+                            </div>
+                          </td>
+                        </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    {% endfor %}
+    </main>
 
-</div>
-{% endblock %}
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+   <!-- Essential javascripts for application to work-->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <!-- Data table plugin-->
+    <script type="text/javascript" src="{% static 'js/plugins/jquery.dataTables.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins/dataTables.bootstrap.min.js' %}"></script>
+    <script type="text/javascript">$('#sampleTable').DataTable();</script>
+
+
+    {% endblock %}
