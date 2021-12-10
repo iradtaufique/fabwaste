@@ -113,7 +113,8 @@ class ListDevicesApiView(ListAPIView):
     # permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        return Product.objects.filter(user=self.request.user)
+        # return Product.objects.filter(user=self.request.user)
+        return Product.objects.all()
 
 
 class ListUsersApiView(ListAPIView):
