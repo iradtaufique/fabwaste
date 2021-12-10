@@ -52,7 +52,7 @@ def addProduct(request):
 
 
 def houseHoldProducts(request):
-    products = Product.objects.filter(user=request.user)
+    products = Product.objects.filter(user=request.user).order_by()
     return render(request, 'houseHoldProducts.html', {'products': products})
 
 

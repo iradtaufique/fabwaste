@@ -37,6 +37,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'userauth.apps.UserauthConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -44,7 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'drf_yasg',
     'products.apps.ProductsConfig',
-    'userauth.apps.UserauthConfig',
     'dashboard.apps.DashboardConfig',
 
     'crispy_forms',
