@@ -16,7 +16,9 @@ class JWTAuthentication(authentication.BaseAuthentication):
         try:
             payload = jwt.decode(token, settings.JWT_SECRET_KEY, algorithms="HS256")
             user = UsersAccount.objects.get(email=payload['email'])
-            return user, token
+            name = UsersAccount.objects.get(full_name=payload['full_name'])
+            id = UsersAccount.objects.get(id=payload['id'])
+            return user, name, id, token
         except jwt.DecodeError as identifier:
             raise exceptions.AuthenticationFailed('Token Provided is Invalid')
 

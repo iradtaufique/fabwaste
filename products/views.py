@@ -52,10 +52,9 @@ def addProduct(request):
 
 
 def houseHoldProducts(request):
-    # products = Product.objects.all()
     products = Product.objects.all().filter(user=request.user)
-    # if request.user.is_house_hold:
-    #     products = Product.objects.all()
+    if request.user.is_house_hold:
+        products = Product.objects.all()
     return render(request, 'houseHoldProducts.html', {'products': products})
 
 
@@ -108,6 +107,7 @@ def changeProductToCollected(request, id):
 
 
 def device_details(request, pk):
+    # address = Address.objects.get(pk=pk)
     details = Product.objects.get(pk=pk)
     context = {'details': details}
     return render(request, 'product_details.html', context)
