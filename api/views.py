@@ -104,7 +104,7 @@ class CreateProductApiView(CreateAPIView):
         # return redirect('view_product')
 
     def get_queryset(self):
-        return Product.objects.filter(user=self.request.user)
+        return Product.objects.filter(user=self.request.user).order_by('-created_date')
 
 
 # view for listing devices
