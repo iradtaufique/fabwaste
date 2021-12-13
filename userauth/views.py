@@ -30,17 +30,17 @@ def register(request):
             user.is_active = True
             user.is_house_hold = True
             user.save()
-            # current_site = get_current_site(request)
-            # subject = 'Activate Account'
-            # message = render_to_string(
-            #     'registration/account_activation_email.html', {
-            #         'user': user,
-            #         'domain': current_site.domain,
-            #         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            #         'token': account_activation_token.make_token(user),
-            #
-            # })
-            # user.email_user(subject=subject, message=message)
+            current_site = get_current_site(request)
+            subject = 'Activate Account'
+            message = render_to_string(
+                'registration/account_activation_email.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': account_activation_token.make_token(user),
+
+            })
+            user.email_user(subject=subject, message=message)
             return render(request, 'registration/register_email_confirm.html')
         else:
             form = RegisterUserForm()
