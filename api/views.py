@@ -26,17 +26,17 @@ class RegisterUserAPi(GenericAPIView):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(is_active=True, is_house_hold=True)
-            # user = serializer.save(is_active=True, is_house_hold=True)
-            # current_site = get_current_site(request)
-            # subject = 'Activate Account'
-            # message = render_to_string(
-            #     'registration/account_activation_email.html', {
-            #         'user': user,
-            #         'domain': current_site.domain,
-            #         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            #         'token': account_activation_token.make_token(user),
-            #     })
-            # user.email_user(subject=subject, message=message)
+            user = serializer.save(is_active=True, is_house_hold=True)
+            current_site = get_current_site(request)
+            subject = 'Activate Account'
+            message = render_to_string(
+                'registration/account_activation_email.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': account_activation_token.make_token(user),
+                })
+            user.email_user(subject=subject, message=message)
 
             return Response(
                 {
@@ -84,25 +84,25 @@ class CreateProductApiView(CreateAPIView):
         device = serializer.data['product_name']
 
         # template = render_to_string('send_email.html', {'name': request.user, 'date': dat})
-        # template = render_to_string('send_email.html', {'date': dat})
-        # template2 = render_to_string('send_email2.html', {'device': device, 'date': dat})
-        #
-        # email1 = (
-        #     ' Thanks for adding your product',
-        #     template,
-        #     settings.EMAIL_HOST_USER,
-        #     # [request.user.email, 'iradukunda.ta@gmail.com'],
-        #     ['iradukunda.ta@gmail.com'],
-        # )
-        # email2 = (
-        #     ' Thanks for adding your product',
-        #     template2,
-        #     settings.EMAIL_HOST_USER,
-        #     ['iradukunda.ta@gmail.com'],
-        # )
-        # send_mass_mail((email1, email2), fail_silently=False)
+        template = render_to_string('send_email.html', {'date': dat})
+        template2 = render_to_string('send_email2.html', {'device': device, 'date': dat})
 
-        # return redirect('view_product')
+        email1 = (
+            ' Thanks for adding your product',
+            template,
+            settings.EMAIL_HOST_USER,
+            [self.request.user.email, 'iradukunda.ta@gmail.com'],
+            # ['iradukunda.ta@gmail.com'],
+        )
+        email2 = (
+            ' Thanks for adding your product',
+            template2,
+            settings.EMAIL_HOST_USER,
+            ['iradukunda.ta@gmail.com'],
+        )
+        send_mass_mail((email1, email2), fail_silently=False)
+
+        return redirect('view_product')
 
     def get_queryset(self):
         return Product.objects.filter(user=self.request.user).order_by('-created_date')

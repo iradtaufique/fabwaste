@@ -60,10 +60,9 @@ def account_activate(request, uidb64, token):
         login(request, user)
 
         a = UsersAccount.objects.get(email=request.user.email)
-        # for i in a:
-        #     nam = i.full_name
+
         messages.success(request, "Welcome " + a.full_name + " Your Account has been activated")
-        return redirect('home')
+        return redirect('dashboard')
     else:
         return render(request, 'registration/activation_invalid.html')
 
