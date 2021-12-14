@@ -40,6 +40,9 @@ class UsersAccount(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_house_hold = models.BooleanField(default=False)
+    is_agent = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
+    location = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -66,11 +69,13 @@ class UsersAccount(AbstractBaseUser, PermissionsMixin):
 
 
 class Profile(models.Model):
-    pass
     user = models.OneToOneField(UsersAccount, on_delete=models.CASCADE, blank=True, null=True)
     first_name = models.CharField(max_length=30, null=True, blank=True)
     last_name = models.CharField(max_length=200, null=True, blank=True)
-    # image = models.ImageField(max_length=200, null=True, blank=True)
+    image = models.ImageField(default='blank-person.jpg')
+    sector = models.CharField(max_length=100, null=True, blank=True)
+    cell = models.CharField(max_length=100, null=True, blank=True)
+    village = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return str(self.user)

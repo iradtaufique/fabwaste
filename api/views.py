@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth.models import Group
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mass_mail
 from django.shortcuts import redirect
@@ -16,7 +17,6 @@ from products.models import Product
 from userauth.tokens import account_activation_token
 from .serializers import RegisterSerializer, UserLoginSerializer, CreateProductSerializer, ListProductSerializer
 import jwt
-from jwt import PyJWT
 
 
 class RegisterUserAPi(GenericAPIView):
@@ -25,8 +25,58 @@ class RegisterUserAPi(GenericAPIView):
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(is_active=True, is_house_hold=True)
-            user = serializer.save(is_active=True, is_house_hold=True)
+            user = serializer.save(is_house_hold=True)
+            current_site = get_current_site(request)
+            subject = 'Activate Account'
+            message = render_to_string(
+                'registration/account_activation_email.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': account_activation_token.make_token(user),
+                })
+            user.email_user(subject=subject, message=message)
+
+            return Response(
+                {
+                    'data': serializer.data,
+                    'status': status.HTTP_201_CREATED,
+                    "message": "Account Created Successfully",
+                }
+
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+"""ApiView for registering agent"""
+class RegisterAgentAPiView(GenericAPIView):
+    serializer_class = RegisterSerializer
+
+    def post(self, request):
+        serializer = RegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(is_agent=True, is_active=True)
+
+            return Response(
+                {
+                    'data': serializer.data,
+                    'status': status.HTTP_201_CREATED,
+                    "message": "Account Created Successfully",
+                }
+
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+"""ApiView for registering agent"""
+class RegisterHouseHoldAPiView(GenericAPIView):
+    serializer_class = RegisterSerializer
+
+    def post(self, request):
+        serializer = RegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save(is_house_hold=True)
+
             current_site = get_current_site(request)
             subject = 'Activate Account'
             message = render_to_string(
@@ -50,8 +100,6 @@ class RegisterUserAPi(GenericAPIView):
 
 
 """api view for login a user"""
-
-
 class UserLoginApiView(GenericAPIView):
     serializer_class = UserLoginSerializer
 

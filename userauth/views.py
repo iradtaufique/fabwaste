@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
-from userauth.forms import RegisterUserForm
+from userauth.forms import RegisterUserForm, UserLoginForm
 from .models import UsersAccount
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
@@ -39,7 +39,7 @@ def register(request):
                     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                     'token': account_activation_token.make_token(user),
 
-            })
+                })
             user.email_user(subject=subject, message=message)
             return render(request, 'registration/register_email_confirm.html')
         else:
@@ -68,14 +68,20 @@ def account_activate(request, uidb64, token):
 
 
 def loginUser(request):
+    form = UserLoginForm()
     if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
+        form = UserLoginForm(request.POST or None)
+        if form.is_valid():
+            email = request.POST.get('email')
+            password = request.POST.get('password')
 
-        user = authenticate(request, email=email, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('home')
-        else:
-            messages.info(request, 'Username of Password incorrect')
-    return render(request, 'registration/login.html')
+            user = authenticate(request, email=email, password=password)
+            if user is not None:
+                login(request, user)
+                print('user is')
+                print(user)
+                # if user.is_house_hold:
+                #     return redirect('payed')
+            else:
+                messages.info(request, 'Username of Password incorrect')
+    return render(request, 'registration/login.html', {'form': form})
