@@ -1,4 +1,5 @@
 asgiref==3.4.1
+Babel==2.9.1
 certifi==2021.10.8
 cffi==1.15.0
 charset-normalizer==2.0.9
@@ -19,6 +20,7 @@ MarkupSafe==2.0.1
 packaging==21.3
 Pillow==8.4.0
 psycopg2-binary==2.9.2
+py-moneyed==1.2
 pycparser==2.21
 PyJWT==2.3.0
 pyparsing==3.0.6

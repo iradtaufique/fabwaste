@@ -4,7 +4,7 @@ from django.db import models
 from django.db.models.fields.related import ForeignKey
 from userauth.models import UsersAccount
 from django.utils import timezone
-from djmoney.models.fields import MoneyField
+
 
 
 class Category(models.Model):

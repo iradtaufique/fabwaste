@@ -1,4 +1,3 @@
-from djmoney.contrib.django_rest_framework import MoneyField
 from rest_framework import serializers
 from userauth.models import UsersAccount
 from products.models import Product, Category, SubCategory
