@@ -1,6 +1,7 @@
+from djmoney.contrib.django_rest_framework import MoneyField
 from rest_framework import serializers
 from userauth.models import UsersAccount
-from products.models import Product
+from products.models import Product, Category, SubCategory
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -24,6 +25,18 @@ class RegisterSerializer(serializers.ModelSerializer):
         return UsersAccount.objects.create_user(**validated_data)
 
 
+class CreateProductSerializer(serializers.ModelSerializer):
+    # desired_price = MoneyField(max_digits=10, decimal_places=2, default_currency='FRw')
+    class Meta:
+        model = Product
+        fields = [
+            'category', 'product_name', 'product_image', 'description',
+            'quantity', 'desired_price', 'collected_date',
+            'district', 'sector', 'cell',
+            'village', 'road_number', 'house_number',
+        ]
+
+
 class UserLoginSerializer(serializers.ModelSerializer):
     password = serializers.CharField(max_length=60, min_length=4, write_only=True)
 
@@ -32,19 +45,35 @@ class UserLoginSerializer(serializers.ModelSerializer):
         fields = ['email', 'password']
 
 
-class CreateProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        fields = [
-            'product_name', 'product_image', 'description',
-            'quantity', 'price', 'other', 'collected_date',
-        ]
-
-
+# --------- serializer for listing household products -----------------
 class ListProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'id', 'product_name', 'product_image', 'description', 'user',
-            'quantity', 'price', 'other', 'collected_date',
+            'id', 'category', 'product_name', 'product_image', 'description',
+            'quantity', 'desired_price', 'collected_date', 'user', 'district',
+            'sector', 'cell', 'village', 'road_number', 'house_number'
         ]
+
+
+# --------- view for listing household paid products -----------------
+class ListHouseHoldPayedProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = [
+            'id', 'category', 'product_name', 'product_image', 'description',
+            'quantity', 'desired_price', 'buying_price', 'collected_date', 'user', 'district',
+            'sector', 'cell', 'village', 'road_number', 'house_number'
+        ]
+
+
+class AddCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['name']
+
+
+class AddSubCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SubCategory
+        fields = ['category', 'name', 'minimum_price', 'maximum_price']

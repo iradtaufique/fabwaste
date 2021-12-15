@@ -1,4 +1,5 @@
 {% extends 'dashboard/dashboard.html' %}
+{% load static %}
 
 {% block dashboard_content %}
     <main class="app-content">
@@ -77,8 +78,8 @@
         <div class="col-md-6 col-lg-3">
           <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
             <div class="info">
-              <h4>Devices</h4>
-              <p><b>10</b></p>
+              <h4>UnSold Devices</h4>
+              <p><b>{{ household_total_devices }}</b></p>
             </div>
           </div>
         </div>
@@ -87,7 +88,7 @@
           <div class="widget-small warning coloured-icon"><i class="icon fa fa-files-o fa-3x"></i>
             <div class="info">
               <h4>Earned Money</h4>
-              <p><b>RF 2000</b></p>
+              <p><b>RWF {{ money }}</b></p>
             </div>
           </div>
         </div>
@@ -95,7 +96,7 @@
           <div class="widget-small danger coloured-icon"><i class="icon fa fa-star fa-3x"></i>
             <div class="info">
               <h4>Picked Devices</h4>
-              <p><b>50</b></p>
+              <p><b>{{ household_picked_device }}</b></p>
             </div>
           </div>
         </div>
@@ -103,12 +104,56 @@
           <div class="widget-small info coloured-icon"><i class="icon fa fa-thumbs-o-up fa-3x"></i>
             <div class="info">
               <h4>Sold Device</h4>
-              <p><b>12</b></p>
+              <p><b>{{ household_sold_device }}</b></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+            <div class="tile">
+            <div class="tile-body">
+              <div class="table-responsive">
+                <table class="table table-hover table-bordered" id="sampleTable">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Created Date</th>
+                      <th>Collected Date</th>
+                      <th>View</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for device in devices %}
+                        <tr>
+                          <td>{{ device.product_name}}</td>
+                          <td>{{ device.quantity}}</td>
+                          <td>{{ device.created_date}}</td>
+                          <td>{{ device.collected_date}}</td>
+                          <td>
+                            <div class="text-center">
+                              <a href="{% url 'device_details' device.pk %}"><ion-icon name="eye-outline" style="font-size: large"></ion-icon></a>
+                            </div>
+                          </td>
+                        </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
     {% endif %}
     </main>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+   <!-- Essential javascripts for application to work-->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <!-- Data table plugin-->
+    <script type="text/javascript" src="{% static 'js/plugins/jquery.dataTables.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins/dataTables.bootstrap.min.js' %}"></script>
+    <script type="text/javascript">$('#sampleTable').DataTable();</script>
 
 {% endblock %}

@@ -1,19 +1,89 @@
-{%extends 'base.html'%}
+<!DOCTYPE html>
+{% load static %}
 {% load crispy_forms_tags %}
 
-{% block content %}
-<div class="container">
-    <div class="row justify-content-center mt-5">
-        <div class="col-5">
-            <form action="" method="post">
-            {% csrf_token %}
-            {{form|crispy}}
-            <!-- <button >Save</button> -->
-            <div class="text-center">
-                <input type="submit" class="btn btn-success w-50" value="Save">
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Fab Waste</title>
+
+      <style>
+          .login-content .logo {
+            margin-bottom: 40px;
+            font-family: Book Antiqua;
+            color: #fff;
+          }
+          .login-box{
+              height: 610px!important;
+          }
+          #hint_id_email, #hint_id_full_name{
+              display: none;
+          }
+      </style>
+  </head>
+  <body>
+    <section class="material-half-bg">
+      <div class="cover"></div>
+    </section>
+    <section class="login-content">
+{#      <div class="logo">#}
+{#        <h1>Fab Waste</h1>#}
+{#      </div>#}
+
+        {% if form.errors %}
+            <div class="alert alert-info" role="alert">
+                Username or Password not correct!
             </div>
-            </form>
-        </div>
-    </div>
-</div>
-{%endblock%}
+        {% endif %}
+      <div class="login-box">
+        <form class="login-form" method="post">
+            {% csrf_token %}
+          {{ form.email|as_crispy_field }}
+          {{ form.full_name|as_crispy_field }}
+          {{ form.mobile|as_crispy_field }}
+          {{ form.location|as_crispy_field }}
+          {{ form.password|as_crispy_field }}
+          {{ form.password2|as_crispy_field }}
+
+          <div class="form-group btn-container">
+            <button class="btn btn-primary btn-block"><i class="fa fa-sign-in fa-lg fa-fw"></i>REGISTER</button>
+          </div>
+          <div class="form-group text-center">
+{#            <div class="utility">#}
+              <p class="semibold-text mt-2"><a href="{% url 'user_login' %}">Login Here</a></p>
+{#            </div>#}
+          </div>
+        </form>
+      </div>
+    </section>
+    <!-- Essential javascripts for application to work-->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="{% static 'js/plugins/pace.min.js' %}"></script>
+    <script type="text/javascript">
+      // Login Page Flipbox control
+      $('.login-content [data-toggle="flip"]').click(function() {
+      	$('.login-box').toggleClass('flipped');
+      	return false;
+      });
+    </script>
+  </body>
+</html>
+
+
+
+
+
+
+

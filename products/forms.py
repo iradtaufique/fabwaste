@@ -7,9 +7,11 @@ from userauth.models import UsersAccount
 class AddProductForm(ModelForm):
     class Meta:
         model = Product
+        # fields = '__all__'
         fields = [
-            'product_name', 'product_image', 'description',
-            'quantity', 'price', 'other', 'user', 'collected_date'
+            'category', 'product_name', 'product_image', 'description',
+            'quantity', 'desired_price', 'user', 'collected_date', 'district',
+            'sector', 'cell', 'village', 'road_number', 'house_number',
             ]
 
     def __init__(self, *args, **kwargs):

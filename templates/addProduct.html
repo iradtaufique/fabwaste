@@ -19,10 +19,10 @@
                     <h5 class="text-center">Add Device</h5>
                     <hr>
                     <div class="row">
+                        <div class="col-sm-6">{{ form.category|as_crispy_field }}</div>
                         <div class="col-sm-6">{{ form.product_name|as_crispy_field }}</div>
                         <div class="col-sm-6">{{ form.quantity|as_crispy_field }}</div>
-                        <div class="col-sm-6">{{ form.price|as_crispy_field }}</div>
-                        <div class="col-sm-6">{{ form.other|as_crispy_field }}</div>
+                        <div class="col-sm-6">{{ form.desired_price|as_crispy_field }}</div>
                         <div class="col-sm-6">{{ form.user|as_crispy_field }}</div>
                         <div class="col-sm-6">{{ form.collected_date|as_crispy_field }}</div>
                         <div class="col-sm-6">{{ form.description|as_crispy_field }}</div>
@@ -33,7 +33,15 @@
                 <div class="col-6">
                     <h5 class="text-center">Add Address</h5>
                     <hr>
-                    {{ address_form|crispy }}
+                    <div class="row">
+                        <div class="col-sm-6">{{ form.district|as_crispy_field }}</div>
+                        <div class="col-sm-6">{{ form.sector|as_crispy_field }}</div>
+                        <div class="col-sm-6">{{ form.cell|as_crispy_field }}</div>
+                        <div class="col-sm-6">{{ form.village|as_crispy_field }}</div>
+                        <div class="col-sm-6">{{ form.road_number|as_crispy_field }}</div>
+                        <div class="col-sm-6">{{ form.house_number|as_crispy_field }}</div>
+
+                    </div>
                 </div>
             </div>
             <br>

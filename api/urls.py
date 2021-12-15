@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import RegisterUserAPi, UserLoginApiView, CreateProductApiView, ListDevicesApiView, ListUsersApiView, \
-    RegisterAgentAPiView, RegisterHouseHoldAPiView
+    RegisterAgentAPiView, RegisterHouseHoldAPiView, ListHouseHoldPayedProductApiView
 
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -27,7 +27,8 @@ urlpatterns = [
     path('register-house-hold/', RegisterHouseHoldAPiView.as_view(), name='register_house_hold'),
     path('login_user/', UserLoginApiView.as_view(), name='login_user'),
     path('create-product/', CreateProductApiView.as_view(), name='create_product'),
-    path('list-devices/', ListDevicesApiView.as_view(), name='list_devices'),
+    path('list-product/', ListDevicesApiView.as_view(), name='list_devices'),
+    path('list-household-payed-product/', ListHouseHoldPayedProductApiView.as_view(), name='list_household_payed_product'),
     path('list-users/', ListUsersApiView.as_view(), name='list_users'),
 
     # documentation links

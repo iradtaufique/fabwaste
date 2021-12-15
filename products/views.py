@@ -11,17 +11,17 @@ from django.conf import settings
 
 def addProduct(request):
     form = AddProductForm(request=request)
-    address_form = AddAddressForm()
+    # address_form = AddAddressForm()
     if request.method == 'POST':
         form = AddProductForm(request.POST, request.FILES, request=request)
         # address_form = AddAddressForm(request.POST, request.FILES,  request=request)
-        address_form = AddAddressForm(request.POST)
-        if form.is_valid() and address_form.is_valid():
-            address = address_form.save(commit=False)
+        # address_form = AddAddressForm(request.POST)
+        if form.is_valid():
+            # address = address_form.save(commit=False)
             # print(form.cleaned_data['id'])
-            address.user = request.user
+            # address.user = request.user
             form.save()
-            address.save()
+            # address.save()
 
             dat = form.cleaned_data['collected_date']
             device = form.cleaned_data['product_name']
@@ -45,7 +45,7 @@ def addProduct(request):
             # email.fail_silently = False
             # email.send()
             return redirect('view_product')
-    return render(request, 'addProduct.html', {'form': form, 'address_form': address_form})
+    return render(request, 'addProduct.html', {'form': form})
 
 
 """view for viewing the products based on user"""

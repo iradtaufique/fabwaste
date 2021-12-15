@@ -15,7 +15,8 @@ from userauth.models import UsersAccount
 
 from products.models import Product
 from userauth.tokens import account_activation_token
-from .serializers import RegisterSerializer, UserLoginSerializer, CreateProductSerializer, ListProductSerializer
+from .serializers import RegisterSerializer, UserLoginSerializer, CreateProductSerializer, ListProductSerializer, \
+    ListHouseHoldPayedProductSerializer, AddCategorySerializer
 import jwt
 
 
@@ -49,6 +50,8 @@ class RegisterUserAPi(GenericAPIView):
 
 
 """ApiView for registering agent"""
+
+
 class RegisterAgentAPiView(GenericAPIView):
     serializer_class = RegisterSerializer
 
@@ -69,6 +72,8 @@ class RegisterAgentAPiView(GenericAPIView):
 
 
 """ApiView for registering agent"""
+
+
 class RegisterHouseHoldAPiView(GenericAPIView):
     serializer_class = RegisterSerializer
 
@@ -100,6 +105,8 @@ class RegisterHouseHoldAPiView(GenericAPIView):
 
 
 """api view for login a user"""
+
+
 class UserLoginApiView(GenericAPIView):
     serializer_class = UserLoginSerializer
 
@@ -110,7 +117,8 @@ class UserLoginApiView(GenericAPIView):
         user = authenticate(email=email, password=password)
 
         if user:
-            auth_token = jwt.encode({'email': user.email, 'full_name': user.full_name, 'id': user.id}, settings.JWT_SECRET_KEY)
+            auth_token = jwt.encode({'email': user.email, 'full_name': user.full_name, 'id': user.id},
+                                    settings.JWT_SECRET_KEY)
             serializer = UserLoginSerializer(user)
             data = {'user': serializer.data, 'token': auth_token}
             return Response(data, status=status.HTTP_200_OK)
@@ -131,7 +139,6 @@ class CreateProductApiView(CreateAPIView):
         dat = serializer.data['collected_date']
         device = serializer.data['product_name']
 
-        # template = render_to_string('send_email.html', {'name': request.user, 'date': dat})
         template = render_to_string('send_email.html', {'date': dat})
         template2 = render_to_string('send_email2.html', {'device': device, 'date': dat})
 
@@ -143,7 +150,7 @@ class CreateProductApiView(CreateAPIView):
             # ['iradukunda.ta@gmail.com'],
         )
         email2 = (
-            ' Thanks for adding your product',
+            ' New Product Added',
             template2,
             settings.EMAIL_HOST_USER,
             ['iradukunda.ta@gmail.com'],
@@ -162,8 +169,17 @@ class ListDevicesApiView(ListAPIView):
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        # return Product.objects.filter(user=self.request.user)
-        return Product.objects.all()
+        return Product.objects.filter(user=self.request.user)
+        # return Product.objects.all()
+
+
+# view for listing devices
+class ListHouseHoldPayedProductApiView(ListAPIView):
+    serializer_class = ListHouseHoldPayedProductSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        return Product.objects.filter(user=self.request.user, payed=True)
 
 
 class ListUsersApiView(ListAPIView):
@@ -172,3 +188,12 @@ class ListUsersApiView(ListAPIView):
 
     def get_queryset(self):
         return UsersAccount.objects.all()
+
+
+# ApiView for adding category
+class AddCategoryApiView(CreateAPIView):
+    serializer_class = AddCategorySerializer
+    permission_classes = (IsAuthenticated, )
+
+    def perform_create(self, serializer):
+        return

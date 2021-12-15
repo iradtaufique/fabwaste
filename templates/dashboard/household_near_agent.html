@@ -2,10 +2,10 @@
 {% load static %}
 {% block dashboard_content %}
 
-    <main class="app-content">
+  <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-th-list"></i>Your Devices</h1>
+          <h1><i class="fa fa-th-list"></i>NearBy Fab|Waste Agents</h1>
           <p>Fab|Waste</p>
         </div>
       </div>
@@ -17,29 +17,17 @@
                 <table class="table table-hover table-bordered" id="sampleTable">
                   <thead>
                     <tr>
-                      <th>ID</th>
-                      <th>Product</th>
-                      <th>Quantity</th>
-                      <th>Cost</th>
-                      <th>Created Date</th>
-                      <th>Collected Date</th>
-                      <th>View</th>
+                      <th>Agent Name</th>
+                      <th>Email</th>
+                      <th>Phone</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for device in products %}
+                    {% for agent in agents %}
                         <tr>
-                          <td>{{ device.id}}</td>
-                          <td>{{ device.product_name}}</td>
-                          <td>{{ device.quantity}}</td>
-                          <td>{{ device.desired_price}}</td>
-                          <td>{{ device.created_date}}</td>
-                          <td>{{ device.collected_date}}</td>
-                          <td>
-                            <div class="text-center">
-                              <a href="{% url 'device_details' device.pk %}"><ion-icon name="eye-outline" style="font-size: large"></ion-icon></a>
-                            </div>
-                          </td>
+                          <td>{{ agent.full_name}}</td>
+                          <td>{{ agent.email}}</td>
+                          <td>{{ agent.mobile}}</td>
                         </tr>
                     {% endfor %}
                   </tbody>
@@ -61,5 +49,4 @@
     <script type="text/javascript" src="{% static 'js/plugins/dataTables.bootstrap.min.js' %}"></script>
     <script type="text/javascript">$('#sampleTable').DataTable();</script>
 
-
-    {% endblock %}
+{% endblock %}
