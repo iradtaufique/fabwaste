@@ -27,7 +27,7 @@ def register(request):
             user.full_name = form.cleaned_data['full_name']
             user.mobile = form.cleaned_data['mobile']
             user.set_password(form.cleaned_data['password'])
-            user.is_active = True
+            user.is_active = False
             user.is_house_hold = True
             user.save()
             current_site = get_current_site(request)
