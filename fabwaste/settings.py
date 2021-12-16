@@ -28,8 +28,8 @@ SECRET_KEY = 'django-insecure-+^0apvqn%)d3ff-4f^kk8=@lx2qif7iq)ir2(pde(bi3rc+yp_
 # # jwt Secret Key
 JWT_SECRET_KEY = config('JWT_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = False
+# DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ['*']
@@ -137,13 +137,13 @@ LOGOUT_REDIRECT_URL = 'user_login'
 
 AUTH_USER_MODEL = 'userauth.UsersAccount'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'fab.wastee@gmail.com'
-EMAIL_HOST_PASSWORD = 'irad1423'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'fab.wastee@gmail.com'
+# EMAIL_HOST_PASSWORD = 'irad1423'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
