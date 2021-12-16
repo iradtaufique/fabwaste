@@ -2,7 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from userauth.models import UsersAccount
 from products.models import Product, Category, Address
-from .forms import AddCategoriesForm
+from .forms import AddCategoriesForm, AddSubCategoriesForm
+from django.contrib import messages
 
 
 def dashboard(request):
@@ -12,7 +13,8 @@ def dashboard(request):
 @login_required
 def index(request):
     total_users = UsersAccount.objects.all().exclude(is_superuser=True).count()
-    house_hold_unsold_products = Product.objects.filter(user=request.user, status='UnSold')
+    # house_hold_unsold_products = Product.objects.filter(user=request.user, status='UnSold')
+    house_hold_unsold_products = Product.objects.filter(user=request.user)
     total_collected_devices = Product.objects.filter(status='Collected').count()
     household_total_devices = Product.objects.filter(user=request.user).count()
     household_earned_money = Product.objects.filter(user=request.user, payed=True)
@@ -85,14 +87,16 @@ def user_list(request):
 
 
 def add_categories(request):
+    categories = Category.objects.all()
     form = AddCategoriesForm()
     if request.method == 'POST':
         form = AddCategoriesForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('dashboard')
+            messages.success(request, 'Category Added Successfully')
     context = {
         'form': form,
+        'categories': categories,
     }
     return render(request, 'dashboard/add_categories.html', context)
 
@@ -120,3 +124,15 @@ def near_agent_view(request):
 #     form =
 #     context = {'update': update}
 #     return render(request, 'dashboard/house_hold_update_product.html', context)
+
+def add_sub_category(request):
+    form = AddSubCategoriesForm()
+    if request.method == 'POST':
+        form = AddSubCategoriesForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+    context = {
+        'form': form,
+    }
+    return render(request, 'dashboard/add_sub_category.html', context)

@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (available_devices, index, payed_devices, un_payed_devices,
-                    un_available_devices, user_list, add_categories, delete_user, near_agent_view)
+                    un_available_devices, user_list, add_categories, delete_user, near_agent_view, add_sub_category)
 
 
 urlpatterns = [
@@ -12,6 +12,7 @@ urlpatterns = [
     path('un-available', un_available_devices, name='un_available'),
     path('user-list', user_list, name='list_user'),
     path('add-category', add_categories, name='add_category'),
+    path('add-sub-category', add_sub_category, name='add_sub_category'),
     path('delete-user/<int:id>', delete_user, name='delete_user'),
 
     # ---- urls for household ------------
