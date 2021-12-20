@@ -119,12 +119,6 @@ def near_agent_view(request):
     return render(request, 'dashboard/household_near_agent.html', context)
 
 
-# def house_hold_update_product(request, pk):
-#     update = Product.objects.get(pk=pk)
-#     form =
-#     context = {'update': update}
-#     return render(request, 'dashboard/house_hold_update_product.html', context)
-
 def add_sub_category(request):
     form = AddSubCategoriesForm()
     if request.method == 'POST':

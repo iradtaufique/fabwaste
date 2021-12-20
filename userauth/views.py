@@ -85,3 +85,48 @@ def loginUser(request):
             else:
                 messages.info(request, 'Username of Password incorrect')
     return render(request, 'registration/login.html', {'form': form})
+
+
+"""view for registering agent"""
+
+
+def register_agent(request):
+    agents = UsersAccount.objects.filter(is_agent=True)
+    form = RegisterUserForm()
+    if request.method == 'POST':
+        form = RegisterUserForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.email = form.cleaned_data['email']
+            user.full_name = form.cleaned_data['full_name']
+            user.mobile = form.cleaned_data['mobile']
+            user.set_password(form.cleaned_data['password'])
+            user.is_active = True
+            user.is_agent = True
+            user.save()
+            messages.success(request, "agent added successfully!")
+            form = RegisterUserForm()
+        else:
+            form = RegisterUserForm()
+    return render(request, 'registration/register_agent.html', {'form': form, 'agents': agents})
+
+
+def register_manufacture(request):
+    manufacture = UsersAccount.objects.filter(is_manufacture=True)
+    form = RegisterUserForm()
+    if request.method == 'POST':
+        form = RegisterUserForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.email = form.cleaned_data['email']
+            user.full_name = form.cleaned_data['full_name']
+            user.mobile = form.cleaned_data['mobile']
+            user.set_password(form.cleaned_data['password'])
+            user.is_active = True
+            user.is_manufacture = True
+            user.save()
+            messages.success(request, "manufacture added successfully!")
+            form = RegisterUserForm()
+        else:
+            form = RegisterUserForm()
+    return render(request, 'registration/register_manufacture.html', {'form': form, 'manufacture': manufacture})

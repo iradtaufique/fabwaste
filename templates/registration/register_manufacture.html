@@ -1,0 +1,85 @@
+{% extends 'dashboard/dashboard.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block dashboard_content %}
+    <main class="app-content">
+      <div class="app-title">
+        <div>
+          <h1><i class="fa fa-edit"></i>Register Manufacture</h1>
+          <p>FAB Waste</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+          <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+          <li class="breadcrumb-item">Forms</li>
+          <li class="breadcrumb-item"><a href="#">Register Manufacture</a></li>
+        </ul>
+      </div>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <div class="alert alert-success text-center" role="alert">
+              {{ message }}
+            </div>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+      <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+              <div class="col-lg-6">
+                <form method="post" class="tile">
+                    {% csrf_token %}
+                  <div class="row">
+                      <div class="col-sm-6">{{ form.full_name|as_crispy_field }}</div>
+                      <div class="col-6">{{ form.email|as_crispy_field }}</div>
+                      <div class="col-6">{{ form.mobile|as_crispy_field }}</div>
+                      <div class="col-6">{{ form.location|as_crispy_field }}</div>
+                      <div class="col-6">{{ form.password|as_crispy_field }}</div>
+                      <div class="col-6">{{ form.password2|as_crispy_field }}</div>
+                  </div>
+                  <div class="tile-footer">
+                      <button class="btn btn-primary" type="submit">Submit</button>
+                  </div>
+                </form>
+              </div>
+              <div class="col-lg-6 tile">
+               <h5 class="text-center">All Manufacture</h5>
+                  <table class="table table-hover table-bordered" id="sampleTable">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Manufacture Name</th>
+                      <th>Phone</th>
+                      <th>Location</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for manuf in manufacture %}
+                        <tr>
+                          <td>{{ manuf.id}}</td>
+                          <td>{{ manuf.full_name}}</td>
+                          <td>{{ manuf.mobile}}</td>
+                          <td>{{ manuf.location}}</td>
+                        </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+    </main>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+   <!-- Essential javascripts for application to work-->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <!-- Data table plugin-->
+    <script type="text/javascript" src="{% static 'js/plugins/jquery.dataTables.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins/dataTables.bootstrap.min.js' %}"></script>
+    <script type="text/javascript">$('#sampleTable').DataTable();</script>
+{% endblock %}

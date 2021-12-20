@@ -22,13 +22,13 @@ schema_view = get_schema_view(
 
 
 urlpatterns = [
-    path('register/', RegisterUserAPi.as_view(), name='register'),
-    path('register-agent/', RegisterAgentAPiView.as_view(), name='register_agent'),
-    path('register-house-hold/', RegisterHouseHoldAPiView.as_view(), name='register_house_hold'),
-    path('login_user/', UserLoginApiView.as_view(), name='login_user'),
-    path('create-product/', CreateProductApiView.as_view(), name='create_product'),
-    path('list-product/', ListDevicesApiView.as_view(), name='list_devices'),
-    path('list-household-payed-product/', ListHouseHoldPayedProductApiView.as_view(), name='list_household_payed_product'),
+    path('register/', RegisterUserAPi.as_view(), name='register_api'),
+    path('register-agent/', RegisterAgentAPiView.as_view(), name='register_agent_api'),
+    path('register-house-hold/', RegisterHouseHoldAPiView.as_view(), name='register_house_hold_api'),
+    path('login_user/', UserLoginApiView.as_view(), name='login_user_api'),
+    path('create-product/', CreateProductApiView.as_view(), name='create_product_api'),
+    path('list-product/', ListDevicesApiView.as_view(), name='list_devices_api'),
+    path('list-household-payed-product/', ListHouseHoldPayedProductApiView.as_view(), name='list_household_payed_product_api'),
     path('list-users/', ListUsersApiView.as_view(), name='list_users'),
 
     # documentation links

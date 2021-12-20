@@ -41,4 +41,3 @@ class UserLoginForm(AuthenticationForm):
         attrs={'class': 'form-control mb-3', 'placeholder': 'Email', 'id': 'login-email'}))
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'password', 'id': 'login-pwd'}))
-
