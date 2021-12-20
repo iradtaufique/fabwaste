@@ -19,23 +19,22 @@
                     <tr>
                       <th>Product</th>
                       <th>Quantity</th>
-                      <th>Owner</th>
                       <th>Created Date</th>
                       <th>Collected Date</th>
                       <th>View</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for device in devices %}
+                    {% for device in metals %}
                         <tr>
                           <td>{{ device.product_name}}</td>
                           <td>{{ device.quantity}}</td>
-                          <td>{{ device.user.full_name}}</td>
+{#                          <td>{{ device.user.full_name}}</td>#}
                           <td>{{ device.created_date}}</td>
                           <td>{{ device.collected_date}}</td>
                           <td>
                             <div class="text-center">
-                              <a href=""><ion-icon name="eye-outline" style="font-size: large"></ion-icon></a>
+                              <a href="{% url 'device_details' device.id %}"><ion-icon name="eye-outline" style="font-size: large"></ion-icon></a>
                             </div>
                           </td>
                         </tr>

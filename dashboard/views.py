@@ -23,6 +23,23 @@ def index(request):
     total_unpayed_devices = Product.objects.filter(payed=False, status='Collected').count()
     total_payed_devices = Product.objects.filter(payed=True).count()
 
+    # categories = Category.objects.all()
+    categ = []
+    cateName = []
+
+    categories = Category.objects.all()
+
+    for i in categories:
+        categ.append(i.id)
+        cateName.append(i.name)
+    print(categ)
+    print(cateName)
+
+    total_textile_products = Product.objects.filter(category=categ[0]).count()
+    total_electronics_products = Product.objects.filter(category=categ[1]).count()
+    total_metals_products = Product.objects.filter(category=categ[1]).count()
+    total_plastics_products = Product.objects.filter(category=categ[2]).count()
+
     money = 0
 
     for i in household_earned_money:
@@ -38,6 +55,11 @@ def index(request):
         'household_sold_device': household_sold_device,
         'money': money,
         'devices': house_hold_unsold_products,
+        'categories': categories,
+        'total_textile_products': total_textile_products,
+        'total_metals_products': total_metals_products,
+        'total_plastics_products': total_plastics_products,
+        'total_electronics_products': total_electronics_products,
 
     }
     return render(request, 'dashboard/index.html', context)
@@ -93,6 +115,7 @@ def add_categories(request):
         form = AddCategoriesForm(request.POST)
         if form.is_valid():
             form.save()
+            form = AddCategoriesForm()
             messages.success(request, 'Category Added Successfully')
     context = {
         'form': form,
@@ -130,3 +153,35 @@ def add_sub_category(request):
         'form': form,
     }
     return render(request, 'dashboard/add_sub_category.html', context)
+
+
+def view_textile_products(request):
+    textile = Product.objects.filter(category__name='Textile')
+    context = {
+        'textile': textile,
+    }
+    return render(request, 'dashboard/textile_products.html', context)
+
+
+def view_electronics_products(request):
+    electronics = Product.objects.filter(category__name='Electronics')
+    context = {
+        'electronics': electronics,
+    }
+    return render(request, 'dashboard/electronics_products.html', context)
+
+
+def view_metals_products(request):
+    metals = Product.objects.filter(category__name='Metals')
+    context = {
+        'metals': metals,
+    }
+    return render(request, 'dashboard/metals_product.html', context)
+
+
+def view_plastics_products(request):
+    plastics = Product.objects.filter(category__name='Plastics')
+    context = {
+        'plastics': plastics,
+    }
+    return render(request, 'dashboard/plastics_products.html', context)

@@ -143,6 +143,59 @@
           </div>
         </div>
       </div>
+
+
+{# =========================================================================================================================          #}
+      {% elif request.user.is_manufacture %}
+          <div class="row">
+          {% for category in categories %}
+            <div class="col-md-6 col-lg-3">
+              <div class="widget-small primary coloured-icon"><i class="icon fa fa fa-desktop fa-3x"></i>
+                <div class="info">
+                  <h4>{{ category.name }} Products</h4>
+                  {% if category.name == 'Textile' %}
+                    <p><b>{{ total_textile_products }}</b></p>
+                  {% elif category.name == 'Electronics' %}
+                    <p><b>{{ total_electronics_products }}</b></p>
+                  {% elif category.name == 'Metals' %}
+                    <p><b>{{ total_metals_products }}</b></p>
+                  {% elif category.name == 'Plastics' %}
+                    <p><b>{{ total_plastics_products }}</b></p>
+                  {% else %}
+                    <p><b>0</b></p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+
+
+
+{#          <div class="col-md-6 col-lg-3">#}
+{#              <div class="widget-small primary coloured-icon"><i class="icon fa fa-file fa-3x"></i>#}
+{#                <div class="info">#}
+{#                  <h4>Metals Products</h4>#}
+{#                  <p><b>{{ total_metals_products }}</b></p>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#          <div class="col-md-6 col-lg-3">#}
+{#              <div class="widget-small primary coloured-icon"><i class="icon fa fa-cloud fa-3x"></i>#}
+{#                <div class="info">#}
+{#                  <h4>Plastic Products</h4>#}
+{#                  <p><b>{{ total_plastics_products }}</b></p>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#          <div class="col-md-6 col-lg-3">#}
+{#              <div class="widget-small primary coloured-icon"><i class="icon fa fa-tint fa-3x"></i>#}
+{#                <div class="info">#}
+{#                  <h4>Textile Products</h4>#}
+{#                  <p><b>{{ total_textile_products }}</b></p>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+          </div>
     {% endif %}
     </main>
 

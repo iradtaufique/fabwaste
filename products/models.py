@@ -6,7 +6,6 @@ from userauth.models import UsersAccount
 from django.utils import timezone
 
 
-
 class Category(models.Model):
     name = models.CharField(max_length=100)
 
@@ -14,7 +13,7 @@ class Category(models.Model):
         return f'{self.name}'
 
 class SubCategory(models.Model):
-    category = models.CharField(max_length=100)
+    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=100)
     minimum_price = models.DecimalField(max_digits=10, decimal_places=0, default=0)
     maximum_price = models.DecimalField(max_digits=10, decimal_places=0, default=0)
@@ -31,7 +30,7 @@ class Product(models.Model):
     )
 
     user = models.ForeignKey(UsersAccount, on_delete=models.DO_NOTHING)
-    category = models.CharField(max_length=100)
+    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     product_name = models.CharField(max_length=100)
     product_image = models.ImageField(upload_to='media')
     description = models.TextField()

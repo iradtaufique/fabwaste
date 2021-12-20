@@ -10,7 +10,7 @@
 
     {#================== snippets for displaying sidebar on Admin ======================================#}
       {% if request.user.is_superuser %}
-          <ul class="app-menu">
+      <ul class="app-menu">
         <li><a class="app-menu__item active" href="{% url 'dashboard' %}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Categories</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
@@ -49,7 +49,17 @@
           </ul>
         </li>
         <li><a class="app-menu__item" href="{% url 'near_agent' %}"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Near Agent</span></a></li>
+      </ul>
+      {% endif %}
 
+    {#================== snippets for displaying sidebar on manufacture ======================================#}
+      {% if request.user.is_manufacture%}
+       <ul class="app-menu">
+        <li><a class="app-menu__item active" href="{% url 'dashboard' %}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
+        <li><a class="app-menu__item" href="{% url 'electronics_products' %}"><i class="icon fa fa-circle-o"></i>Electronics Products</a></li>
+        <li><a class="app-menu__item" href="{% url 'plastics_products' %}"><i class="icon fa fa-circle-o"></i>Plastics Products</a></li>
+        <li><a class="app-menu__item" href="{% url 'textile_products' %}"><i class="icon fa fa-circle-o"></i>Textile Products</a></li>
+        <li><a class="app-menu__item" href="{% url 'metals_products' %}"><i class="icon fa fa-circle-o"></i>Metals Products</a></li>
       </ul>
       {% endif %}
     </aside>
