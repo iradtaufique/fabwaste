@@ -2,8 +2,9 @@ import datetime
 
 from django.db import models
 from django.db.models.fields.related import ForeignKey
-from userauth.models import UsersAccount
+from userauth.models import UsersAccount, District
 from django.utils import timezone
+
 
 
 class Category(models.Model):
@@ -22,11 +23,11 @@ class SubCategory(models.Model):
 class Product(models.Model):
     AVAILABILITY = (
         ('Available', 'Available'),
-        ('Not_Available', 'Not_Available'),
+        ('UnAvailable', 'UnAvailable'),
     )
     STATUS = (
-        ('UnSold', 'UnSold'), ('Collected', 'Collected'),
-        ('Available', 'Available'), ('Denied', 'Denied'),
+        ('Collected', 'Collected'),
+        ('Pending', 'Pending'), ('Denied', 'Denied'),
     )
 
     user = models.ForeignKey(UsersAccount, on_delete=models.DO_NOTHING)
@@ -38,7 +39,7 @@ class Product(models.Model):
     collected_date = models.DateField()
     quantity = models.IntegerField()
     status = models.CharField(max_length=10, choices=STATUS, default='Pending')
-    # availability = models.CharField(max_length=20, choices=AVAILABILITY, default='Available')
+    availability = models.CharField(max_length=20, choices=AVAILABILITY, default='Available')
 
     # ----------- product pricing ---------------
     payed = models.BooleanField(default=False)
@@ -47,7 +48,7 @@ class Product(models.Model):
     selling_price = models.DecimalField(max_digits=10, decimal_places=0, default=0)
 
     # -------product address --------------------
-    district = models.CharField(max_length=100)
+    district = models.ForeignKey(District, on_delete=models.DO_NOTHING)
     sector = models.CharField(max_length=100)
     cell = models.CharField(max_length=100)
     village = models.CharField(max_length=100)

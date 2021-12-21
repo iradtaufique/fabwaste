@@ -1,0 +1,71 @@
+{% extends 'dashboard/dashboard.html' %}
+{% load static %}
+{% block dashboard_content %}
+    <main class="app-content">
+      <div class="app-title">
+        <div>
+          <h1><i class="fa fa-th-list"></i>Product Details</h1>
+          <p>Fab|Waste</p>
+        </div>
+      </div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="tile">
+                <h5 class="text-center">Product Image</h5>
+                <hr>
+                <div class="text-center">
+                    <img src="{{ details.product_image.url }}" alt="" width="300" height="300">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="tile">
+                <h5 class="text-center">Product Information</h5>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-form-label" for="inputDefault">Product Name</label>
+                            <p class="form-control">{{ details.product_name }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-form-label" for="inputDefault">Created Date</label>
+                            <p class="form-control">{{ details.created_date }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-form-label" for="inputDefault">Selling Price</label>
+                            <p class="form-control">{{ details.selling_price }}</p>
+                        </div>
+                    </div>
+{#                    <div class="col-sm-6">#}
+{#                        <div class="form-group">#}
+{#                            <label class="col-form-label" for="inputDefault">Price</label>#}
+{#                            <p class="form-control">RWF {{ details.desired_price }}</p>#}
+{#                        </div>#}
+{#                    </div>#}
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-form-label" for="inputDefault">Quantity</label>
+                            <p class="form-control">{{ details.quantity }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="exampleTextarea">Descriptions</label>
+                            <textarea class="form-control" id="exampleTextarea" rows="3">{{ details.description }}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    </main>
+{% endblock %}

@@ -62,4 +62,16 @@
         <li><a class="app-menu__item" href="{% url 'metals_products' %}"><i class="icon fa fa-circle-o"></i>Metals Products</a></li>
       </ul>
       {% endif %}
+
+    {#================== snippets for displaying sidebar on agents sidebar ======================================#}
+      {% if request.user.is_agent %}
+       <ul class="app-menu">
+        <li><a class="app-menu__item active" href="{% url 'dashboard' %}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
+        <li><a class="app-menu__item" href="{% url 'add_product' %}"><i class="icon fa fa-plus mr-2"></i>Add Products</a></li>
+        <li><a class="app-menu__item" href="{% url 'agent_products' %}"><i class="icon fa fa-eye mr-2"></i>Pending Products</a></li>
+        <li><a class="app-menu__item" href="{% url 'agent_collected_products' %}"><i class="icon fa fa-eye mr-2"></i>Collected Products</a></li>
+        <li><a class="app-menu__item" href="{% url 'agent_users' %}"><i class="icon fa fa-user mr-2"></i>Users</a></li>
+        <li><a class="app-menu__item" href="{% url 'subcategory' %}"><i class="icon fa fa-money mr-2"></i>Product Buying Price</a></li>
+      </ul>
+      {% endif %}
     </aside>

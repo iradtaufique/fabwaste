@@ -3,9 +3,15 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.utils.translation import gettext_lazy as _
 
+class District(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f'{self.name}'
+
 
 class CustomAccountManager(BaseUserManager):
-    def create_superuser(self, email, full_name, password, **other_fields):
+    def create_superuser(self, email, full_name, password,  **other_fields):
 
         other_fields.setdefault('is_staff', True)
         other_fields.setdefault('is_superuser', True)
@@ -18,7 +24,7 @@ class CustomAccountManager(BaseUserManager):
             raise ValueError(
                 'Superuser must be assigned to is_superuser=True.')
 
-        return self.create_user(email, full_name, password, **other_fields)
+        return self.create_user(email, full_name, password,  **other_fields)
 
     def create_user(self, email, full_name, password, **other_fields):
 
@@ -43,7 +49,8 @@ class UsersAccount(AbstractBaseUser, PermissionsMixin):
     is_agent = models.BooleanField(default=False)
     is_manufacture = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
-    location = models.CharField(max_length=100)
+    # location = models.CharField(max_length=100)
+    location = models.ForeignKey(District, on_delete=models.DO_NOTHING, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

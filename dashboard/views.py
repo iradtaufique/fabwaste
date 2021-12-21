@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from userauth.models import UsersAccount
-from products.models import Product, Category, Address
+from products.models import Product, Category, Address, SubCategory
 from .forms import AddCategoriesForm, AddSubCategoriesForm
 from django.contrib import messages
 
@@ -22,6 +22,7 @@ def index(request):
     household_sold_device = Product.objects.filter(user=request.user, status='Collected', payed=True).count()
     total_unpayed_devices = Product.objects.filter(payed=False, status='Collected').count()
     total_payed_devices = Product.objects.filter(payed=True).count()
+    agent_total_devices = Product.objects.filter(availability='Available', status='Pending').count()
 
     # categories = Category.objects.all()
     categ = []
@@ -35,10 +36,15 @@ def index(request):
     print(categ)
     print(cateName)
 
-    total_textile_products = Product.objects.filter(category=categ[0]).count()
-    total_electronics_products = Product.objects.filter(category=categ[1]).count()
-    total_metals_products = Product.objects.filter(category=categ[1]).count()
-    total_plastics_products = Product.objects.filter(category=categ[2]).count()
+    total_textile_products = Product.objects.filter(category__name='Textile', status='Collected').count()
+    total_electronics_products = Product.objects.filter(category__name='Electronics', status='Collected').count()
+    total_metals_products = Product.objects.filter(category__name='Metals', status='Collected').count()
+    total_plastics_products = Product.objects.filter(category__name='Plastics', status='Collected').count()
+    agent_total_collected_devices = Product.objects.filter(status='Collected').count()
+    agent_total_denied_devices = Product.objects.filter(status='Denied').count()
+    agent_total_payed_devices = Product.objects.filter(status='Collected', payed=True).count()
+    agent_total_unpayed_devices = Product.objects.filter(status='Collected', payed=False).count()
+    agent_total_users = UsersAccount.objects.filter(location=request.user.location).count()
 
     money = 0
 
@@ -60,6 +66,12 @@ def index(request):
         'total_metals_products': total_metals_products,
         'total_plastics_products': total_plastics_products,
         'total_electronics_products': total_electronics_products,
+        'agent_total_devices': total_electronics_products,
+        'agent_total_collected_devices': agent_total_collected_devices,
+        'agent_total_denied_devices': agent_total_denied_devices,
+        'agent_total_payed_devices': agent_total_payed_devices,
+        'agent_total_unpayed_devices': agent_total_unpayed_devices,
+        'agent_total_users': agent_total_users,
 
     }
     return render(request, 'dashboard/index.html', context)
@@ -156,7 +168,7 @@ def add_sub_category(request):
 
 
 def view_textile_products(request):
-    textile = Product.objects.filter(category__name='Textile')
+    textile = Product.objects.filter(category__name='Textile', status='Collected')
     context = {
         'textile': textile,
     }
@@ -164,7 +176,7 @@ def view_textile_products(request):
 
 
 def view_electronics_products(request):
-    electronics = Product.objects.filter(category__name='Electronics')
+    electronics = Product.objects.filter(category__name='Electronics', status='Collected')
     context = {
         'electronics': electronics,
     }
@@ -172,7 +184,7 @@ def view_electronics_products(request):
 
 
 def view_metals_products(request):
-    metals = Product.objects.filter(category__name='Metals')
+    metals = Product.objects.filter(category__name='Metals', status='Collected')
     context = {
         'metals': metals,
     }
@@ -180,8 +192,32 @@ def view_metals_products(request):
 
 
 def view_plastics_products(request):
-    plastics = Product.objects.filter(category__name='Plastics')
+    plastics = Product.objects.filter(category__name='Plastics', status='Collected')
     context = {
         'plastics': plastics,
     }
     return render(request, 'dashboard/plastics_products.html', context)
+
+
+"""view for viewing products which are on agent location"""
+def agent_view_products(request):
+    data = Product.objects.filter(district=request.user.location, availability='Available', status='Pending')
+    return render(request, 'dashboard/agent_products.html', {'data': data})
+
+
+"""view for viewing products which are on agent location"""
+def agent_view_collected_products(request):
+    data = Product.objects.filter(district=request.user.location, status='Collected')
+    return render(request, 'dashboard/agent_collected_products.html', {'data': data})
+
+
+"""view for viewing users which are on agent location"""
+def agent_view_users(request):
+    data = UsersAccount.objects.filter(location=request.user.location, is_house_hold=True)
+    return render(request, 'dashboard/agent_users.html', {'data': data})
+
+
+"""view for viewing subcategories"""
+def agent_view_subcategories(request):
+    subcategories = SubCategory.objects.all()
+    return render(request, 'dashboard/list_subcategories.html', {'subcategories': subcategories})

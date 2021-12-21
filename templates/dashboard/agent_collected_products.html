@@ -5,10 +5,23 @@
     <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-th-list"></i>Textile Products</h1>
+          <h1><i class="fa fa-th-list"></i>All Collected Products in Your Location</h1>
           <p>Fab|Waste</p>
         </div>
       </div>
+
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <div class="alert alert-success text-center" role="alert">
+              {{ message }}
+            </div>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+
       <div class="row">
         <div class="col-md-12">
           <div class="tile">
@@ -17,26 +30,26 @@
                 <table class="table table-hover table-bordered" id="sampleTable">
                   <thead>
                     <tr>
+                      <th>ID</th>
                       <th>Product</th>
                       <th>Quantity</th>
                       <th>Created Date</th>
                       <th>Collected Date</th>
-                      <th>View</th>
+                      <th>Desired Price</th>
+                      <th>Buying Price</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for device in plastics %}
+                    {% for device in data %}
                         <tr>
+                          <td>{{ device.id}}</td>
                           <td>{{ device.product_name}}</td>
                           <td>{{ device.quantity}}</td>
-{#                          <td>{{ device.user.full_name}}</td>#}
                           <td>{{ device.created_date}}</td>
                           <td>{{ device.collected_date}}</td>
-                          <td>
-                            <div class="text-center">
-                              <a href="{% url 'manufacture_device_details' device.id %}"><ion-icon name="eye-outline" style="font-size: large"></ion-icon></a>
-                            </div>
-                          </td>
+                          <td>{{ device.desired_price}}</td>
+                          <td>{{ device.buying_price}}</td>
+
                         </tr>
                     {% endfor %}
                   </tbody>
@@ -58,4 +71,5 @@
     <script type="text/javascript" src="{% static 'js/plugins/dataTables.bootstrap.min.js' %}"></script>
     <script type="text/javascript">$('#sampleTable').DataTable();</script>
 
-{% endblock %}
+
+    {% endblock %}

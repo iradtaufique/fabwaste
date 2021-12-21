@@ -6,7 +6,7 @@
     <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-th-list"></i>Devices Details</h1>
+          <h1><i class="fa fa-th-list"></i>Update your product</h1>
           <p>Fab|Waste</p>
         </div>
       </div>
@@ -14,107 +14,68 @@
             <form action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row">
-        <div class="col-sm-4">
-            <div class="tile">
-                <h5 class="text-center">Device Image</h5>
-                <hr>
-                <div class="text-center">
-{#                    <img src="{{ form.product_image.url }}" alt="" width="300" height="300">#}
-                    {{ form.product_image }}
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-8">
-            <div class="tile">
-                <h5 class="text-center">Device Information</h5>
-                <hr>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Product Name</label>
-                            {{ form.product_name }}
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Created Date</label>
-                            <p class="form-control">{{ details.created_date }}</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Collected Date</label>
-                            <p class="form-control">{{ details.collected_date }}</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Price</label>
-                            <p class="form-control">RWF {{ details.desired_price }}</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Quantity</label>
-                            <p class="form-control">{{ details.quantity }}</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-8">
-                        <div class="form-group">
-                            <label for="exampleTextarea">Example textarea</label>
-                            <textarea class="form-control" id="exampleTextarea" rows="3">{{ details.description }}</textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12">
-            <div class="tile">
-                <h5>Address Info</h5>
-                <hr>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">District</label>
-                            <p class="form-control">{{ details.district }}</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Sector</label>
-                            <p class="form-control">{{ details.sector}}</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Cell</label>
-                            <p class="form-control">{{ details.cell }}</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Village</label>
-                            <p class="form-control">{{ details.village }}</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Road Number</label>
-                            <p class="form-control">{{ details.road_number }}</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Road Number</label>
-                            <p class="form-control">{{ details.house_number }}</p>
+                   <div class="col-sm-12">
+                        <div class="tile">
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form.quantity|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form.availability|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form.collected_date|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form.district|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form.sector|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form.cell|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form.village|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form.road_number|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form.house_number|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form.description|as_crispy_field }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-primary" width="500">Update Device</button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-            </div>
-        </div>
-    </div>
-                <button>save</button>
             </form>
     </main>
 {% endblock %}

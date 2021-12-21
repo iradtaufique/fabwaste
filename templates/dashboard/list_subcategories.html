@@ -5,10 +5,11 @@
     <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-th-list"></i>Textile Products</h1>
+          <h1><i class="fa fa-th-list"></i>List of Acceptable Categories and their Price</h1>
           <p>Fab|Waste</p>
         </div>
       </div>
+
       <div class="row">
         <div class="col-md-12">
           <div class="tile">
@@ -17,26 +18,21 @@
                 <table class="table table-hover table-bordered" id="sampleTable">
                   <thead>
                     <tr>
-                      <th>Product</th>
-                      <th>Quantity</th>
-                      <th>Created Date</th>
-                      <th>Collected Date</th>
-                      <th>View</th>
+                      <th>ID</th>
+                      <th>Category</th>
+                      <th>Sub Category</th>
+                      <th>Minimum Price</th>
+                      <th>Maximum Price</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for device in plastics %}
+                    {% for subcategory in  subcategories %}
                         <tr>
-                          <td>{{ device.product_name}}</td>
-                          <td>{{ device.quantity}}</td>
-{#                          <td>{{ device.user.full_name}}</td>#}
-                          <td>{{ device.created_date}}</td>
-                          <td>{{ device.collected_date}}</td>
-                          <td>
-                            <div class="text-center">
-                              <a href="{% url 'manufacture_device_details' device.id %}"><ion-icon name="eye-outline" style="font-size: large"></ion-icon></a>
-                            </div>
-                          </td>
+                          <td>{{ subcategory.id}}</td>
+                          <td>{{ subcategory.category}}</td>
+                          <td>{{ subcategory.name}}</td>
+                          <td>{{ subcategory.maximum_price}}</td>
+                          <td>{{ subcategory.minimum_price}}</td>
                         </tr>
                     {% endfor %}
                   </tbody>
@@ -58,4 +54,5 @@
     <script type="text/javascript" src="{% static 'js/plugins/dataTables.bootstrap.min.js' %}"></script>
     <script type="text/javascript">$('#sampleTable').DataTable();</script>
 
-{% endblock %}
+
+    {% endblock %}

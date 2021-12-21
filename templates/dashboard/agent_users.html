@@ -5,7 +5,7 @@
     <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-th-list"></i>Textile Products</h1>
+          <h1><i class="fa fa-th-list"></i>All Users in Your Location</h1>
           <p>Fab|Waste</p>
         </div>
       </div>
@@ -17,26 +17,21 @@
                 <table class="table table-hover table-bordered" id="sampleTable">
                   <thead>
                     <tr>
-                      <th>Product</th>
-                      <th>Quantity</th>
+                      <th>ID</th>
+                      <th>Full Name</th>
+                      <th>Email</th>
+                      <th>Phone</th>
                       <th>Created Date</th>
-                      <th>Collected Date</th>
-                      <th>View</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for device in plastics %}
+                    {% for user in data %}
                         <tr>
-                          <td>{{ device.product_name}}</td>
-                          <td>{{ device.quantity}}</td>
-{#                          <td>{{ device.user.full_name}}</td>#}
-                          <td>{{ device.created_date}}</td>
-                          <td>{{ device.collected_date}}</td>
-                          <td>
-                            <div class="text-center">
-                              <a href="{% url 'manufacture_device_details' device.id %}"><ion-icon name="eye-outline" style="font-size: large"></ion-icon></a>
-                            </div>
-                          </td>
+                          <td>{{ user.id}}</td>
+                          <td>{{ user.full_name}}</td>
+                          <td>{{ user.email}}</td>
+                          <td>{{ user.mobile}}</td>
+                          <td>{{ user.created}}</td>
                         </tr>
                     {% endfor %}
                   </tbody>
@@ -58,4 +53,5 @@
     <script type="text/javascript" src="{% static 'js/plugins/dataTables.bootstrap.min.js' %}"></script>
     <script type="text/javascript">$('#sampleTable').DataTable();</script>
 
-{% endblock %}
+
+    {% endblock %}

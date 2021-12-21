@@ -1,6 +1,7 @@
 from django import forms
+from django.contrib import messages
 from django.shortcuts import redirect, render, get_object_or_404
-from .forms import AddProductForm, AddAddressForm, UpdateProductForm
+from .forms import AddProductForm, AddAddressForm, UpdateProductForm, ProductBuyingPriceForm
 from .models import Product, Address
 from django.core.mail import EmailMessage, send_mass_mail
 from django.template.loader import render_to_string
@@ -52,7 +53,7 @@ def addProduct(request):
 
 
 def houseHoldProducts(request):
-    products = Product.objects.filter(user=request.user).order_by()
+    products = Product.objects.filter(user=request.user)
     return render(request, 'houseHoldProducts.html', {'products': products})
 
 
@@ -66,6 +67,7 @@ def updateHouseHoldProducts(request, id):
         form = UpdateProductForm(request.POST or None, instance=product)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Product Updated Successfully')
             return redirect('view_product')
     return render(request, 'houseHoldProductUpdate.html', {'form': form})
 
@@ -101,11 +103,32 @@ def changeProductToCollected(request, id):
     product = get_object_or_404(Product, id=id)
 
 
-"""view for viewing the products details on Admin side"""
-
-
+"""view for viewing the products details"""
 def device_details(request, pk):
-    # address = Address.objects.get(pk=pk)
     details = Product.objects.get(pk=pk)
     context = {'details': details}
     return render(request, 'product_details.html', context)
+
+
+"""view for viewing the products details"""
+def manufacture_device_details(request, pk):
+    details = Product.objects.get(pk=pk)
+    context = {'details': details}
+    return render(request, 'dashboard/manufacture_product_details.html', context)
+
+
+"""view for adding buying price on product"""
+def add_buying_price(request, pk):
+    product = Product.objects.get(pk=pk)
+    form = ProductBuyingPriceForm()
+    if request.method == 'POST':
+        form = ProductBuyingPriceForm(request.POST or None, instance=product)
+        if form.is_valid():
+            prod = form.save(commit=False)
+            prod.payed = True
+            prod.save()
+            Product.objects.filter(pk=pk).update(status='Collected')
+            messages.success(request, 'Product Buying price Added Successfully')
+            return redirect('agent_products')
+    context = {'form': form}
+    return render(request, 'add_buying_price.html', context)

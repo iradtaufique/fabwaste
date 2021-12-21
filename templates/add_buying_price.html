@@ -1,0 +1,25 @@
+{% extends 'dashboard/dashboard.html' %}
+{% load crispy_forms_tags %}
+{% block dashboard_content %}
+    <main class="app-content">
+      <div class="app-title">
+        <div>
+          <h1><i class="fa fa-th-list"></i>Add Buying Price</h1>
+          <p>Fab|Waste</p>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+          <div class="col-7">
+            <div class="tile">
+                <h5 class="text-info">Add Buying Price</h5>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{ form.buying_price|as_crispy_field }}
+                    <button class="btn btn-info">Submit</button>
+                </form>
+
+           </div>
+          </div>
+      </div>
+    </main>
+{% endblock %}

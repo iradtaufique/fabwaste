@@ -9,6 +9,17 @@
           <p>Fab|Waste</p>
         </div>
       </div>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <div class="alert alert-success text-center" role="alert">
+              {{ message }}
+            </div>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
       <div class="row">
         <div class="col-md-12">
           <div class="tile">
@@ -23,6 +34,7 @@
                       <th>Cost</th>
                       <th>Created Date</th>
                       <th>Collected Date</th>
+                      <th>Product Availability</th>
                       <th>View</th>
                     </tr>
                   </thead>
@@ -35,6 +47,9 @@
                           <td>{{ device.desired_price}}</td>
                           <td>{{ device.created_date}}</td>
                           <td>{{ device.collected_date}}</td>
+                          <td class="text-center">
+                              <span class="badge {% if device.payed == True %}badge-success {% elif device.availability == 'UnAvailable' %}badge-danger{% elif device.availability == 'Available' %}badge-info{% endif %}">{% if device.payed == True %}
+                              Payed {% else %}{{ device.availability }}{% endif %} </span></td>
                           <td>
                             <div class="text-center">
                               <a href="{% url 'device_details' device.pk %}"><ion-icon name="eye-outline" style="font-size: large"></ion-icon></a>
