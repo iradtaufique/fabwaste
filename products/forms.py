@@ -55,3 +55,11 @@ class ProductBuyingPriceForm(ModelForm):
         fields = [
             'buying_price'
         ]
+
+
+class ProductSellingPriceForm(ModelForm):
+    class Meta:
+        model = Product
+        fields = [
+            'selling_price'
+        ]

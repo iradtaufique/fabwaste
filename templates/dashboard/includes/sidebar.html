@@ -12,28 +12,28 @@
       {% if request.user.is_superuser %}
       <ul class="app-menu">
         <li><a class="app-menu__item active" href="{% url 'dashboard' %}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
-        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Categories</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-list"></i><span class="app-menu__label">Categories</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
-            <li><a class="treeview-item" href="{% url 'add_category' %}"><i class="icon fa fa-circle-o"></i>Add Categories</a></li>
-            <li><a class="treeview-item" href="{% url 'add_sub_category' %}"><i class="icon fa fa-circle-o"></i>Add Sub Categories</a></li>
+            <li><a class="treeview-item" href="{% url 'add_category' %}"><i class="icon fa fa-plus mr-2"></i>Add Categories</a></li>
+            <li><a class="treeview-item" href="{% url 'add_sub_category' %}"><i class="icon fa fa-play-circle mr-2"></i>Add Sub Categories</a></li>
           </ul>
         </li>
 {#        <li><a class="app-menu__item" href="charts.html"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Charts</span></a></li>#}
 
-        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">Devices</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Devices</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
-            <li><a class="treeview-item" href="{% url 'payed' %}"><i class="icon fa fa-circle-o"></i>Payed Devices</a></li>
-            <li><a class="treeview-item" href="{% url 'un_payed' %}"><i class="icon fa fa-circle-o"></i>UnPayed Devices</a></li>
-            <li><a class="treeview-item" href="{% url 'available_devices' %}"><i class="icon fa fa-circle-o"></i>Available Devices</a></li>
-            <li><a class="treeview-item" href="{% url 'un_available' %}"><i class="icon fa fa-circle-o"></i>Unavailable Devices</a></li>
+            <li><a class="treeview-item" href="{% url 'payed' %}"><i class="icon fa fa-dollar mr-2"></i>Payed Devices</a></li>
+            <li><a class="treeview-item" href="{% url 'un_payed' %}"><i class="icon fa fa-money mr-2"></i>UnPayed Devices</a></li>
+            <li><a class="treeview-item" href="{% url 'available_devices' %}"><i class="icon fa fa-adjust mr-2"></i>Available Devices</a></li>
+            <li><a class="treeview-item" href="{% url 'un_available' %}"><i class="icon fa fa-times-circle mr-2"></i>Unavailable Devices</a></li>
           </ul>
         </li>
 
-        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">User Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">User Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
-            <li><a class="treeview-item" href="{% url 'register_agent' %}"><i class="icon fa fa-circle-o"></i>Register Agent</a></li>
-            <li><a class="treeview-item" href="{% url 'register_manufacture' %}"><i class="icon fa fa-circle-o"></i>Register Manufacture</a></li>
-            <li><a class="treeview-item" href="{% url 'list_user' %}"><i class="icon fa fa-circle-o"></i>All Users</a></li>
+            <li><a class="treeview-item" href="{% url 'register_agent' %}"><i class="icon fa fa-plus mr-2"></i>Register Agent</a></li>
+            <li><a class="treeview-item" href="{% url 'register_manufacture' %}"><i class="icon fa fa-plus mr-2"></i>Register Manufacture</a></li>
+            <li><a class="treeview-item" href="{% url 'list_user' %}"><i class="icon fa fa-users mr-2"></i>All Users</a></li>
           </ul>
         </li>
       </ul>
@@ -44,11 +44,11 @@
         <li><a class="app-menu__item active" href="{% url 'dashboard' %}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Device</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
-            <li><a class="treeview-item" href="{% url 'add_product' %}"><i class="icon fa fa-circle-o"></i>Add Device</a></li>
-            <li><a class="treeview-item" href="{% url 'view_product' %}"><i class="icon fa fa-circle-o"></i>View Device</a></li>
+            <li><a class="treeview-item" href="{% url 'add_product' %}"><i class="icon fa fa-plus mr-2"></i>Add Device</a></li>
+            <li><a class="treeview-item" href="{% url 'view_product' %}"><i class="icon fa fa-eye mr-2"></i>View Device</a></li>
           </ul>
         </li>
-        <li><a class="app-menu__item" href="{% url 'near_agent' %}"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Near Agent</span></a></li>
+        <li><a class="app-menu__item" href="{% url 'near_agent' %}"><i class="app-menu__icon fa fa-pie-chart mr-2"></i><span class="app-menu__label">Near Agent</span></a></li>
       </ul>
       {% endif %}
 
@@ -56,10 +56,10 @@
       {% if request.user.is_manufacture%}
        <ul class="app-menu">
         <li><a class="app-menu__item active" href="{% url 'dashboard' %}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
-        <li><a class="app-menu__item" href="{% url 'electronics_products' %}"><i class="icon fa fa-circle-o"></i>Electronics Products</a></li>
-        <li><a class="app-menu__item" href="{% url 'plastics_products' %}"><i class="icon fa fa-circle-o"></i>Plastics Products</a></li>
-        <li><a class="app-menu__item" href="{% url 'textile_products' %}"><i class="icon fa fa-circle-o"></i>Textile Products</a></li>
-        <li><a class="app-menu__item" href="{% url 'metals_products' %}"><i class="icon fa fa-circle-o"></i>Metals Products</a></li>
+        <li><a class="app-menu__item" href="{% url 'electronics_products' %}"><i class="icon fa fa-desktop mr-2"></i>Electronics Products</a></li>
+        <li><a class="app-menu__item" href="{% url 'plastics_products' %}"><i class="icon fa fa-ruble mr-2"></i>Plastics Products</a></li>
+        <li><a class="app-menu__item" href="{% url 'textile_products' %}"><i class="icon fa fa-users mr-2"></i>Textile Products</a></li>
+        <li><a class="app-menu__item" href="{% url 'metals_products' %}"><i class="icon fa fa-list mr-2"></i>Metals Products</a></li>
       </ul>
       {% endif %}
 

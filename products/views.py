@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib import messages
 from django.shortcuts import redirect, render, get_object_or_404
-from .forms import AddProductForm, AddAddressForm, UpdateProductForm, ProductBuyingPriceForm
+from .forms import AddProductForm, AddAddressForm, UpdateProductForm, ProductBuyingPriceForm, ProductSellingPriceForm
 from .models import Product, Address
 from django.core.mail import EmailMessage, send_mass_mail
 from django.template.loader import render_to_string
@@ -132,3 +132,19 @@ def add_buying_price(request, pk):
             return redirect('agent_products')
     context = {'form': form}
     return render(request, 'add_buying_price.html', context)
+
+
+"""view for adding selling price on product"""
+def add_selling_price(request, pk):
+    product = Product.objects.get(pk=pk)
+    form = ProductSellingPriceForm(request.POST or None, instance=product)
+    if request.method == 'POST':
+        form = ProductSellingPriceForm(request.POST or None, instance=product)
+        if form.is_valid():
+            prod = form.save(commit=False)
+            prod.save()
+            messages.success(request, 'Product selling price Added Successfully')
+            return redirect('payed')
+    context = {'form': form}
+    return render(request, 'add_selling_price.html', context)
+
