@@ -23,7 +23,7 @@ urlpatterns = [
     path('agent-collected-products', agent_view_collected_products, name='agent_collected_products'),
     path('agent-users', agent_view_users, name='agent_users'),
     path('delete-user/<int:id>', delete_user, name='delete_user'),
-    path('subcategories', agent_view_subcategories, name='subcategory'),
+    path('view-subcategories', agent_view_subcategories, name='subcategory'),
 
     # ---- urls for household ------------
     path('nearest-agent', near_agent_view, name='near_agent')

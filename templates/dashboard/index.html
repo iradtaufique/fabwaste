@@ -130,7 +130,10 @@
                           <td>{{ device.quantity}}</td>
                           <td>{{ device.created_date}}</td>
                           <td>{{ device.collected_date}}</td>
-                          <td class="text-center"><span class="badge {% if device.availability == 'Available' %}badge-info {% elif device.availability == 'UnAvailable' %}badge-danger{% endif %}">{{ device.availability }}</span></td>
+                          <td class="text-center">
+                              <span class="badge {% if device.payed == True %}badge-success {% elif device.availability == 'UnAvailable' %}badge-danger{% elif device.availability == 'Available' %}badge-info{% endif %}">{% if device.payed == True %}
+                              Payed {% else %}{{ device.availability }}{% endif %} </span>
+                          </td>
                           <td>
                             <div class="text-center">
                               <a href="{% url 'device_details' device.pk %}"><ion-icon name="eye-outline" style="font-size: large"></ion-icon></a>
@@ -150,26 +153,40 @@
 {# =========================================================================================================================          #}
       {% elif request.user.is_manufacture %}
           <div class="row">
-          {% for category in categories %}
+            <div class="col-md-6 col-lg-3">
+                <a href="{% url 'electronics_products' %}" class="text-decoration-none">
+                    <div class="widget-small primary coloured-icon"><i class="icon fa fa fa-list fa-3x"></i>
+                <div class="info">
+                  <h4>Electronics Products</h4>
+                    <p><b>{{ total_electronics_products }}</b></p>
+                </div>
+              </div>
+                </a>
+            </div>
             <div class="col-md-6 col-lg-3">
               <div class="widget-small primary coloured-icon"><i class="icon fa fa fa-list fa-3x"></i>
                 <div class="info">
-                  <h4>{{ category.name }} Products</h4>
-                  {% if category.name == 'Textile' %}
+                  <h4>Textile Products</h4>
                     <p><b>{{ total_textile_products }}</b></p>
-                  {% elif category.name == 'Electronics' %}
-                    <p><b>{{ total_electronics_products }}</b></p>
-                  {% elif category.name == 'Metals' %}
-                    <p><b>{{ total_metals_products }}</b></p>
-                  {% elif category.name == 'Plastics' %}
-                    <p><b>{{ total_plastics_products }}</b></p>
-                  {% else %}
-                    <p><b>0</b></p>
-                  {% endif %}
                 </div>
               </div>
             </div>
-          {% endfor %}
+            <div class="col-md-6 col-lg-3">
+              <div class="widget-small primary coloured-icon"><i class="icon fa fa fa-list fa-3x"></i>
+                <div class="info">
+                  <h4>Metals Products</h4>
+                    <p><b>{{ total_plastics_products }}</b></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <div class="widget-small primary coloured-icon"><i class="icon fa fa fa-list fa-3x"></i>
+                <div class="info">
+                  <h4>Metals Products</h4>
+                    <p><b>{{ total_metals_products }}</b></p>
+                </div>
+              </div>
+            </div>
           </div>
 {# =========================================================================================================================          #}
           {% elif request.user.is_agent %}

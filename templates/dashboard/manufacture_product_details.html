@@ -4,7 +4,7 @@
     <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-th-list"></i>Product Details</h1>
+          <h1><i class="fa fa-th-list"></i>Devices Details</h1>
           <p>Fab|Waste</p>
         </div>
       </div>
@@ -21,43 +21,28 @@
         </div>
         <div class="col-sm-8">
             <div class="tile">
-                <h5 class="text-center">Product Information</h5>
+                <h5 class="text-center">{{ details.product_name }}</h5>
                 <hr>
-                <div class="row">
+                <p>{{ details.description }}</p>
+                <div class="row" style="width: 70%">
                     <div class="col-sm-6">
-                        <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Product Name</label>
-                            <p class="form-control">{{ details.product_name }}</p>
+                        <div class="card mb-3 border-primary">
+                            <div class="card-body">
+                                <b>Price: </b>{{ details.selling_price }}<br>
+                                <b>Quantity: </b>{{ details.quantity }}<br>
+{#                                <b>Price: </b>{{ details.selling_price }}<br>#}
+                                <b>Create Date: </b>{{ details.created_date }}
+                            </div>
                         </div>
                     </div>
+
                     <div class="col-sm-6">
-                        <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Created Date</label>
-                            <p class="form-control">{{ details.created_date }}</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Selling Price</label>
-                            <p class="form-control">{{ details.selling_price }}</p>
-                        </div>
-                    </div>
-{#                    <div class="col-sm-6">#}
-{#                        <div class="form-group">#}
-{#                            <label class="col-form-label" for="inputDefault">Price</label>#}
-{#                            <p class="form-control">RWF {{ details.desired_price }}</p>#}
-{#                        </div>#}
-{#                    </div>#}
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label class="col-form-label" for="inputDefault">Quantity</label>
-                            <p class="form-control">{{ details.quantity }}</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label for="exampleTextarea">Descriptions</label>
-                            <textarea class="form-control" id="exampleTextarea" rows="3">{{ details.description }}</textarea>
+                        <div class="card mb-3 border-primary">
+                            <div class="card-body">
+                                <b>District: </b>{{ details.district }}<br>
+                                <b>Sector: </b>{{ details.sector }}<br>
+                                <b>Cell: </b>{{ details.cell }}<br>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -65,7 +50,6 @@
         </div>
 
     </div>
-
 
     </main>
 {% endblock %}

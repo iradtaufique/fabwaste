@@ -53,7 +53,7 @@ def addProduct(request):
 
 
 def houseHoldProducts(request):
-    products = Product.objects.filter(user=request.user)
+    products = Product.objects.filter(user=request.user).order_by('-created_date')
     return render(request, 'houseHoldProducts.html', {'products': products})
 
 

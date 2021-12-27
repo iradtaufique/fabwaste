@@ -160,7 +160,8 @@ def add_sub_category(request):
         form = AddSubCategoriesForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('dashboard')
+            messages.success(request, 'Sub category added Successfully!')
+            return redirect('subcategory')
     context = {
         'form': form,
     }
