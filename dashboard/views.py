@@ -161,7 +161,7 @@ def add_sub_category(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Sub category added Successfully!')
-            return redirect('subcategory')
+            return redirect('view_subcategory')
     context = {
         'form': form,
     }
@@ -218,7 +218,39 @@ def agent_view_users(request):
     return render(request, 'dashboard/agent_users.html', {'data': data})
 
 
-"""view for viewing subcategories"""
+"""view for viewing subcategories on agent side"""
 def agent_view_subcategories(request):
     subcategories = SubCategory.objects.all()
     return render(request, 'dashboard/list_subcategories.html', {'subcategories': subcategories})
+
+
+"""view for viewing subcategories on admin side"""
+def view_subcategories(request):
+    subcategories = SubCategory.objects.all()
+    return render(request, 'dashboard/admin_list_subcategories.html', {'subcategories': subcategories})
+
+
+"""view for editing subcategory"""
+def edit_sub_category(request, pk):
+    data = get_object_or_404(SubCategory, id=pk)
+    form = AddSubCategoriesForm(instance=data)
+    if request.method == 'POST':
+        form = AddSubCategoriesForm(request.POST or None, instance=data)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Sub category edited Successfully!')
+            return redirect('view_subcategory')
+    context = {
+        'form': form,
+    }
+    return render(request, 'dashboard/add_sub_category.html', context)
+
+
+"""view for deleting subcategory"""
+def delete_subcategory(request, pk):
+    data = get_object_or_404(SubCategory, id=pk)
+    if request.method == 'POST':
+        data.delete()
+        messages.success(request, 'Item Deleted Successfully')
+        return redirect('view_subcategory')
+    return render(request, 'dashboard/delete.html')

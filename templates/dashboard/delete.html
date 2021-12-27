@@ -1,0 +1,27 @@
+{% extends 'dashboard/dashboard.html' %}
+{% block dashboard_content %}
+
+    <main class="app-content">
+      <div class="app-title">
+        <div>
+          <h1><i class="fa fa-th-list"></i>Delete User</h1>
+          <p>Fab|Waste</p>
+        </div>
+      </div>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                  <div class="tile text-center">
+                    <h3 class="tile-title"><i class="fa fa-exclamation-circle mr-4 text-danger" style="font-size: 40px"></i>Delete Product</h3>
+                    <div class="tile-body">Are you sure You want to delete this Item</div>
+                    <div class="tile-footer">
+                        <button class="btn btn-danger"><i class="fa fa-trash-o"></i>Confirm</button>
+                        <a href="{% url 'view_subcategory' %}" class="btn btn-secondary"><i class="fa fa-times"></i>Cancel </a>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </form>
+    </main>
+{% endblock %}
