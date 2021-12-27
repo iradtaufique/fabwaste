@@ -197,3 +197,11 @@ class AddCategoryApiView(CreateAPIView):
 
     def perform_create(self, serializer):
         return
+
+
+"""API View for listing agents"""
+class ListAllAgentAPIView(ListAPIView):
+    serializer_class = RegisterSerializer
+
+    def get_queryset(self):
+        return UsersAccount.objects.filter(is_agent=True)
