@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import RegisterUserAPi, UserLoginApiView, CreateProductApiView, ListDevicesApiView, ListUsersApiView, \
-    RegisterAgentAPiView, RegisterHouseHoldAPiView, ListHouseHoldPayedProductApiView, ListAllAgentAPIView
+    RegisterAgentAPiView, RegisterHouseHoldAPiView, ListHouseHoldPayedProductApiView, ListAllAgentAPIView, \
+    ListElectronicsProductsApiView, ListPlasticsProductsApiView, ListMetalsProductsApiView, ListTextileProductsApiView
 
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -31,6 +32,10 @@ urlpatterns = [
     path('list-household-payed-product/', ListHouseHoldPayedProductApiView.as_view(), name='list_household_payed_product_api'),
     path('list-users/', ListUsersApiView.as_view(), name='list_users'),
     path('list-agents-api/', ListAllAgentAPIView.as_view(), name='list_agents_api'),
+    path('electronic-products-api/', ListElectronicsProductsApiView.as_view(), name='electronic_product_api'),
+    path('plastic-products-api/', ListPlasticsProductsApiView.as_view(), name='plastics_product_api'),
+    path('metal-products-api/', ListMetalsProductsApiView.as_view(), name='metals_product_api'),
+    path('textile-products-api/', ListTextileProductsApiView.as_view(), name='textile_product_api'),
 
     # documentation links
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

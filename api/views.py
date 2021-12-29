@@ -16,7 +16,7 @@ from userauth.models import UsersAccount
 from products.models import Product
 from userauth.tokens import account_activation_token
 from .serializers import RegisterSerializer, UserLoginSerializer, CreateProductSerializer, ListProductSerializer, \
-    ListHouseHoldPayedProductSerializer, AddCategorySerializer
+    ListHouseHoldPayedProductSerializer, AddCategorySerializer, ListAvailableToSoldProductSerializer
 import jwt
 
 
@@ -26,7 +26,7 @@ class RegisterUserAPi(GenericAPIView):
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
-            user = serializer.save(is_house_hold=True)
+            user = serializer.save(is_house_hold=True, is_active=True)
             current_site = get_current_site(request)
             subject = 'Activate Account'
             message = render_to_string(
@@ -80,7 +80,7 @@ class RegisterHouseHoldAPiView(GenericAPIView):
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
-            user = serializer.save(is_house_hold=True)
+            user = serializer.save(is_house_hold=True, is_active=True)
 
             current_site = get_current_site(request)
             subject = 'Activate Account'
@@ -205,3 +205,35 @@ class ListAllAgentAPIView(ListAPIView):
 
     def get_queryset(self):
         return UsersAccount.objects.filter(is_agent=True)
+
+
+"""APi view for listing electronics products"""
+class ListElectronicsProductsApiView(ListAPIView):
+    serializer_class = ListAvailableToSoldProductSerializer
+
+    def get_queryset(self):
+        return Product.objects.filter(category__name='Electronics')
+
+
+"""APi view for listing Plastics products"""
+class ListPlasticsProductsApiView(ListAPIView):
+    serializer_class = ListAvailableToSoldProductSerializer
+
+    def get_queryset(self):
+        return Product.objects.filter(category__name='Plastics')
+
+
+"""APi view for listing Plastics products"""
+class ListMetalsProductsApiView(ListAPIView):
+    serializer_class = ListAvailableToSoldProductSerializer
+
+    def get_queryset(self):
+        return Product.objects.filter(category__name='Metals')
+
+
+"""APi view for listing Plastics products"""
+class ListTextileProductsApiView(ListAPIView):
+    serializer_class = ListAvailableToSoldProductSerializer
+
+    def get_queryset(self):
+        return Product.objects.filter(category__name='Textile')
