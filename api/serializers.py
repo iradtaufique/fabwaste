@@ -73,9 +73,16 @@ class AddCategorySerializer(serializers.ModelSerializer):
 
 
 class AddSubCategorySerializer(serializers.ModelSerializer):
+    # category = serializers.CharField(source='category.name')
+
     class Meta:
         model = SubCategory
         fields = ['id', 'category', 'name', 'minimum_price', 'maximum_price']
+
+    def to_representation(self, instance):
+        rep = super(AddSubCategorySerializer, self).to_representation(instance)
+        rep['category'] = instance.category.name
+        return rep
 
 
 """serializer for listing electronic products"""
