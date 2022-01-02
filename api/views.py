@@ -10,13 +10,15 @@ from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.generics import CreateAPIView, GenericAPIView, ListAPIView, RetrieveAPIView
+from rest_framework.generics import CreateAPIView, GenericAPIView, ListAPIView, RetrieveAPIView, RetrieveDestroyAPIView, \
+    RetrieveUpdateAPIView
 from userauth.models import UsersAccount
 
-from products.models import Product
+from products.models import Product, Category, SubCategory
 from userauth.tokens import account_activation_token
 from .serializers import RegisterSerializer, UserLoginSerializer, CreateProductSerializer, ListProductSerializer, \
-    ListHouseHoldPayedProductSerializer, AddCategorySerializer, ListAvailableToSoldProductSerializer
+    ListHouseHoldPayedProductSerializer, AddCategorySerializer, ListAvailableToSoldProductSerializer, \
+    AddSubCategorySerializer
 import jwt
 
 
@@ -289,4 +291,57 @@ class ListTextileProductsApiView(ListAPIView):
 class ProductDetailsAPIView(RetrieveAPIView):
     serializer_class = ListProductSerializer
     queryset = Product.objects.all()
+    lookup_field = 'pk'
+
+
+"""view for adding category"""
+class AddCategoryAPIView(CreateAPIView):
+    serializer_class = AddCategorySerializer
+
+    def get_queryset(self):
+        return Category.objects.all()
+
+
+"""view for Listing category"""
+class ListCategoryAPIView(ListAPIView):
+    serializer_class = AddCategorySerializer
+
+    def get_queryset(self):
+        return Category.objects.all()
+
+
+"""view for adding sub-category"""
+class AddSubCategoryAPIView(CreateAPIView):
+    serializer_class = AddSubCategorySerializer
+
+    def get_queryset(self):
+        return SubCategory.objects.all()
+
+
+"""view for Listing sub-category"""
+class ListSubCategoryAPIView(ListAPIView):
+    serializer_class = AddSubCategorySerializer
+
+    def get_queryset(self):
+        return SubCategory.objects.all()
+
+
+"""view for Listing sub-category"""
+class DeleteCategory(RetrieveDestroyAPIView):
+    serializer_class = AddCategorySerializer
+    queryset = Category.objects.all()
+    lookup_field = 'pk'
+
+
+"""view for Listing sub-category"""
+class DeleteSubCategory(RetrieveDestroyAPIView):
+    serializer_class = AddSubCategorySerializer
+    queryset = SubCategory.objects.all()
+    lookup_field = 'pk'
+
+
+""" api view for updating subcategory """
+class UpdateSubCategory(RetrieveUpdateAPIView):
+    serializer_class = AddSubCategorySerializer
+    queryset = SubCategory.objects.all()
     lookup_field = 'pk'

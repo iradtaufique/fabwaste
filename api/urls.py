@@ -2,7 +2,8 @@ from django.urls import path
 from .views import RegisterUserAPi, UserLoginApiView, CreateProductApiView, ListDevicesApiView, ListUsersApiView, \
     RegisterAgentAPiView, RegisterHouseHoldAPiView, ListHouseHoldPayedProductApiView, ListAllAgentAPIView, \
     ListElectronicsProductsApiView, ListPlasticsProductsApiView, ListMetalsProductsApiView, ListTextileProductsApiView, \
-    RegisterManufactureAPiView, ProductDetailsAPIView, AgentDetailsAPIView
+    RegisterManufactureAPiView, ProductDetailsAPIView, AgentDetailsAPIView, AddCategoryAPIView, ListCategoryAPIView, \
+    ListSubCategoryAPIView, AddSubCategoryAPIView, DeleteCategory, DeleteSubCategory, UpdateSubCategory
 
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -41,6 +42,14 @@ urlpatterns = [
     path('plastic-products-api/', ListPlasticsProductsApiView.as_view(), name='plastics_product_api'),
     path('metal-products-api/', ListMetalsProductsApiView.as_view(), name='metals_product_api'),
     path('textile-products-api/', ListTextileProductsApiView.as_view(), name='textile_product_api'),
+
+    path('add-category/', AddCategoryAPIView.as_view(), name='add-category-api'),
+    path('list-category/', ListCategoryAPIView.as_view(), name='list-category-api'),
+    path('add-sub-category/', AddSubCategoryAPIView.as_view(), name='add-sub-category-api'),
+    path('list-sub-category/', ListSubCategoryAPIView.as_view(), name='list-sub-category-api'),
+    path('delete-category/<int:pk>', DeleteCategory.as_view(), name='delete-sub-category-api'),
+    path('delete-sub-category/<int:pk>', DeleteSubCategory.as_view(), name='delete-sub-category-api'),
+    path('update-sub-category/<int:pk>', UpdateSubCategory.as_view(), name='update-sub-category-api'),
 
     # documentation links
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

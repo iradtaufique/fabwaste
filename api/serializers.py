@@ -78,10 +78,11 @@ class AddSubCategorySerializer(serializers.ModelSerializer):
         fields = ['category', 'name', 'minimum_price', 'maximum_price']
 
 
-"""serializer for listing eelctronic products"""
+"""serializer for listing electronic products"""
 class ListAvailableToSoldProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
             'id', 'category', 'product_name', 'product_image'
         ]
+
