@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 {% load static %}
+{% load crispy_forms_tags %}
 
 <html>
   <head>
@@ -31,9 +32,9 @@
         <h1>Fab Waste</h1>
       </div>
 
-        {% if form.errors %}
-            <div class="alert alert-info" role="alert">
-                Username or Password not correct!
+        {% if login_form.non_field_errors %}
+            <div class="alert alert-info text-decoration-none" role="alert">
+            {{ login_form.non_field_errors }}
             </div>
         {% endif %}
 
@@ -41,14 +42,13 @@
         <form class="login-form" method="post">
             {% csrf_token %}
           <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>
-          <div class="form-group">
-            <label class="control-label">{{ form.username.label|upper}}</label>
-            {{ form.username}}
-          </div>
-          <div class="form-group">
-            <label class="control-label">{{ form.password.label|upper }}</label>
-            {{ form.password }}
-          </div>
+
+            <div class="">
+                {{ login_form.email|as_crispy_field }}
+            </div>
+            <div class="">
+                {{ login_form.password|as_crispy_field }}
+            </div>
 
           <div class="form-group btn-container">
             <button class="btn btn-primary btn-block"><i class="fa fa-sign-in fa-lg fa-fw"></i>SIGN IN</button>
@@ -77,3 +77,10 @@
     </script>
   </body>
 </html>
+
+
+
+
+
+
+

@@ -49,7 +49,6 @@ class UsersAccount(AbstractBaseUser, PermissionsMixin):
     is_agent = models.BooleanField(default=False)
     is_manufacture = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
-    # location = models.CharField(max_length=100)
     location = models.ForeignKey(District, on_delete=models.DO_NOTHING, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -86,4 +85,4 @@ class Profile(models.Model):
     village = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
-        return str(self.user)
+        return str(self.first_name) + ' ' + str(self.last_name)

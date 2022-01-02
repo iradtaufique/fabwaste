@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth import authenticate
 from django.forms import ModelForm, fields
 from .models import UsersAccount
 from django.contrib.auth.forms import AuthenticationForm
@@ -41,3 +42,20 @@ class UserLoginForm(AuthenticationForm):
         attrs={'class': 'form-control mb-3', 'placeholder': 'Email', 'id': 'login-email'}))
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'password', 'id': 'login-pwd'}))
+
+
+"""new form for loging user"""
+class LoginUserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    class Meta:
+        model = UsersAccount
+        fields = ['email', 'password']
+
+    def clean(self):
+        email = self.cleaned_data['email']
+        password = self.cleaned_data['password']
+
+        if not authenticate(email=email, password=password):
+            raise forms.ValidationError('Check your username or password if are correct')
+

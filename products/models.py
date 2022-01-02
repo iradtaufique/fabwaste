@@ -47,12 +47,14 @@ class Product(models.Model):
     selling_price = models.DecimalField(max_digits=10, decimal_places=0, default=0)
 
     # -------product address --------------------
-    district = models.ForeignKey(District, on_delete=models.DO_NOTHING)
+    district = models.ForeignKey(District, on_delete=models.SET_NULL, null=True)
     sector = models.CharField(max_length=100)
     cell = models.CharField(max_length=100)
     village = models.CharField(max_length=100)
-    road_number = models.CharField(max_length=100)
-    house_number = models.CharField(max_length=100)
+    road_number = models.CharField(max_length=100, null=True, blank=True)
+    house_number = models.CharField(max_length=100, null=True, blank=True)
+
+    location_description = models.TextField(max_length=150, null=True, blank=True)
 
     def __str__(self):
         return f'{self.product_name}'

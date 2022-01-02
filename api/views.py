@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.generics import CreateAPIView, GenericAPIView, ListAPIView
+from rest_framework.generics import CreateAPIView, GenericAPIView, ListAPIView, RetrieveAPIView
 from userauth.models import UsersAccount
 
 from products.models import Product
@@ -50,8 +50,6 @@ class RegisterUserAPi(GenericAPIView):
 
 
 """ApiView for registering agent"""
-
-
 class RegisterAgentAPiView(GenericAPIView):
     serializer_class = RegisterSerializer
 
@@ -71,9 +69,27 @@ class RegisterAgentAPiView(GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-"""ApiView for registering agent"""
+"""ApiView for registering Manufacture"""
+class RegisterManufactureAPiView(GenericAPIView):
+    serializer_class = RegisterSerializer
+
+    def post(self, request):
+        serializer = RegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(is_manufacture=True, is_active=True)
+
+            return Response(
+                {
+                    'data': serializer.data,
+                    'status': status.HTTP_201_CREATED,
+                    "message": "Account Created Successfully",
+                }
+
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+"""ApiView for registering house_hold"""
 class RegisterHouseHoldAPiView(GenericAPIView):
     serializer_class = RegisterSerializer
 
@@ -105,8 +121,6 @@ class RegisterHouseHoldAPiView(GenericAPIView):
 
 
 """api view for login a user"""
-
-
 class UserLoginApiView(GenericAPIView):
     serializer_class = UserLoginSerializer
 
@@ -116,11 +130,19 @@ class UserLoginApiView(GenericAPIView):
         password = data.get('password', )
         user = authenticate(email=email, password=password)
 
+        # print(request.data)
+        print(user.is_house_hold)
+
         if user:
             auth_token = jwt.encode({'email': user.email, 'full_name': user.full_name, 'id': user.id},
                                     settings.JWT_SECRET_KEY)
             serializer = UserLoginSerializer(user)
             data = {'user': serializer.data, 'token': auth_token}
+
+            # ----------- description for redirecting users -------------
+            # if user.is_house_hold:
+            #     return redirect('list_devices_api')
+            # ------------end of redirect--------------------------------
             return Response(data, status=status.HTTP_200_OK)
 
         return Response({'details': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
@@ -207,6 +229,15 @@ class ListAllAgentAPIView(ListAPIView):
         return UsersAccount.objects.filter(is_agent=True)
 
 
+"""API View for agents Details"""
+class AgentDetailsAPIView(RetrieveAPIView):
+    serializer_class = RegisterSerializer
+    lookup_field = 'pk'
+
+    def get_queryset(self):
+        return UsersAccount.objects.filter(is_agent=True)
+
+
 """APi view for listing electronics products"""
 class ListElectronicsProductsApiView(ListAPIView):
     serializer_class = ListAvailableToSoldProductSerializer
@@ -237,3 +268,10 @@ class ListTextileProductsApiView(ListAPIView):
 
     def get_queryset(self):
         return Product.objects.filter(category__name='Textile')
+
+
+"""view for product details"""
+class ProductDetailsAPIView(RetrieveAPIView):
+    serializer_class = ListProductSerializer
+    queryset = Product.objects.all()
+    lookup_field = 'pk'

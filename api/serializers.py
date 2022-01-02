@@ -31,8 +31,8 @@ class CreateProductSerializer(serializers.ModelSerializer):
         fields = [
             'category', 'product_name', 'product_image', 'description',
             'quantity', 'desired_price', 'collected_date',
-            'district', 'sector', 'cell',
-            'village', 'road_number', 'house_number',
+            'district', 'sector', 'cell', 'village',
+            'road_number', 'house_number', 'location_description'
         ]
 
 
@@ -51,7 +51,7 @@ class ListProductSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'category', 'product_name', 'product_image', 'description',
             'quantity', 'desired_price', 'collected_date', 'user', 'district',
-            'sector', 'cell', 'village', 'road_number', 'house_number'
+            'sector', 'cell', 'village', 'road_number', 'house_number', 'location_description'
         ]
 
 

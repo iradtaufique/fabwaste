@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
-from userauth.forms import RegisterUserForm, UserLoginForm
+from userauth.forms import RegisterUserForm, UserLoginForm, LoginUserForm
 from .models import UsersAccount
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
@@ -130,3 +130,22 @@ def register_manufacture(request):
         else:
             form = RegisterUserForm()
     return render(request, 'registration/register_manufacture.html', {'form': form, 'manufacture': manufacture})
+
+
+"""===========view for custom login ================"""
+def UserLoginn(request):
+    if request.POST:
+        form = LoginUserForm(request.POST)
+        if form.is_valid():
+            email = request.POST['email']
+            password = request.POST['password']
+            user = authenticate(email=email, password=password)
+
+            if user:
+                login(request, user)
+                if user.is_house_hold:
+                    return redirect('view_product')
+    else:
+        form = LoginUserForm()
+    context = {'login_form': form}
+    return render(request, 'registration/logi.html', context)
