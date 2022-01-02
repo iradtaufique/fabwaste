@@ -69,13 +69,13 @@ class ListHouseHoldPayedProductSerializer(serializers.ModelSerializer):
 class AddCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['name']
+        fields = ['id', 'name']
 
 
 class AddSubCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = SubCategory
-        fields = ['category', 'name', 'minimum_price', 'maximum_price']
+        fields = ['id', 'category', 'name', 'minimum_price', 'maximum_price']
 
 
 """serializer for listing electronic products"""
