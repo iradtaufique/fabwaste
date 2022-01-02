@@ -137,7 +137,22 @@ class UserLoginApiView(GenericAPIView):
             auth_token = jwt.encode({'email': user.email, 'full_name': user.full_name, 'id': user.id},
                                     settings.JWT_SECRET_KEY)
             serializer = UserLoginSerializer(user)
-            data = {'user': serializer.data, 'token': auth_token}
+
+            if user.is_house_hold:
+                data = {'user': serializer.data, 'household': user.is_house_hold, 'id': user.id,  'token': auth_token}
+            elif user.is_agent:
+                data = {'user': serializer.data, 'agent': user.is_agent, 'id': user.id, 'token': auth_token}
+
+            elif user.is_manufacture:
+                data = {'user': serializer.data, 'manufacture': user.is_manufacture, 'id': user.id, 'token': auth_token}
+
+            elif user.is_admin:
+                data = {'user': serializer.data, 'admin': user.is_admin, 'id': user.id, 'token': auth_token}
+
+            else:
+                data = {'message': 'User Has No Role!!'}
+
+            print(data)
 
             # ----------- description for redirecting users -------------
             # if user.is_house_hold:
