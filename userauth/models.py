@@ -50,7 +50,7 @@ class UsersAccount(AbstractBaseUser, PermissionsMixin):
     is_agent = models.BooleanField(default=False)
     is_manufacture = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
-    location = models.ForeignKey(District, on_delete=models.DO_NOTHING, null=True, blank=True)
+    location = models.ForeignKey(District, on_delete=models.DO_NOTHING, null=True, blank=True, default=1)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

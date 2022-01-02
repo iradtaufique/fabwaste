@@ -18,7 +18,7 @@ from products.models import Product, Category, SubCategory
 from userauth.tokens import account_activation_token
 from .serializers import RegisterSerializer, UserLoginSerializer, CreateProductSerializer, ListProductSerializer, \
     ListHouseHoldPayedProductSerializer, AddCategorySerializer, ListAvailableToSoldProductSerializer, \
-    AddSubCategorySerializer
+    AddSubCategorySerializer, ListUsersSerializer
 import jwt
 
 
@@ -222,8 +222,17 @@ class ListHouseHoldPayedProductApiView(ListAPIView):
 
 
 class ListUsersApiView(ListAPIView):
-    serializer_class = RegisterSerializer
+    serializer_class = ListUsersSerializer
     permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        return UsersAccount.objects.all()
+
+
+class DeleteUsersApiView(RetrieveDestroyAPIView):
+    serializer_class = ListUsersSerializer
+    permission_classes = (IsAuthenticated,)
+    lookup_field = 'pk'
 
     def get_queryset(self):
         return UsersAccount.objects.all()
@@ -240,7 +249,7 @@ class AddCategoryApiView(CreateAPIView):
 
 """API View for listing agents"""
 class ListAllAgentAPIView(ListAPIView):
-    serializer_class = RegisterSerializer
+    serializer_class = ListUsersSerializer
 
     def get_queryset(self):
         return UsersAccount.objects.filter(is_agent=True)
@@ -248,7 +257,7 @@ class ListAllAgentAPIView(ListAPIView):
 
 """API View for agents Details"""
 class AgentDetailsAPIView(RetrieveAPIView):
-    serializer_class = RegisterSerializer
+    serializer_class = ListUsersSerializer
     lookup_field = 'pk'
 
     def get_queryset(self):

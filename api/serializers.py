@@ -11,6 +11,11 @@ class RegisterSerializer(serializers.ModelSerializer):
         model = UsersAccount
         fields = ['email', 'full_name', 'mobile', 'location', 'password']
 
+    def to_representation(self, instance):
+        rep = super(RegisterSerializer, self).to_representation(instance)
+        rep['district'] = instance.district.name
+        return rep
+
     def validate(self, attrs):
         email = attrs.get('email')
         phone = attrs.get('mobile')
@@ -24,8 +29,20 @@ class RegisterSerializer(serializers.ModelSerializer):
         return UsersAccount.objects.create_user(**validated_data)
 
 
+class ListUsersSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UsersAccount
+        fields = ['id', 'email', 'full_name', 'mobile', 'location']
+
+    def to_representation(self, instance):
+        rep = super(ListUsersSerializer, self).to_representation(instance)
+        rep['location'] = instance.location.name
+        return rep
+
+
 class CreateProductSerializer(serializers.ModelSerializer):
-    # desired_price = MoneyField(max_digits=10, decimal_places=2, default_currency='FRw')
+    # district = serializers.CharField(source='district.name')
     class Meta:
         model = Product
         fields = [
@@ -54,6 +71,12 @@ class ListProductSerializer(serializers.ModelSerializer):
             'sector', 'cell', 'village', 'road_number', 'house_number', 'location_description'
         ]
 
+    def to_representation(self, instance):
+        rep = super(ListProductSerializer, self).to_representation(instance)
+        rep['category'] = instance.category.name
+        rep['district'] = instance.district.name
+        rep['user'] = instance.user.full_name
+        return rep
 
 # --------- view for listing household paid products -----------------
 class ListHouseHoldPayedProductSerializer(serializers.ModelSerializer):
@@ -64,6 +87,13 @@ class ListHouseHoldPayedProductSerializer(serializers.ModelSerializer):
             'quantity', 'desired_price', 'buying_price', 'collected_date', 'user', 'district',
             'sector', 'cell', 'village', 'road_number', 'house_number'
         ]
+
+    def to_representation(self, instance):
+        rep = super(ListHouseHoldPayedProductSerializer, self).to_representation(instance)
+        rep['category'] = instance.category.name
+        rep['district'] = instance.district.name
+        rep['user'] = instance.user.full_name
+        return rep
 
 
 class AddCategorySerializer(serializers.ModelSerializer):
@@ -92,4 +122,8 @@ class ListAvailableToSoldProductSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'category', 'product_name', 'product_image'
         ]
+
+    def to_representation(self, instance):
+        rep = super(ListAvailableToSoldProductSerializer, self).to_representation(instance)
+        rep['category'] = instance.category.name
 
