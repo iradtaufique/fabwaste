@@ -45,6 +45,7 @@ def addProduct(request):
             send_mass_mail((email1, email2), fail_silently=False)
             # email.fail_silently = False
             # email.send()
+            messages.success(request, 'Product Added Successfully')
             return redirect('view_product')
     return render(request, 'addProduct.html', {'form': form})
 

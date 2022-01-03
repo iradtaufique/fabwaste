@@ -1,5 +1,6 @@
 {% extends 'dashboard/dashboard.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block dashboard_content %}
     <main class="app-content">
@@ -190,11 +191,72 @@
           </div>
 
 
-          <div class="row">
-          <div class="card">
-              <h5 class="card-header">Hello</h5>
+        {#   ============snippets for listing products on manufacture=============       #}
+
+       <div class="row justify-content-end">
+           <div class="col-sm-4 mb-3">
+               <form action="" class="d-flex">
+                   <input class="form-control w-10" type="search" name="q" placeholder="Search">
+                   <button class="btn btn-primary ml-2">Search</button>
+               </form>
+           </div>
+       </div>
+
+       <div class="row row-cols-1 row-cols-md-1 g-4">
+           {% for dat in page_obj.object_list %}
+               <div class="col-2 mb-3">
+                <div class="card">
+                  <img src="{{dat.product_image.url}}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ dat.product_name }}</h5>
+                      <div class="">
+                          <h5>
+                              <span class="badge bg-danger text-white"><i class="fa fa-money mr-1"></i>Price</span>
+                              <span class="badge">RWF {{ dat.selling_price }}</span>
+                          </h5>
+                      </div>
+                      <div class="text-center mt-3">
+                          <a href="{% url 'manufacture_device_details' dat.id %}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i>More</a>
+                      </div>
+                  </div>
+                </div>
+              </div>
+               {% empty  %}
+               <div class="col-12">
+                <div class="alert alert-info text-center" role="alert">
+                  <h5>No Result Found!</h5>
+                </div>
+               </div>
+           {% endfor %}
+        </div>
+
+        <div class="row justify-content-center m-4">
+        <div class="col-lg-6">
+            <div class="bs-component">
+              <div>
+                <ul class="pagination">
+                 {% if page_obj.has_previous %}
+                  <li class="page-item disabled"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">«</a></li>
+                  {% endif %}
+                {% for i in page_obj.paginator.page_range %}
+                  {% if page_obj.number == i %}
+                  <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+                 {% else %}
+                  <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                  {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">»</a></li>
+                {% endif %}
+                </ul>
+              </div>
+            </div>
           </div>
-          </div>
+        </div>
+
+
+
+
 {# =========================================================================================================================          #}
           {% elif request.user.is_agent %}
 

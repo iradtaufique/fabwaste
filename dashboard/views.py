@@ -1,4 +1,6 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from userauth.models import UsersAccount
 from products.models import Product, Category, Address, SubCategory
@@ -35,6 +37,28 @@ def index(request):
         cateName.append(i.name)
     print(categ)
     print(cateName)
+    """================= snippets for searching ================"""
+    if 'q' in request.GET:
+        q = request.GET['q']
+        data = Product.objects.filter(
+            Q(category__name__icontains=q) | Q(product_name__icontains=q)
+        )
+    else:
+        data = Product.objects.all()
+
+    """=================end of snippets for searching ================"""
+
+    """=================end of snippets for pagination ================"""
+    p = Paginator(data, 12)
+    page_number = request.GET.get('page')
+    try:
+        page_obj = p.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = p.page(1)
+    except EmptyPage:
+        page_obj = p.page(p.num_pages)
+
+    """=================end of snippets for pagination ================"""
 
     total_textile_products = Product.objects.filter(category__name='Textile', status='Collected').count()
     total_electronics_products = Product.objects.filter(category__name='Electronics', status='Collected').count()
@@ -72,6 +96,8 @@ def index(request):
         'agent_total_payed_devices': agent_total_payed_devices,
         'agent_total_unpayed_devices': agent_total_unpayed_devices,
         'agent_total_users': agent_total_users,
+        'data': data,
+        'page_obj': page_obj,
 
     }
     return render(request, 'dashboard/index.html', context)
