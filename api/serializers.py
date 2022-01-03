@@ -13,7 +13,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         rep = super(RegisterSerializer, self).to_representation(instance)
-        rep['district'] = instance.district.name
+        rep['location'] = instance.location.name
         return rep
 
     def validate(self, attrs):

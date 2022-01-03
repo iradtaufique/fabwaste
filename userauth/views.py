@@ -88,8 +88,6 @@ def loginUser(request):
 
 
 """view for registering agent"""
-
-
 def register_agent(request):
     agents = UsersAccount.objects.filter(is_agent=True)
     form = RegisterUserForm()
@@ -111,6 +109,7 @@ def register_agent(request):
     return render(request, 'registration/register_agent.html', {'form': form, 'agents': agents})
 
 
+"""view for registering manufacture"""
 def register_manufacture(request):
     manufacture = UsersAccount.objects.filter(is_manufacture=True)
     form = RegisterUserForm()
