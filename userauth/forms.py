@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth import authenticate
 from django.forms import ModelForm, fields
-from .models import UsersAccount
+from .models import UsersAccount, Profile
 from django.contrib.auth.forms import AuthenticationForm
 
 
@@ -45,6 +45,8 @@ class UserLoginForm(AuthenticationForm):
 
 
 """new form for loging user"""
+
+
 class LoginUserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
 
@@ -59,3 +61,8 @@ class LoginUserForm(forms.ModelForm):
         if not authenticate(email=email, password=password):
             raise forms.ValidationError('Check your username or password if are correct')
 
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = '__all__'

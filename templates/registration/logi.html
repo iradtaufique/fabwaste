@@ -38,6 +38,12 @@
             </div>
         {% endif %}
 
+        {% if form.errors %}
+            <div class="alert alert-info" role="alert">
+                Username or Password not correct!
+            </div>
+        {% endif %}
+
       <div class="login-box">
         <form class="login-form" method="post">
             {% csrf_token %}

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from userauth.models import UsersAccount
+from userauth.models import UsersAccount, Profile
 from products.models import Product, Category, SubCategory
 
 
@@ -127,3 +127,24 @@ class ListAvailableToSoldProductSerializer(serializers.ModelSerializer):
         rep = super(ListAvailableToSoldProductSerializer, self).to_representation(instance)
         rep['category'] = instance.category.name
 
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=UsersAccount
+        fields = "__all__"
+
+"""serializer for user profile"""
+class UserProfileSerializer(serializers.ModelSerializer):
+    # profile = serializers.StringRelatedField(many=True)
+    # user = serializers.SerializerMethodField()
+    # user = serializers.CurrentUserDefault()
+    # first_name = serializers.PrimaryKeyRelatedField(queryset=user.profile.first_name,many=False)
+
+    def get_user(self, obj):
+        request = self.context.get('request', None)
+        if request:
+            return UserSerializer(request.user, many=False).data
+
+    class Meta:
+        model = Profile
+        fields = ['user']

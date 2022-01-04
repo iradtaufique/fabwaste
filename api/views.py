@@ -18,7 +18,7 @@ from products.models import Product, Category, SubCategory
 from userauth.tokens import account_activation_token
 from .serializers import RegisterSerializer, UserLoginSerializer, CreateProductSerializer, ListProductSerializer, \
     ListHouseHoldPayedProductSerializer, AddCategorySerializer, ListAvailableToSoldProductSerializer, \
-    AddSubCategorySerializer, ListUsersSerializer
+    AddSubCategorySerializer, ListUsersSerializer, UserProfileSerializer
 import jwt
 
 
@@ -205,7 +205,7 @@ class CreateProductApiView(CreateAPIView):
 # view for listing devices
 class ListDevicesApiView(ListAPIView):
     serializer_class = ListProductSerializer
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         return Product.objects.filter(user=self.request.user)
@@ -354,3 +354,9 @@ class UpdateSubCategory(RetrieveUpdateAPIView):
     serializer_class = AddSubCategorySerializer
     queryset = SubCategory.objects.all()
     lookup_field = 'pk'
+
+
+class UserProfileAPIView(ListAPIView):
+    serializer_class = UserProfileSerializer
+    def get_queryset(self):
+        return UsersAccount.objects.filter(id=self.request.user.id)

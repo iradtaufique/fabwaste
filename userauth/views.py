@@ -1,12 +1,12 @@
 from django import forms
 from django.contrib.sites.shortcuts import get_current_site
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
-from userauth.forms import RegisterUserForm, UserLoginForm, LoginUserForm
-from .models import UsersAccount
+from userauth.forms import RegisterUserForm, UserLoginForm, LoginUserForm, UserProfileForm
+from .models import UsersAccount, Profile
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 
@@ -148,3 +148,28 @@ def UserLoginn(request):
         form = LoginUserForm()
     context = {'login_form': form}
     return render(request, 'registration/logi.html', context)
+
+
+"""view for user profile"""
+def user_profile(request):
+    data = Profile.objects.filter(user=request.user)
+    context = {'data': data}
+    return render(request, 'user_profile.html', context)
+
+
+"""view for editing profile"""
+def edit_user_profile(request, pk):
+    dat = get_object_or_404(Profile, id=pk)
+    form = UserProfileForm(request.POST or None, instance=dat)
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST or None, request.FILES, instance=dat)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.user = request.user
+            user.save()
+            messages.success(request, 'Profile Updated Successfully')
+            return redirect('user_profile')
+    context = {'form': form}
+    return render(request, 'edit_user_profile.html', context)
+
+

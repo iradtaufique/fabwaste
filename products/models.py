@@ -59,6 +59,9 @@ class Product(models.Model):
     def __str__(self):
         return f'{self.product_name}'
 
+    class Meta:
+        ordering = ['-created_date']
+
 
 class Address(models.Model):
     user = models.ForeignKey(UsersAccount, on_delete=models.DO_NOTHING, default=None)

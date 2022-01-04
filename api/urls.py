@@ -4,7 +4,7 @@ from .views import RegisterUserAPi, UserLoginApiView, CreateProductApiView, List
     ListElectronicsProductsApiView, ListPlasticsProductsApiView, ListMetalsProductsApiView, ListTextileProductsApiView, \
     RegisterManufactureAPiView, ProductDetailsAPIView, AgentDetailsAPIView, AddCategoryAPIView, ListCategoryAPIView, \
     ListSubCategoryAPIView, AddSubCategoryAPIView, DeleteCategory, DeleteSubCategory, UpdateSubCategory, \
-    DeleteUsersApiView
+    DeleteUsersApiView, UserProfileAPIView
 
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -37,6 +37,7 @@ urlpatterns = [
 
     path('list-household-payed-product/', ListHouseHoldPayedProductApiView.as_view(), name='list_household_payed_product_api'),
     path('list-users/', ListUsersApiView.as_view(), name='list_users'),
+    path('user-profile/', UserProfileAPIView.as_view(), name='user_profile'),
     path('delete-user/<int:pk>', DeleteUsersApiView.as_view(), name='delete_users'),
     path('list-agents-api/', ListAllAgentAPIView.as_view(), name='list_agents_api'),
     path('agent/<int:pk>', AgentDetailsAPIView.as_view(), name='agent_details_api'),

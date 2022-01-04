@@ -12,7 +12,7 @@ def dashboard(request):
     return render(request, 'dashboard/dashboard.html')
 
 
-@login_required
+@login_required(redirect_field_name=None, login_url='user_login')
 def index(request):
     total_users = UsersAccount.objects.all().exclude(is_superuser=True).count()
     # house_hold_unsold_products = Product.objects.filter(user=request.user, status='UnSold')
@@ -26,17 +26,16 @@ def index(request):
     total_payed_devices = Product.objects.filter(payed=True).count()
     agent_total_devices = Product.objects.filter(availability='Available', status='Pending').count()
 
-    # categories = Category.objects.all()
-    categ = []
-    cateName = []
-
+    # categ = []
+    # cateName = []
+    #
     categories = Category.objects.all()
-
-    for i in categories:
-        categ.append(i.id)
-        cateName.append(i.name)
-    print(categ)
-    print(cateName)
+    #
+    # for i in categories:
+    #     categ.append(i.id)
+    #     cateName.append(i.name)
+    # print(categ)
+    # print(cateName)
     """================= snippets for searching ================"""
     if 'q' in request.GET:
         q = request.GET['q']

@@ -1,0 +1,52 @@
+{% extends 'dashboard/dashboard.html' %}
+{% load crispy_forms_tags %}
+{% block dashboard_content %}
+    <main class="app-content">
+      <div class="app-title">
+        <div>
+          <h1><i class="fa fa-dashboard"></i> Dashboard</h1>
+          <p>Care the Environment</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+          <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+          <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        </ul>
+      </div>
+
+       <div class="row">
+           <div class="col-4">
+               <div class="card">
+                   <div class="card-body">
+                       {% for dat in data %}
+                        <img src="{{ dat.image.url }}" class="card-img-top" alt="">
+
+                       <div class="text-center">
+                           <a href="{% url 'edit_user_profile' dat.pk %}" class="btn btn-primary btn-sm mt-3"><i class="fa fa-edit"></i>Edit</a>
+                       </div>
+                       {% endfor %}
+                   </div>
+               </div>
+           </div>
+           <div class="col-8">
+               <div class="card">
+                   <div class="card-header">Personal Information</div>
+                   <div class="card-body">
+                   <div class="row">
+                        {% for dat in data %}
+                        <div class="col-6 mt-2 mb-2"><strong>First Name</strong>: <span>{{ dat.first_name }}</span></div>
+                        <div class="col-6 mt-2 mb-2"><strong>Last Name</strong>: <span>{{ dat.last_name }}</span></div>
+                        <div class="col-6 mt-2 mb-2"><strong>Email Address</strong>: <span>{{ dat.user.email }}</span></div>
+                        <div class="col-6 mt-2 mb-2"><strong>District</strong>: <span>{{ dat.user.location }}</span></div>
+                        <div class="col-6 mt-2 mb-2"><strong>Sector</strong>: <span>{{ dat.sector }}</span></div>
+                        <div class="col-6 mt-2 mb-2"><strong>Cell</strong>: <span>{{ dat.cell }}</span></div>
+                        <div class="col-6 mt-2 mb-2"><strong>VIllage</strong>: <span>{{ dat.village }}</span></div>
+                       {% endfor %}
+                   </div>
+
+                   </div>
+               </div>
+           </div>
+       </div>
+       <hr>
+    </main>
+{% endblock %}
