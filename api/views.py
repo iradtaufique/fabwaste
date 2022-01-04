@@ -205,11 +205,10 @@ class CreateProductApiView(CreateAPIView):
 # view for listing devices
 class ListDevicesApiView(ListAPIView):
     serializer_class = ListProductSerializer
-    # permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        return Product.objects.filter(user=self.request.user)
-        # return Product.objects.all()
+        # return Product.objects.filter(user=self.request.user)
+        return Product.objects.all()
 
 
 # view for listing devices
