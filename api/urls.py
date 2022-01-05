@@ -26,7 +26,7 @@ schema_view = get_schema_view(
 
 
 urlpatterns = [
-    path('register/', RegisterUserAPi.as_view(), name='register_api'),
+    # path('register/', RegisterUserAPi.as_view(), name='register_api'),
     path('register-agent/', RegisterAgentAPiView.as_view(), name='register_agent_api'),
     path('register-manufacture/', RegisterManufactureAPiView.as_view(), name='register_manufacture_api'),
     path('register-house-hold/', RegisterHouseHoldAPiView.as_view(), name='register_house_hold_api'),
@@ -41,10 +41,10 @@ urlpatterns = [
     path('delete-user/<int:pk>', DeleteUsersApiView.as_view(), name='delete_users'),
     path('list-agents-api/', ListAllAgentAPIView.as_view(), name='list_agents_api'),
     path('agent/<int:pk>', AgentDetailsAPIView.as_view(), name='agent_details_api'),
-    path('electronic-products-api/', ListElectronicsProductsApiView.as_view(), name='electronic_product_api'),
-    path('plastic-products-api/', ListPlasticsProductsApiView.as_view(), name='plastics_product_api'),
-    path('metal-products-api/', ListMetalsProductsApiView.as_view(), name='metals_product_api'),
-    path('textile-products-api/', ListTextileProductsApiView.as_view(), name='textile_product_api'),
+    # path('electronic-products-api/', ListElectronicsProductsApiView.as_view(), name='electronic_product_api'),
+    # path('plastic-products-api/', ListPlasticsProductsApiView.as_view(), name='plastics_product_api'),
+    # path('metal-products-api/', ListMetalsProductsApiView.as_view(), name='metals_product_api'),
+    # path('textile-products-api/', ListTextileProductsApiView.as_view(), name='textile_product_api'),
     path('district-list', ListDistrictAPIView.as_view(), name='list_district'),
 
     path('add-category/', AddCategoryAPIView.as_view(), name='add-category-api'),
