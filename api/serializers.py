@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from userauth.models import UsersAccount, Profile
+from userauth.models import UsersAccount, Profile, District
 from products.models import Product, Category, SubCategory
 
 
@@ -148,3 +148,10 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ['user']
+
+
+""" serializer for adding District"""
+class DistrictSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = District
+        fields = '__all__'

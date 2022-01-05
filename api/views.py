@@ -12,13 +12,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView, GenericAPIView, ListAPIView, RetrieveAPIView, RetrieveDestroyAPIView, \
     RetrieveUpdateAPIView
-from userauth.models import UsersAccount
+from userauth.models import UsersAccount, District
 
 from products.models import Product, Category, SubCategory
 from userauth.tokens import account_activation_token
 from .serializers import RegisterSerializer, UserLoginSerializer, CreateProductSerializer, ListProductSerializer, \
     ListHouseHoldPayedProductSerializer, AddCategorySerializer, ListAvailableToSoldProductSerializer, \
-    AddSubCategorySerializer, ListUsersSerializer, UserProfileSerializer
+    AddSubCategorySerializer, ListUsersSerializer, UserProfileSerializer, DistrictSerializer
 import jwt
 
 
@@ -359,3 +359,11 @@ class UserProfileAPIView(ListAPIView):
     serializer_class = UserProfileSerializer
     def get_queryset(self):
         return UsersAccount.objects.filter(id=self.request.user.id)
+
+
+"""view for Listing District """
+class ListDistrictAPIView(ListAPIView):
+    serializer_class = DistrictSerializer
+
+    def get_queryset(self):
+        return District.objects.all()
