@@ -37,6 +37,7 @@ def index(request):
     # print(categ)
     # print(cateName)
     """================= snippets for searching ================"""
+    q = ''
     if 'q' in request.GET:
         q = request.GET['q']
         data = Product.objects.filter(
@@ -96,6 +97,7 @@ def index(request):
         'agent_total_unpayed_devices': agent_total_unpayed_devices,
         'agent_total_users': agent_total_users,
         'data': data,
+        'q': q,
         'page_obj': page_obj,
 
     }

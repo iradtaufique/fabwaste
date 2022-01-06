@@ -4,7 +4,7 @@ from .views import RegisterUserAPi, UserLoginApiView, CreateProductApiView, List
     ListElectronicsProductsApiView, ListPlasticsProductsApiView, ListMetalsProductsApiView, ListTextileProductsApiView, \
     RegisterManufactureAPiView, ProductDetailsAPIView, AgentDetailsAPIView, AddCategoryAPIView, ListCategoryAPIView, \
     ListSubCategoryAPIView, AddSubCategoryAPIView, DeleteCategory, DeleteSubCategory, UpdateSubCategory, \
-    DeleteUsersApiView, UserProfileAPIView, ListDistrictAPIView
+    DeleteUsersApiView, UserProfileAPIView, ListDistrictAPIView, RetrieveTokenApi
 
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -54,6 +54,9 @@ urlpatterns = [
     path('delete-category/<int:pk>', DeleteCategory.as_view(), name='delete-sub-category-api'),
     path('delete-sub-category/<int:pk>', DeleteSubCategory.as_view(), name='delete-sub-category-api'),
     path('update-sub-category/<int:pk>', UpdateSubCategory.as_view(), name='update-sub-category-api'),
+
+    # path('token-det/', retrieve_token_details, name='token-api'),
+    path('token-det/', RetrieveTokenApi.as_view(), name='token-api'),
 
     # documentation links
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

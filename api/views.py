@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mass_mail
@@ -7,11 +8,14 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth import authenticate
-from rest_framework import status
+from rest_framework import status, authentication
+from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView, GenericAPIView, ListAPIView, RetrieveAPIView, RetrieveDestroyAPIView, \
     RetrieveUpdateAPIView
+from rest_framework.views import APIView
+
 from userauth.models import UsersAccount, District
 
 from products.models import Product, Category, SubCategory
@@ -138,6 +142,7 @@ class UserLoginApiView(GenericAPIView):
         if user:
             auth_token = jwt.encode({'email': user.email, 'full_name': user.full_name, 'id': user.id},
                                     settings.JWT_SECRET_KEY)
+
             serializer = UserLoginSerializer(user)
 
             if user.is_house_hold:
@@ -151,10 +156,14 @@ class UserLoginApiView(GenericAPIView):
             elif user.is_admin:
                 data = {'user': serializer.data, 'admin': user.is_admin, 'id': user.id, 'token': auth_token}
 
+                dec = jwt.decode(auth_token, settings.JWT_SECRET_KEY, algorithms="HS256")
+
+                # print('print decodede::', dec)
+
+
             else:
                 data = {'message': 'User Has No Role!!'}
 
-            print(data)
 
             # ----------- description for redirecting users -------------
             # if user.is_house_hold:
@@ -367,3 +376,30 @@ class ListDistrictAPIView(ListAPIView):
 
     def get_queryset(self):
         return District.objects.all()
+
+
+# @login_required(login_url='login_user_api')
+# @api_view(['GET'])
+# def retrieve_token_details(request):
+#     serializer = {
+#         "email": request.user.email,
+#     }
+#     return Response(serializer)
+
+class RetrieveTokenApi(APIView):
+    # authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
+    def get(self, request):
+        serializer = {
+            "Email": request.user.email,
+            "Full Name": request.user.full_name,
+            "admin": request.user.is_admin,
+            "HouseHold": request.user.is_house_hold,
+            "agent": request.user.is_agent,
+            "manufacture": request.user.is_manufacture
+
+
+        }
+        return Response(serializer)
