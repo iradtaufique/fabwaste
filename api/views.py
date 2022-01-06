@@ -393,10 +393,10 @@ class RetrieveTokenApi(APIView):
 
     def get(self, request):
         serializer = {
-            "Email": request.user.email,
-            "Full Name": request.user.full_name,
+            "email": request.user.email,
+            "fullname": request.user.full_name,
             "admin": request.user.is_admin,
-            "HouseHold": request.user.is_house_hold,
+            "household": request.user.is_house_hold,
             "agent": request.user.is_agent,
             "manufacture": request.user.is_manufacture
 
