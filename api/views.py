@@ -146,17 +146,17 @@ class UserLoginApiView(GenericAPIView):
             serializer = UserLoginSerializer(user)
 
             if user.is_house_hold:
-                data = {'user': serializer.data, 'household': user.is_house_hold, 'id': user.id,  'token': auth_token}
+                data = {'user': serializer.data, 'household': user.is_house_hold, 'id': user.id, 'full_name': user.full_name,  'token': auth_token}
             elif user.is_agent:
-                data = {'user': serializer.data, 'agent': user.is_agent, 'id': user.id, 'token': auth_token}
+                data = {'user': serializer.data, 'agent': user.is_agent, 'id': user.id, 'full_name': user.full_name, 'token': auth_token}
 
             elif user.is_manufacture:
-                data = {'user': serializer.data, 'manufacture': user.is_manufacture, 'id': user.id, 'token': auth_token}
+                data = {'user': serializer.data, 'manufacture': user.is_manufacture, 'full_name': user.full_name, 'id': user.id, 'token': auth_token}
 
             elif user.is_admin:
-                data = {'user': serializer.data, 'admin': user.is_admin, 'id': user.id, 'token': auth_token}
+                data = {'user': serializer.data, 'admin': user.is_admin, 'full_name': user.full_name, 'id': user.id, 'token': auth_token}
 
-                dec = jwt.decode(auth_token, settings.JWT_SECRET_KEY, algorithms="HS256")
+                # dec = jwt.decode(auth_token, settings.JWT_SECRET_KEY, algorithms="HS256")
 
                 # print('print decodede::', dec)
 
@@ -393,13 +393,12 @@ class RetrieveTokenApi(APIView):
 
     def get(self, request):
         serializer = {
+            "id": request.user.id,
             "email": request.user.email,
             "fullname": request.user.full_name,
             "admin": request.user.is_admin,
             "household": request.user.is_house_hold,
             "agent": request.user.is_agent,
             "manufacture": request.user.is_manufacture
-
-
         }
         return Response(serializer)
