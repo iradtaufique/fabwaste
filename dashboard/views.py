@@ -24,18 +24,9 @@ def index(request):
     household_sold_device = Product.objects.filter(user=request.user, status='Collected', payed=True).count()
     total_unpayed_devices = Product.objects.filter(payed=False, status='Collected').count()
     total_payed_devices = Product.objects.filter(payed=True).count()
-    agent_total_devices = Product.objects.filter(availability='Available', status='Pending').count()
+    agent_total_devices = Product.objects.filter(availability='Available', district=request.user.location).count()
 
-    # categ = []
-    # cateName = []
-    #
     categories = Category.objects.all()
-    #
-    # for i in categories:
-    #     categ.append(i.id)
-    #     cateName.append(i.name)
-    # print(categ)
-    # print(cateName)
     """================= snippets for searching ================"""
     q = ''
     if 'q' in request.GET:
@@ -90,7 +81,7 @@ def index(request):
         'total_metals_products': total_metals_products,
         'total_plastics_products': total_plastics_products,
         'total_electronics_products': total_electronics_products,
-        'agent_total_devices': total_electronics_products,
+        'agent_total_devices': agent_total_devices,
         'agent_total_collected_devices': agent_total_collected_devices,
         'agent_total_denied_devices': agent_total_denied_devices,
         'agent_total_payed_devices': agent_total_payed_devices,

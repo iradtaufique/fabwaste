@@ -75,7 +75,6 @@ class ListProductSerializer(serializers.ModelSerializer):
         rep = super(ListProductSerializer, self).to_representation(instance)
         rep['category'] = instance.category.name
         rep['district'] = instance.district.name
-        rep['user'] = instance.user.full_name
         return rep
 
 # --------- view for listing household paid products -----------------
