@@ -30,10 +30,13 @@
       <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
       <!-- Navbar Right Menu-->
       <ul class="app-nav">
-{#        <li class="app-search">#}
+        <li class="app-search">
 {#          <input class="app-search__input" type="search" placeholder="Search">#}
-{#          <button class="app-search__button"><i class="fa fa-search"></i></button>#}
-{#        </li>#}
+            <form action="">
+                <input class="app-search__input" type="search" name="q" placeholder="Search">
+                <button class="app-search__button"><i class="fa fa-search"></i></button>
+            </form>
+        </li>
         <!--Notification Menu-->
 {#        {% include 'dashboard/includes/notification.html' %}#}
         <!-- User Menu-->

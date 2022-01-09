@@ -29,6 +29,11 @@ class Product(models.Model):
         ('Pending', 'Pending'), ('Denied', 'Denied'),
     )
 
+    PRO_CATEGORY = (
+        ('Published', 'Published'),
+        ('Waste', 'Waste')
+    )
+
     user = models.ForeignKey(UsersAccount, on_delete=models.DO_NOTHING)
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     product_name = models.CharField(max_length=100)
@@ -39,6 +44,10 @@ class Product(models.Model):
     quantity = models.IntegerField()
     status = models.CharField(max_length=10, choices=STATUS, default='Pending')
     availability = models.CharField(max_length=20, choices=AVAILABILITY, default='Available')
+
+    available_quantity = models.IntegerField(default=0)
+    published = models.BooleanField(default=False)
+    pro_category = models.CharField(max_length=20, choices=PRO_CATEGORY, default=None, null=True)
 
     # ----------- product pricing ---------------
     payed = models.BooleanField(default=False)

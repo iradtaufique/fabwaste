@@ -221,7 +221,33 @@ def view_plastics_products(request):
 """view for viewing products which are on agent location"""
 def agent_view_products(request):
     data = Product.objects.filter(district=request.user.location, availability='Available', status='Pending')
-    return render(request, 'dashboard/agent_products.html', {'data': data})
+    # dat = Product.objects.all().filter()
+
+    """================= snippets for searching ================"""
+    q = ''
+    if 'q' in request.GET:
+        q = request.GET['q']
+        data = Product.objects.filter(district=request.user.location, availability='Available', status='Pending')\
+            .filter(Q(category__name__icontains=q) | Q(product_name__icontains=q))
+    else:
+        Product.objects.filter(district=request.user.location, availability='Available', status='Pending')
+
+    """=================end of snippets for searching ================"""
+
+    """=================end of snippets for pagination ================"""
+    p = Paginator(data, 12)
+    page_number = request.GET.get('page')
+    try:
+        page_obj = p.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = p.page(1)
+    except EmptyPage:
+        page_obj = p.page(p.num_pages)
+
+    context = {'data': data, 'page_obj': page_obj}
+
+    """=================end of snippets for pagination ================"""
+    return render(request, 'dashboard/agent_products.html', context)
 
 
 """view for viewing products which are on agent location"""

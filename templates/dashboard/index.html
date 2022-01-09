@@ -193,16 +193,16 @@
 
         {#   ============snippets for listing products on manufacture=============       #}
 
-       <div class="row justify-content-end">
-           <div class="col-sm-4 mb-3">
-               <form action="" class="d-flex">
-                   <input class="form-control w-10" type="search" name="q" placeholder="Search">
-                   <button class="btn btn-primary ml-2">Search</button>
-               </form>
-           </div>
-       </div>
+{#       <div class="row justify-content-end">#}
+{#           <div class="col-sm-4 mb-3">#}
+{#               <form action="" class="d-flex">#}
+{#                   <input class="form-control w-10" type="search" name="q" placeholder="Search">#}
+{#                   <button class="btn btn-primary ml-2">Search</button>#}
+{#               </form>#}
+{#           </div>#}
+{#       </div>#}
 
-       <div class="row row-cols-1 row-cols-md-1 g-4">
+        <div class="row row-cols-1 row-cols-md-1 g-4">
            {% for dat in page_obj.object_list %}
                <div class="col-2 mb-3">
                 <div class="card">

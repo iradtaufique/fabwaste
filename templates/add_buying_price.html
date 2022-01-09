@@ -15,6 +15,7 @@
                 <form action="" method="post">
                     {% csrf_token %}
                     {{ form.buying_price|as_crispy_field }}
+                    {{ form.available_quantity|as_crispy_field }}
                     <button class="btn btn-info">Submit</button>
                 </form>
 

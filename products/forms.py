@@ -53,7 +53,7 @@ class ProductBuyingPriceForm(ModelForm):
     class Meta:
         model = Product
         fields = [
-            'buying_price'
+            'buying_price', 'available_quantity'
         ]
 
 

@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib import messages
 from django.shortcuts import redirect, render, get_object_or_404
+from rest_framework import status
+
 from .forms import AddProductForm, AddAddressForm, UpdateProductForm, ProductBuyingPriceForm, ProductSellingPriceForm
 from .models import Product, Address
 from django.core.mail import EmailMessage, send_mass_mail
@@ -111,6 +113,14 @@ def device_details(request, pk):
     return render(request, 'product_details.html', context)
 
 
+"""denied products"""
+def denied_product(request, pk):
+    details = Product.objects.filter(pk=pk).update(status='Denied')
+    messages.success(request, 'Successfully denied Product')
+    return redirect('dashboard')
+    # return render(request, 'product_details.html')
+
+
 """view for viewing the products details"""
 def manufacture_device_details(request, pk):
     details = Product.objects.get(pk=pk)
@@ -121,14 +131,20 @@ def manufacture_device_details(request, pk):
 """view for adding buying price on product"""
 def add_buying_price(request, pk):
     product = Product.objects.get(pk=pk)
-    form = ProductBuyingPriceForm()
+    form = ProductBuyingPriceForm(request.POST or None, instance=product)
     if request.method == 'POST':
         form = ProductBuyingPriceForm(request.POST or None, instance=product)
         if form.is_valid():
             prod = form.save(commit=False)
-            prod.payed = True
+            if prod.buying_price > 0:
+                prod.payed = True
+            else:
+                prod.payed = False
             prod.save()
-            Product.objects.filter(pk=pk).update(status='Collected')
+            if prod.buying_price > 0:
+                Product.objects.filter(pk=pk).update(status='Collected', pro_category='Published')
+            else:
+                Product.objects.filter(pk=pk).update(status='Collected', pro_category='Waste')
             messages.success(request, 'Product Buying price Added Successfully')
             return redirect('agent_products')
     context = {'form': form}
