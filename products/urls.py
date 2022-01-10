@@ -2,7 +2,7 @@ from django.urls import path
 from .views import addProduct, houseHoldProducts, updateHouseHoldProducts, productStatus, \
     productUpdate, device_details, add_buying_price, manufacture_device_details, add_selling_price, denied_product, \
     list_ready_for_sold_products, list_waste_products, list_published_products, list_requested_products, \
-    published_details, ready_for_sold_details
+    published_details, ready_for_sold_details, request_product, requested_product_details, sold_product
 
 urlpatterns = [
     path('add-product', addProduct, name='add_product'),
@@ -21,8 +21,11 @@ urlpatterns = [
     path('ready-for-sold/', list_ready_for_sold_products, name='ready_for_sold'),
     path('waste-products/', list_waste_products, name='waste_product'),
     path('published-products/', list_published_products, name='published_product'),
-    path('requested-products/', list_requested_products, name='requested_product'),
+    path('requested-products-list/', list_requested_products, name='list_requested_product'),
     path('published-details/<int:pk>/', published_details, name='published_details'),
     path('ready-for-sold-details/<int:pk>/', ready_for_sold_details, name='ready_for_sold_details'),
+    path('requesting-product/<int:pk>/', request_product, name='requesting_product'),
+    path('requested-prod/<int:pk>/', requested_product_details, name='requested_pro_details'),
+    path('sold-product/<int:pk>/', sold_product, name='sold_product'),
 
 ]

@@ -15,7 +15,7 @@
         </ul>
       </div>
 
-      {% if request.user.is_superuser %}
+      {% if request.user.is_superuser and request.user.is_admin %}
         {# ============ Scripts for displaying cards==============  #}
         <div class="row">
         <div class="col-md-6 col-lg-3">
@@ -84,7 +84,7 @@
         </div>
 
         <div class="col-md-6 col-lg-3">
-            <a href="{% url 'requested_product' %}" class="text-decoration-none">
+            <a href="{% url 'list_requested_product' %}" class="text-decoration-none">
                 <div class="widget-small primary coloured-icon"><i class="icon fa fa-exchange fa-3x"></i>
                     <div class="info">
                       <h4>Requested Product</h4>
@@ -207,28 +207,34 @@
                 </a>
             </div>
             <div class="col-md-6 col-lg-3">
-              <div class="widget-small primary coloured-icon"><i class="icon fa fa fa-list fa-3x"></i>
+                <a href="{% url 'textile_products' %}" class="text-decoration-none">
+                    <div class="widget-small primary coloured-icon"><i class="icon fa fa fa-list fa-3x"></i>
                 <div class="info">
                   <h4>Textile Products</h4>
                     <p><b>{{ total_textile_products }}</b></p>
                 </div>
               </div>
+                </a>
             </div>
             <div class="col-md-6 col-lg-3">
-              <div class="widget-small primary coloured-icon"><i class="icon fa fa fa-list fa-3x"></i>
+                <a href="{% url 'plastics_products' %}" class="text-decoration-none">
+                    <div class="widget-small primary coloured-icon"><i class="icon fa fa fa-list fa-3x"></i>
                 <div class="info">
-                  <h4>Metals Products</h4>
+                  <h4>plastic Products</h4>
                     <p><b>{{ total_plastics_products }}</b></p>
                 </div>
               </div>
+                </a>
             </div>
             <div class="col-md-6 col-lg-3">
-              <div class="widget-small primary coloured-icon"><i class="icon fa fa fa-list fa-3x"></i>
+                <a href="{% url 'metals_products' %}" class="text-decoration-none">
+                    <div class="widget-small primary coloured-icon"><i class="icon fa fa fa-list fa-3x"></i>
                 <div class="info">
                   <h4>Metals Products</h4>
                     <p><b>{{ total_metals_products }}</b></p>
                 </div>
               </div>
+                </a>
             </div>
           </div>
 

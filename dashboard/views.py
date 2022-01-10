@@ -31,7 +31,7 @@ def index(request):
     total_wastes = Product.objects.filter(availability='Available', pro_category='Waste').count()
     total_ready_sold = Product.objects.filter(availability='Available', pro_category='Published').count()
     published_products = Product.objects.filter(availability='Available', published=True).count()
-    requested_products = Product.objects.filter(availability='Requested').count()
+    requested_products = Product.objects.filter(status='Requested').count()
 
     categories = Category.objects.all()
     """================= snippets for searching ================"""
@@ -42,7 +42,7 @@ def index(request):
             Q(category__name__icontains=q) | Q(product_name__icontains=q)
         )
     else:
-        data = Product.objects.all()
+        data = Product.objects.filter(status='Collected', published=True)
 
     """=================end of snippets for searching ================"""
 

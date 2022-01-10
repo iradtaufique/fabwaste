@@ -5,8 +5,9 @@ from django.db.models import Q
 from django.shortcuts import redirect, render, get_object_or_404
 from rest_framework import status
 
-from .forms import AddProductForm, AddAddressForm, UpdateProductForm, ProductBuyingPriceForm, ProductSellingPriceForm
-from .models import Product, Address
+from .forms import AddProductForm, AddAddressForm, UpdateProductForm, ProductBuyingPriceForm, ProductSellingPriceForm, \
+    RequestedProductForm
+from .models import Product, Address, RequestedProducts
 from django.core.mail import EmailMessage, send_mass_mail
 from django.template.loader import render_to_string
 from django.conf import settings
@@ -125,7 +126,8 @@ def denied_product(request, pk):
 
 """view for viewing the products details"""
 def manufacture_device_details(request, pk):
-    details = Product.objects.get(pk=pk)
+    # details = Product.objects.get(pk=pk)
+    details = get_object_or_404(Product, id=pk)
     context = {'details': details}
     return render(request, 'dashboard/manufacture_product_details.html', context)
 
@@ -257,17 +259,17 @@ def list_published_products(request):
 
 """listing requested products"""
 def list_requested_products(request):
-    data = Product.objects.filter(availability='Requested')
+    data = RequestedProducts.objects.filter(product__status='Requested')
 
     """================= snippets for searching ================"""
     q = ''
     if 'q' in request.GET:
         q = request.GET['q']
-        data = Product.objects.filter(
+        data = RequestedProducts.objects.filter(
             Q(category__name__icontains=q) | Q(product_name__icontains=q)
         )
     else:
-        data = Product.objects.filter(availability='Requested')
+        data = RequestedProducts.objects.filter(product__status='Requested')
 
     """=================end of snippets for searching ================"""
 
@@ -295,3 +297,36 @@ def ready_for_sold_details(request, pk):
     details = Product.objects.get(pk=pk)
     context = {'details': details}
     return render(request, 'ready_sold_details.html', context)
+
+
+"""view for viewing the requesting product"""
+def request_product(request, pk):
+    prod = Product.objects.get(pk=pk)
+
+    form = RequestedProductForm(request.POST or None)
+    if request.method == 'POST':
+        form = RequestedProductForm(request.POST or None)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.product = prod
+            product.requested_by = request.user
+            product.save()
+            Product.objects.filter(pk=pk).update(status='Requested')
+            return redirect('dashboard')
+    context = {'product': prod, 'form': form}
+    return render(request, 'request_product.html', context)
+
+
+"""view for viewing the requested product details"""
+def requested_product_details(request, pk):
+    details = RequestedProducts.objects.get(pk=pk)
+    context = {'details': details}
+    return render(request, 'requested_products_details.html', context)
+
+
+"""view for viewing the requested product details"""
+def sold_product(request, pk):
+    prod = RequestedProducts.objects.filter(pk=pk).first()
+    print(prod.product.id)
+    Product.objects.filter(id=prod.product.id).update(status='Sold')
+    return redirect('dashboard')

@@ -1,0 +1,37 @@
+{% extends 'dashboard/dashboard.html' %}
+{% block dashboard_content %}
+
+    <main class="app-content">
+      <div class="app-title">
+        <div>
+          <h1><i class="fa fa-th-list"></i>Delete User</h1>
+          <p>Fab|Waste</p>
+        </div>
+      </div>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                  <div class="tile text-center">
+                    <h3 class="tile-title"><i class="fa fa-exclamation-triangle mr-3 text-primary" style="font-size: 40px"></i>Requesting Product</h3>
+                    <div class="tile-body">Do You want to proceed requesting This product</div>
+                    <div class="tile-footer">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{ form }}
+                            <button type="submit" class="btn btn-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-circle" viewBox="0 0 16 16">
+                              <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z"/>
+                              <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/>
+                            </svg>
+                            Proceed
+                            </button>
+                        <a href="{% url 'dashboard' %}" class="btn btn-secondary"><i class="fa fa-times"></i>Cancel </a>
+                        </form>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </form>
+    </main>
+{% endblock %}

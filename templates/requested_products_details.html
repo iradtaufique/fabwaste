@@ -4,7 +4,7 @@
     <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-th-list"></i>Devices Details</h1>
+          <h1><i class="fa fa-th-list"></i>Requested Products</h1>
           <p>Fab|Waste</p>
         </div>
       </div>
@@ -15,22 +15,23 @@
                 <h5 class="text-center">Product Image</h5>
                 <hr>
                 <div class="text-center">
-                    <img src="{{ details.product_image.url }}" alt="" width="300" height="300">
+                    <img src="{{ details.product.product_image.url }}" alt="" width="300" height="300">
                 </div>
             </div>
         </div>
         <div class="col-sm-8">
             <div class="tile">
-                <h5 class="text-center">{{ details.product_name }}</h5>
+                <h5 class="text-center">{{ details.product.product_name }}</h5>
                 <hr>
-                <p>{{ details.description }}</p>
+                <p>{{ details.product.description }}</p>
                 <div class="row" style="width: 70%">
                     <div class="col-sm-6">
                         <div class="card mb-3 border-primary">
                             <div class="card-body">
-                                <b>Price: </b>{{ details.selling_price }}<br>
+                                <b>Price: </b>{{ details.product.selling_price }}<br>
 {#                                <b>Quantity: </b>{{ details.quantity }}<br>#}
-                                <b>Create Date: </b>{{ details.created_date }}
+                                <b>Requested Date: </b>{{ details.requested_date }}
+                                <b>Requested by: </b>{{ details.requested_by }}
                             </div>
                         </div>
                     </div>
@@ -42,36 +43,25 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt text-success mr-2" viewBox="0 0 16 16">
                                       <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
                                       <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                                    </svg>District: </b>{{ details.district }}<br>
+                                    </svg>District: </b>{{ details.requested_by.location }}<br>
                                 <b>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt text-success mr-2" viewBox="0 0 16 16">
                                       <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
                                       <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                                    </svg>Sector: </b>{{ details.sector }}<br>
+                                    </svg>Sector: </b>{{ details.requested_by.profile.sector }}<br>
                                 <b>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt text-success mr-2" viewBox="0 0 16 16">
                                       <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
                                       <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                                    </svg>Cell: </b>{{ details.cell }}<br>
+                                    </svg>Cell: </b>{{ details.requested_by.profile.cell }}<br>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {% if request.user.is_admin and details.published == False %}
+                {% if request.user.is_admin and details.product.published == True and details.product.status == 'Requested' %}
                     <div class="text-right">
-                        <a href="{% url 'add_selling_price' details.id %}" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                            </svg>
-                            Add Selling Price
-                        </a>
-                    </div>
-                {% endif %}
-
-                {% if request.user.is_admin and details.published == True and details.status == 'Requested' %}
-                    <div class="text-right">
-                        <a href="{% url 'add_selling_price' details.id %}" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-circle" viewBox="0 0 16 16">
+                        <a href="{% url 'sold_product' details.id %}" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-circle" viewBox="0 0 16 16">
                               <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z"/>
                               <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/>
                             </svg>

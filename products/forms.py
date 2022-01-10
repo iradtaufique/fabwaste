@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Product, Address
+from .models import Product, Address, RequestedProducts
 from userauth.models import UsersAccount
 
 
@@ -49,6 +49,7 @@ class UpdateProductForm(ModelForm):
             'collected_date': DateInput()
         }
 
+
 class ProductBuyingPriceForm(ModelForm):
     class Meta:
         model = Product
@@ -63,3 +64,12 @@ class ProductSellingPriceForm(ModelForm):
         fields = [
             'selling_price', 'buying_price'
         ]
+
+
+""" Form for creating requested products """
+class RequestedProductForm(ModelForm):
+    class Meta:
+        model = RequestedProducts
+        # fields = '__all__'
+        exclude = ['product', 'requested_by']
+

@@ -37,7 +37,7 @@ urlpatterns = [
 
     path('list-household-payed-product/', ListHouseHoldPayedProductApiView.as_view(), name='list_household_payed_product_api'),
     path('list-users/', ListUsersApiView.as_view(), name='list_users'),
-    path('user-profile/', UserProfileAPIView.as_view(), name='user_profile'),
+    # path('user-profile/', UserProfileAPIView.as_view(), name='user_profile'),
     path('delete-user/<int:pk>', DeleteUsersApiView.as_view(), name='delete_users'),
     path('list-agents-api/', ListAllAgentAPIView.as_view(), name='list_agents_api'),
     path('agent/<int:pk>', AgentDetailsAPIView.as_view(), name='agent_details_api'),

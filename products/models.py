@@ -26,7 +26,7 @@ class Product(models.Model):
     )
     STATUS = (
         ('Collected', 'Collected'), ('Requested', 'Requested'),
-        ('Pending', 'Pending'), ('Denied', 'Denied'),
+        ('Pending', 'Pending'), ('Denied', 'Denied'), ('Sold', 'Sold')
     )
 
     PRO_CATEGORY = (
@@ -84,3 +84,10 @@ class Address(models.Model):
 
     def __str__(self):
         return f'{self.province}'
+
+
+"""model for requested products"""
+class RequestedProducts(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    requested_by = models.ForeignKey(UsersAccount, on_delete=models.SET_NULL, null=True)
+    requested_date = models.DateField(auto_now_add=True)
