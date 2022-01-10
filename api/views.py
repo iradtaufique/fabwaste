@@ -463,5 +463,5 @@ class RetrieveTokenApi(APIView):
 class SearchProductAPIView(ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ListProductSerializer
-    search_fields = ['product_name']
+    search_fields = ['product_name', 'category']
     filter_backends = (filters.SearchFilter,)

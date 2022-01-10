@@ -120,7 +120,7 @@ class ListAvailableToSoldProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'id', 'category', 'product_name', 'product_image'
+            'id', 'category', 'product_name', 'product_image', 'desired_price'
         ]
 
     # def to_representation(self, instance):
