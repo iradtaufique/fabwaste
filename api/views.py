@@ -1,4 +1,5 @@
 from django.conf import settings
+from rest_framework import filters
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from django.contrib.sites.shortcuts import get_current_site
@@ -13,7 +14,7 @@ from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView, GenericAPIView, ListAPIView, RetrieveAPIView, RetrieveDestroyAPIView, \
-    RetrieveUpdateAPIView
+    RetrieveUpdateAPIView, ListCreateAPIView
 from rest_framework.views import APIView
 
 from userauth.models import UsersAccount, District
@@ -56,6 +57,8 @@ class RegisterUserAPi(GenericAPIView):
 
 
 """ApiView for registering agent"""
+
+
 class RegisterAgentAPiView(GenericAPIView):
     serializer_class = RegisterSerializer
 
@@ -76,6 +79,8 @@ class RegisterAgentAPiView(GenericAPIView):
 
 
 """ApiView for registering Manufacture"""
+
+
 class RegisterManufactureAPiView(GenericAPIView):
     serializer_class = RegisterSerializer
 
@@ -96,6 +101,8 @@ class RegisterManufactureAPiView(GenericAPIView):
 
 
 """ApiView for registering house_hold"""
+
+
 class RegisterHouseHoldAPiView(GenericAPIView):
     serializer_class = RegisterSerializer
 
@@ -127,6 +134,8 @@ class RegisterHouseHoldAPiView(GenericAPIView):
 
 
 """api view for login a user"""
+
+
 class UserLoginApiView(GenericAPIView):
     serializer_class = UserLoginSerializer
 
@@ -146,15 +155,19 @@ class UserLoginApiView(GenericAPIView):
             serializer = UserLoginSerializer(user)
 
             if user.is_house_hold:
-                data = {'user': serializer.data, 'household': user.is_house_hold, 'id': user.id, 'full_name': user.full_name,  'token': auth_token}
+                data = {'user': serializer.data, 'household': user.is_house_hold, 'id': user.id,
+                        'full_name': user.full_name, 'token': auth_token}
             elif user.is_agent:
-                data = {'user': serializer.data, 'agent': user.is_agent, 'id': user.id, 'full_name': user.full_name, 'token': auth_token}
+                data = {'user': serializer.data, 'agent': user.is_agent, 'id': user.id, 'full_name': user.full_name,
+                        'token': auth_token}
 
             elif user.is_manufacture:
-                data = {'user': serializer.data, 'manufacture': user.is_manufacture, 'full_name': user.full_name, 'id': user.id, 'token': auth_token}
+                data = {'user': serializer.data, 'manufacture': user.is_manufacture, 'full_name': user.full_name,
+                        'id': user.id, 'token': auth_token}
 
             elif user.is_admin:
-                data = {'user': serializer.data, 'admin': user.is_admin, 'full_name': user.full_name, 'id': user.id, 'token': auth_token}
+                data = {'user': serializer.data, 'admin': user.is_admin, 'full_name': user.full_name, 'id': user.id,
+                        'token': auth_token}
 
                 # dec = jwt.decode(auth_token, settings.JWT_SECRET_KEY, algorithms="HS256")
 
@@ -163,7 +176,6 @@ class UserLoginApiView(GenericAPIView):
 
             else:
                 data = {'message': 'User Has No Role!!'}
-
 
             # ----------- description for redirecting users -------------
             # if user.is_house_hold:
@@ -249,13 +261,15 @@ class DeleteUsersApiView(RetrieveDestroyAPIView):
 # ApiView for adding category
 class AddCategoryApiView(CreateAPIView):
     serializer_class = AddCategorySerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
         return
 
 
 """API View for listing agents"""
+
+
 class ListAllAgentAPIView(ListAPIView):
     serializer_class = ListUsersSerializer
 
@@ -264,6 +278,8 @@ class ListAllAgentAPIView(ListAPIView):
 
 
 """API View for agents Details"""
+
+
 class AgentDetailsAPIView(RetrieveAPIView):
     serializer_class = ListUsersSerializer
     lookup_field = 'pk'
@@ -273,6 +289,8 @@ class AgentDetailsAPIView(RetrieveAPIView):
 
 
 """APi view for listing electronics products"""
+
+
 class ListElectronicsProductsApiView(ListAPIView):
     serializer_class = ListAvailableToSoldProductSerializer
 
@@ -281,6 +299,8 @@ class ListElectronicsProductsApiView(ListAPIView):
 
 
 """APi view for listing Plastics products"""
+
+
 class ListPlasticsProductsApiView(ListAPIView):
     serializer_class = ListAvailableToSoldProductSerializer
 
@@ -289,6 +309,8 @@ class ListPlasticsProductsApiView(ListAPIView):
 
 
 """APi view for listing Plastics products"""
+
+
 class ListMetalsProductsApiView(ListAPIView):
     serializer_class = ListAvailableToSoldProductSerializer
 
@@ -297,6 +319,8 @@ class ListMetalsProductsApiView(ListAPIView):
 
 
 """APi view for listing Plastics products"""
+
+
 class ListTextileProductsApiView(ListAPIView):
     serializer_class = ListAvailableToSoldProductSerializer
 
@@ -305,6 +329,8 @@ class ListTextileProductsApiView(ListAPIView):
 
 
 """view for product details"""
+
+
 class ProductDetailsAPIView(RetrieveAPIView):
     serializer_class = ListProductSerializer
     queryset = Product.objects.all()
@@ -312,6 +338,8 @@ class ProductDetailsAPIView(RetrieveAPIView):
 
 
 """view for adding category"""
+
+
 class AddCategoryAPIView(CreateAPIView):
     serializer_class = AddCategorySerializer
 
@@ -320,6 +348,8 @@ class AddCategoryAPIView(CreateAPIView):
 
 
 """view for Listing category"""
+
+
 class ListCategoryAPIView(ListAPIView):
     serializer_class = AddCategorySerializer
 
@@ -328,6 +358,8 @@ class ListCategoryAPIView(ListAPIView):
 
 
 """view for adding sub-category"""
+
+
 class AddSubCategoryAPIView(CreateAPIView):
     serializer_class = AddSubCategorySerializer
 
@@ -336,6 +368,8 @@ class AddSubCategoryAPIView(CreateAPIView):
 
 
 """view for Listing sub-category"""
+
+
 class ListSubCategoryAPIView(ListAPIView):
     serializer_class = AddSubCategorySerializer
 
@@ -344,6 +378,8 @@ class ListSubCategoryAPIView(ListAPIView):
 
 
 """view for Listing sub-category"""
+
+
 class DeleteCategory(RetrieveDestroyAPIView):
     serializer_class = AddCategorySerializer
     queryset = Category.objects.all()
@@ -351,6 +387,8 @@ class DeleteCategory(RetrieveDestroyAPIView):
 
 
 """view for Listing sub-category"""
+
+
 class DeleteSubCategory(RetrieveDestroyAPIView):
     serializer_class = AddSubCategorySerializer
     queryset = SubCategory.objects.all()
@@ -358,6 +396,8 @@ class DeleteSubCategory(RetrieveDestroyAPIView):
 
 
 """ api view for updating subcategory """
+
+
 class UpdateSubCategory(RetrieveUpdateAPIView):
     serializer_class = AddSubCategorySerializer
     queryset = SubCategory.objects.all()
@@ -366,11 +406,14 @@ class UpdateSubCategory(RetrieveUpdateAPIView):
 
 class UserProfileAPIView(ListAPIView):
     serializer_class = UserProfileSerializer
+
     def get_queryset(self):
         return UsersAccount.objects.filter(id=self.request.user.id)
 
 
 """view for Listing District """
+
+
 class ListDistrictAPIView(ListAPIView):
     serializer_class = DistrictSerializer
 
@@ -390,7 +433,6 @@ class RetrieveTokenApi(APIView):
     # authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-
     def get(self, request):
         serializer = {
             "id": request.user.id,
@@ -404,15 +446,22 @@ class RetrieveTokenApi(APIView):
         return Response(serializer)
 
 
-class RequestProductAPIView(CreateAPIView):
-    serializer_class = RequestProductSerializer
-    permission_classes = [IsAuthenticated]
+# class RequestProductAPIView(CreateAPIView):
+#     serializer_class = RequestProductSerializer
+#     permission_classes = [IsAuthenticated]
+#
+#     # def perform_create(self, serializer):
+#     #
+#     #     serializer.save(requested_buy=self.request.user, product=)
+#     #
+#     #     return redirect('view_product')
+#
+#     def get_queryset(self):
+#         return Product.objects.filter(user=self.request.user).order_by('-created_date')
 
-    # def perform_create(self, serializer):
-    #
-    #     serializer.save(requested_buy=self.request.user, product=)
-    #
-    #     return redirect('view_product')
 
-    def get_queryset(self):
-        return Product.objects.filter(user=self.request.user).order_by('-created_date')
+class SearchProductAPIView(ListCreateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ListProductSerializer
+    search_fields = ['product_name']
+    filter_backends = (filters.SearchFilter,)

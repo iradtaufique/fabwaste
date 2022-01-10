@@ -4,7 +4,7 @@ from .views import RegisterUserAPi, UserLoginApiView, CreateProductApiView, List
     ListElectronicsProductsApiView, ListPlasticsProductsApiView, ListMetalsProductsApiView, ListTextileProductsApiView, \
     RegisterManufactureAPiView, ProductDetailsAPIView, AgentDetailsAPIView, AddCategoryAPIView, ListCategoryAPIView, \
     ListSubCategoryAPIView, AddSubCategoryAPIView, DeleteCategory, DeleteSubCategory, UpdateSubCategory, \
-    DeleteUsersApiView, UserProfileAPIView, ListDistrictAPIView, RetrieveTokenApi
+    DeleteUsersApiView, UserProfileAPIView, ListDistrictAPIView, RetrieveTokenApi, SearchProductAPIView
 
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -55,12 +55,15 @@ urlpatterns = [
     path('delete-sub-category/<int:pk>', DeleteSubCategory.as_view(), name='delete-sub-category-api'),
     path('update-sub-category/<int:pk>', UpdateSubCategory.as_view(), name='update-sub-category-api'),
 
+    path('search/', SearchProductAPIView.as_view(), name='search_product'),
+
     # path('token-det/', retrieve_token_details, name='token-api'),
     path('token-det/', RetrieveTokenApi.as_view(), name='token-api'),
 
     # documentation links
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('swagger.json', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('redoc', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('redoc', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
 ]

@@ -330,3 +330,8 @@ def sold_product(request, pk):
     print(prod.product.id)
     Product.objects.filter(id=prod.product.id).update(status='Sold')
     return redirect('dashboard')
+
+
+def ready_for_sold_list(request):
+    data = Product.objects.filter()
+    return render(request, 'ready_to_be_sold.html', {'data': data})
