@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from userauth.models import UsersAccount, Profile, District
-from products.models import Product, Category, SubCategory
+from products.models import Product, Category, SubCategory, RequestedProducts
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -116,15 +116,16 @@ class AddSubCategorySerializer(serializers.ModelSerializer):
 
 """serializer for listing electronic products"""
 class ListAvailableToSoldProductSerializer(serializers.ModelSerializer):
+    category = serializers.CharField(source='category.name')
     class Meta:
         model = Product
         fields = [
             'id', 'category', 'product_name', 'product_image'
         ]
 
-    def to_representation(self, instance):
-        rep = super(ListAvailableToSoldProductSerializer, self).to_representation(instance)
-        rep['category'] = instance.category.name
+    # def to_representation(self, instance):
+    #     rep = super(ListAvailableToSoldProductSerializer, self).to_representation(instance)
+        # rep['category'] = instance.category.name
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -154,3 +155,9 @@ class DistrictSerializer(serializers.ModelSerializer):
     class Meta:
         model = District
         fields = '__all__'
+
+
+class RequestProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RequestedProducts
+        exclude = ['product', 'requested_by']

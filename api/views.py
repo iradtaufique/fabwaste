@@ -22,7 +22,7 @@ from products.models import Product, Category, SubCategory
 from userauth.tokens import account_activation_token
 from .serializers import RegisterSerializer, UserLoginSerializer, CreateProductSerializer, ListProductSerializer, \
     ListHouseHoldPayedProductSerializer, AddCategorySerializer, ListAvailableToSoldProductSerializer, \
-    AddSubCategorySerializer, ListUsersSerializer, UserProfileSerializer, DistrictSerializer
+    AddSubCategorySerializer, ListUsersSerializer, UserProfileSerializer, DistrictSerializer, RequestProductSerializer
 import jwt
 
 
@@ -402,3 +402,17 @@ class RetrieveTokenApi(APIView):
             "manufacture": request.user.is_manufacture
         }
         return Response(serializer)
+
+
+class RequestProductAPIView(CreateAPIView):
+    serializer_class = RequestProductSerializer
+    permission_classes = [IsAuthenticated]
+
+    # def perform_create(self, serializer):
+    #
+    #     serializer.save(requested_buy=self.request.user, product=)
+    #
+    #     return redirect('view_product')
+
+    def get_queryset(self):
+        return Product.objects.filter(user=self.request.user).order_by('-created_date')
