@@ -25,7 +25,7 @@ class Product(models.Model):
         ('UnAvailable', 'UnAvailable'),
     )
     STATUS = (
-        ('Collected', 'Collected'),
+        ('Collected', 'Collected'), ('Requested', 'Requested'),
         ('Pending', 'Pending'), ('Denied', 'Denied'),
     )
 

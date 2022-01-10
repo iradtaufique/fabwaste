@@ -28,28 +28,70 @@
         </div>
 
         <div class="col-md-6 col-lg-3">
-          <div class="widget-small warning coloured-icon"><i class="icon fa fa-files-o fa-3x"></i>
+          <div class="widget-small warning coloured-icon"><i class="icon fa fa-money fa-3x"></i>
             <div class="info">
-              <h4>Payed</h4>
+              <h4>Paid Products</h4>
               <p><b>{{ total_payed_devices }}</b></p>
             </div>
           </div>
         </div>
         <div class="col-md-6 col-lg-3">
-          <div class="widget-small danger coloured-icon"><i class="icon fa fa-star fa-3x"></i>
+          <div class="widget-small danger coloured-icon"><i class="icon fa fa-money fa-3x"></i>
             <div class="info">
-              <h4>Unpayed Devices</h4>
+              <h4>Unpaid Products</h4>
               <p><b>{{ total_unpayed_devices }}</b></p>
             </div>
           </div>
         </div>
         <div class="col-md-6 col-lg-3">
-          <div class="widget-small info coloured-icon"><i class="icon fa fa-thumbs-o-up fa-3x"></i>
+          <div class="widget-small info coloured-icon"><i class="icon fa fa-list fa-3x"></i>
             <div class="info">
-              <h4>Total Device</h4>
+              <h4>Total Products</h4>
               <p><b>{{ total_collected_devices }}</b></p>
             </div>
           </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <a href="{% url 'ready_for_sold' %}" class="text-decoration-none">
+            <div class="widget-small info coloured-icon"><i class="icon fa fa-money fa-3x"></i>
+            <div class="info">
+              <h4>Ready For Sold</h4>
+              <p><b>{{ total_ready_sold }}</b></p>
+            </div>
+          </div>
+            </a>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <a href="{% url 'waste_product' %}" class="text-decoration-none">
+                <div class="widget-small warning coloured-icon"><i class="icon fa fa-refresh fa-3x"></i>
+                    <div class="info">
+                      <h4>Waste Products</h4>
+                      <p><b>{{ total_wastes }}</b></p>
+                    </div>
+                  </div>
+            </a>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <a href="{% url 'published_product' %}" class="text-decoration-none">
+                <div class="widget-small primary coloured-icon"><i class="icon fa fa-thumbs-o-up fa-3x"></i>
+                    <div class="info">
+                      <h4>Published Product</h4>
+                      <p><b>{{ published_products }}</b></p>
+                    </div>
+                  </div>
+            </a>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <a href="{% url 'requested_product' %}" class="text-decoration-none">
+                <div class="widget-small primary coloured-icon"><i class="icon fa fa-exchange fa-3x"></i>
+                    <div class="info">
+                      <h4>Requested Product</h4>
+                      <p><b>{{ requested_products }}</b></p>
+                    </div>
+                  </div>
+            </a>
         </div>
       </div>
 
@@ -293,7 +335,7 @@
                 </div>
               </div>
             </div>
-              <div class="col-md-6 col-lg-3">
+            <div class="col-md-6 col-lg-3">
                   <div class="widget-small warning coloured-icon"><i class="icon fa fa-money fa-3x"></i>
                     <div class="info">
                       <h4>UnPaid Products</h4>
@@ -301,7 +343,24 @@
                     </div>
                   </div>
                 </div>
-              <div class="col-md-6 col-lg-3">
+            <div class="col-md-6 col-lg-3">
+              <div class="widget-small info coloured-icon"><i class="icon fa fa-refresh fa-3x"></i>
+                <div class="info">
+                  <h4>Wastes</h4>
+                  <p><b>{{ agent_total_wastes }}</b></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                  <div class="widget-small warning coloured-icon"><i class="icon fa fa-money fa-3x"></i>
+                    <div class="info">
+                      <h4>Ready For Sold</h4>
+                      <p><b>{{ agent_total_ready_sold }}</b></p>
+                    </div>
+                  </div>
+                </div>
+            <div class="col-md-6 col-lg-3">
               <div class="widget-small info coloured-icon"><i class="icon fa fa-users fa-3x"></i>
                 <div class="info">
                   <h4>Total Users</h4>

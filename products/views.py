@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib import messages
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import Q
 from django.shortcuts import redirect, render, get_object_or_404
 from rest_framework import status
 
@@ -160,8 +162,136 @@ def add_selling_price(request, pk):
         if form.is_valid():
             prod = form.save(commit=False)
             prod.save()
+            if prod.selling_price > 0:
+                Product.objects.filter(pk=pk).update(published=True)
+            # else:
+            #     Product.objects.filter(pk=pk).update(status='Collected', pro_category='Waste')
             messages.success(request, 'Product selling price Added Successfully')
             return redirect('payed')
+
     context = {'form': form}
     return render(request, 'add_selling_price.html', context)
 
+
+"""listing ready for sold products"""
+def list_ready_for_sold_products(request):
+    data = Product.objects.filter(availability='Available', pro_category='Published')
+
+    """================= snippets for searching ================"""
+    q = ''
+    if 'q' in request.GET:
+        q = request.GET['q']
+        data = Product.objects.filter(
+            Q(category__name__icontains=q) | Q(product_name__icontains=q)
+        )
+    else:
+        data = Product.objects.filter(availability='Available', pro_category='Published')
+
+    p = Paginator(data, 12)
+    page_number = request.GET.get('page')
+    try:
+        page_obj = p.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = p.page(1)
+    except EmptyPage:
+        page_obj = p.page(p.num_pages)
+
+    return render(request, 'ready_sold.html', {'data': data, 'page_obj': page_obj, 'q': q})
+
+
+"""listing wastes products"""
+def list_waste_products(request):
+    data = Product.objects.filter(availability='Available', pro_category='Waste')
+
+    """================= snippets for searching ================"""
+    q = ''
+    if 'q' in request.GET:
+        q = request.GET['q']
+        data = Product.objects.filter(
+            Q(category__name__icontains=q) | Q(product_name__icontains=q)
+        )
+    else:
+        data = Product.objects.filter(availability='Available', pro_category='Waste')
+
+    """=================end of snippets for searching ================"""
+
+    p = Paginator(data, 12)
+    page_number = request.GET.get('page')
+    try:
+        page_obj = p.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = p.page(1)
+    except EmptyPage:
+        page_obj = p.page(p.num_pages)
+
+    return render(request, 'waste_product.html', {'data': data, 'page_obj': page_obj, 'q': q})
+
+
+"""listing published products"""
+def list_published_products(request):
+    data = Product.objects.filter(availability='Available', published=True)
+
+    """================= snippets for searching ================"""
+    q = ''
+    if 'q' in request.GET:
+        q = request.GET['q']
+        data = Product.objects.filter(
+            Q(category__name__icontains=q) | Q(product_name__icontains=q)
+        )
+    else:
+        data = Product.objects.filter(availability='Available', published=True)
+
+    """=================end of snippets for searching ================"""
+
+    p = Paginator(data, 12)
+    page_number = request.GET.get('page')
+    try:
+        page_obj = p.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = p.page(1)
+    except EmptyPage:
+        page_obj = p.page(p.num_pages)
+
+    return render(request, 'published.html', {'data': data, 'page_obj': page_obj, 'q': q})
+
+
+"""listing requested products"""
+def list_requested_products(request):
+    data = Product.objects.filter(availability='Requested')
+
+    """================= snippets for searching ================"""
+    q = ''
+    if 'q' in request.GET:
+        q = request.GET['q']
+        data = Product.objects.filter(
+            Q(category__name__icontains=q) | Q(product_name__icontains=q)
+        )
+    else:
+        data = Product.objects.filter(availability='Requested')
+
+    """=================end of snippets for searching ================"""
+
+    p = Paginator(data, 12)
+    page_number = request.GET.get('page')
+    try:
+        page_obj = p.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = p.page(1)
+    except EmptyPage:
+        page_obj = p.page(p.num_pages)
+
+    return render(request, 'requested_products.html', {'data': data, 'page_obj': page_obj, 'q': q})
+
+
+"""view for viewing the published details"""
+def published_details(request, pk):
+    details = Product.objects.get(pk=pk)
+    context = {'details': details}
+    return render(request, 'published_details.html', context)
+
+
+"""view for viewing the published details"""
+def ready_for_sold_details(request, pk):
+    details = Product.objects.get(pk=pk)
+    context = {'details': details}
+    return render(request, 'ready_sold_details.html', context)

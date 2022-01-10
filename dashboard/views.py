@@ -25,6 +25,13 @@ def index(request):
     total_unpayed_devices = Product.objects.filter(payed=False, status='Collected').count()
     total_payed_devices = Product.objects.filter(payed=True).count()
     agent_total_devices = Product.objects.filter(availability='Available', district=request.user.location).count()
+    agent_total_wastes = Product.objects.filter(availability='Available', pro_category='Waste',  district=request.user.location).count()
+    agent_total_ready_sold = Product.objects.filter(availability='Available', pro_category='Published',  district=request.user.location).count()
+
+    total_wastes = Product.objects.filter(availability='Available', pro_category='Waste').count()
+    total_ready_sold = Product.objects.filter(availability='Available', pro_category='Published').count()
+    published_products = Product.objects.filter(availability='Available', published=True).count()
+    requested_products = Product.objects.filter(availability='Requested').count()
 
     categories = Category.objects.all()
     """================= snippets for searching ================"""
@@ -90,6 +97,13 @@ def index(request):
         'data': data,
         'q': q,
         'page_obj': page_obj,
+        'agent_total_wastes': agent_total_wastes,
+        'agent_total_ready_sold': agent_total_ready_sold,
+
+        'total_wastes': total_wastes,
+        'total_ready_sold': total_ready_sold,
+        'published_products': published_products,
+        'requested_products': requested_products,
 
     }
     return render(request, 'dashboard/index.html', context)

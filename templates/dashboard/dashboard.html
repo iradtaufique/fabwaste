@@ -95,31 +95,34 @@
       	]
       };
       var pdata = [
+
       	{
-      		value: 30,
+      		value: "{{ total_electronics_products }}",
       		color: "#311B92",
       		highlight: "#311B92",
-      		label: "Phone"
+      		label: "Electronics"
       	},
       	{
-      		value: 50,
+      		value: "{{ total_metals_products }}",
       		color:"#00695C",
       		highlight: "#00695C",
-      		label: "Television"
+      		label: "Metals"
       	},
         {
-      		value: 30,
+      		value: "{{ total_textile_products }}",
       		color: "#46AFBC",
       		highlight: "#5AD3D1",
-      		label: "Radio"
+      		label: "Textiles"
       	},
       	{
-      		value: 50,
+      		value: "{{ total_plastics_products }}",
       		color:"#F7464A",
       		highlight: "#FF5A5E",
-      		label: "Cables"
+      		label: "Plastics"
       	},
       ]
+
+
 
       {#var ctxl = $("#lineChartDemo").get(0).getContext("2d");#}
       {#var lineChart = new Chart(ctxl).Line(data);#}
