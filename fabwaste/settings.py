@@ -131,6 +131,7 @@ USE_TZ = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://fabwaste.klabstartupsacademy.rw",
+    "https://fabwastefront.herokuapp.com",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
